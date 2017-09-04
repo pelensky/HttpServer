@@ -13,15 +13,15 @@ class HttpServer {
     private ServerSocket serverSocket;
     private Socket socket;
 
-    HttpServer(Integer port, String directory) {
+    HttpServer(Integer port, String directory, ServerSocket serverSocket) {
         this.port = port;
         this.directory = directory;
+        this.serverSocket = serverSocket;
     }
 
     void serve() {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
-                        serverSocket = new ServerSocket(port);
                         socket = serverSocket.accept();
                         socket.close();
                     } catch (IOException e) {
