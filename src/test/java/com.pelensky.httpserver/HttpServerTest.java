@@ -64,6 +64,24 @@ public class HttpServerTest {
         assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
     }
 
+    @Test
+    public void serverRespondsToUnknownGetRouteWith404() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "GET /foobar HTTP/1.1");
+        assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToUnknownPostRouteWith404() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "POST /foobar HTTP/1.1");
+        assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToUnknownPutRouteWith404() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "PUT /foobar HTTP/1.1");
+        assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
     private FakeServerSocket setUpResponseTest(Integer port, String in) throws IOException, InterruptedException {
         FakeServerSocket fakeServerSocket = new FakeServerSocket(port, in);
         setUp(fakeServerSocket);

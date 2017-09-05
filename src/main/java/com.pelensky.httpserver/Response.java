@@ -16,7 +16,7 @@ class Response {
         static String findCommand(String input) {
             for (ResponseCommand selection : selections()) {
                 if (selection.respondsTo(input)) {
-                    return selection.execute();
+                    return selection.execute(input);
                 }
             }
             return Status.codes().get(404);
