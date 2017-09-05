@@ -58,6 +58,12 @@ public class HttpServerTest {
         assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
     }
 
+    @Test
+    public void serverRespondsToPutRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "PUT /form HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
+    }
+
     private FakeServerSocket setUpResponseTest(Integer port, String in) throws IOException, InterruptedException {
         FakeServerSocket fakeServerSocket = new FakeServerSocket(port, in);
         setUp(fakeServerSocket);

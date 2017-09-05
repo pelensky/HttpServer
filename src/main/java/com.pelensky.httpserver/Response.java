@@ -9,6 +9,7 @@ class Response {
             List<ResponseCommand> selectionList = new ArrayList<>();
             selectionList.add(new GetCommand());
             selectionList.add(new PostCommand());
+            selectionList.add(new PutCommand());
             return selectionList;
         }
 
