@@ -42,14 +42,23 @@ public class HttpServerTest {
     public void serverSocketCanBeClosed() throws IOException, InterruptedException {
         setUp(serverSocketSpy);
         server.serve();
-        connect();
         server.close();
         assertTrue(serverSocketSpy.isClosed());
     }
 
     @Test
     public void serverRespondsToGetRequestWith200() throws IOException, InterruptedException {
-        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "GET /");
+        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "GET / HTTP/1.1");
+        setUp(fakeServerSocket);
+        server.serve();
+        connect();
+        String twoHundredResponse = "HTTP/1.1 200 OK\n";
+        assertEquals(fakeServerSocket.getOut(), twoHundredResponse);
+    }
+
+    @Test
+    public void serverRespondsToPostRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "POST /form HTTP/1.1");
         setUp(fakeServerSocket);
         server.serve();
         connect();

@@ -22,9 +22,12 @@ class HttpServer {
                        clientSocket = serverSocket.accept();
                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                       if (in.readLine().startsWith("GET /")) {
+                       String input = in.readLine();
+                       if (input.startsWith("GET /") || (input.startsWith("POST /"))) {
                            String twoHundredResponse = "HTTP/1.1 200 OK";
                            out.println(twoHundredResponse);
+                       } else {
+                           out.println("HTTP/1.1 404 Not Found");
                        }
                        out.close();
                        in.close();
