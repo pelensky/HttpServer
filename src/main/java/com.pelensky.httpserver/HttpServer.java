@@ -23,15 +23,9 @@ class HttpServer {
                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
                        String input = in.readLine();
-                       if (input.startsWith("GET /") || (input.startsWith("POST /"))) {
-                           String twoHundredResponse = "HTTP/1.1 200 OK";
-                           out.println(twoHundredResponse);
-                       } else {
-                           out.println("HTTP/1.1 404 Not Found");
-                       }
-                       out.close();
-                       in.close();
-                       clientSocket.close();
+                       String response = Response.findCommand(input);
+                       out.println(response);
+                       closeConnections(in, out);
                    } catch (IOException e) {
                        throw new UncheckedIOException(e);
                    }
@@ -39,7 +33,13 @@ class HttpServer {
        );
     }
 
-    void close() throws IOException {
+    private void closeConnections(BufferedReader in, PrintWriter out) throws IOException {
+        out.close();
+        in.close();
+        clientSocket.close();
+    }
+
+    void closeServerSocket() throws IOException {
         serverSocket.close();
     }
 

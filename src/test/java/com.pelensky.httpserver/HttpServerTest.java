@@ -42,28 +42,28 @@ public class HttpServerTest {
     public void serverSocketCanBeClosed() throws IOException, InterruptedException {
         setUp(serverSocketSpy);
         server.serve();
-        server.close();
+        server.closeServerSocket();
         assertTrue(serverSocketSpy.isClosed());
     }
 
     @Test
     public void serverRespondsToGetRequestWith200() throws IOException, InterruptedException {
-        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "GET / HTTP/1.1");
-        setUp(fakeServerSocket);
-        server.serve();
-        connect();
-        String twoHundredResponse = "HTTP/1.1 200 OK\n";
-        assertEquals(fakeServerSocket.getOut(), twoHundredResponse);
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "GET / HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
     }
 
     @Test
     public void serverRespondsToPostRequestWith200() throws IOException, InterruptedException {
-        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "POST /form HTTP/1.1");
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "POST /form HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
+    }
+
+    private FakeServerSocket setUpResponseTest(Integer port, String in) throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, in);
         setUp(fakeServerSocket);
         server.serve();
         connect();
-        String twoHundredResponse = "HTTP/1.1 200 OK\n";
-        assertEquals(fakeServerSocket.getOut(), twoHundredResponse);
+        return fakeServerSocket;
     }
 
     private void connect() throws InterruptedException, IOException {
