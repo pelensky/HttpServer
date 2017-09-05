@@ -2,18 +2,16 @@ package com.pelensky.httpserver;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.Executors;
 
 class HttpServer {
 
     private final String directory;
     private final Integer port;
-    private ServerSocket serverSocket;
-    private Socket socket;
+    private ServerSocketWrapper serverSocket;
+    private SocketWrapper clientSocket;
 
-    HttpServer(Integer port, String directory, ServerSocket serverSocket) {
+    HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
         this.port = port;
         this.directory = directory;
         this.serverSocket = serverSocket;
@@ -22,8 +20,8 @@ class HttpServer {
     void serve() {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
-                        socket = serverSocket.accept();
-                        socket.close();
+                        clientSocket = serverSocket.accept();
+                        clientSocket.close();
                     } catch (IOException e) {
                         throw new UncheckedIOException(e);
                     }
