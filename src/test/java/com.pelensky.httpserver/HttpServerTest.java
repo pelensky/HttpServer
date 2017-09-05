@@ -53,21 +53,15 @@ public class HttpServerTest {
     }
 
     @Test
-    public void serverRespondsToPostRequestWith200() throws IOException, InterruptedException {
-        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "POST /form HTTP/1.1");
-        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-    }
-
-    @Test
-    public void serverRespondsToPutRequestWith200() throws IOException, InterruptedException {
-        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "PUT /form HTTP/1.1");
-        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-    }
-
-    @Test
     public void serverRespondsToUnknownGetRouteWith404() throws IOException, InterruptedException {
         FakeServerSocket fakeServerSocket = setUpResponseTest(port, "GET /foobar HTTP/1.1");
         assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToPostRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "POST /form HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
     }
 
     @Test
@@ -77,8 +71,26 @@ public class HttpServerTest {
     }
 
     @Test
+    public void serverRespondsToPutRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "PUT /form HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
+    }
+
+    @Test
     public void serverRespondsToUnknownPutRouteWith404() throws IOException, InterruptedException {
         FakeServerSocket fakeServerSocket = setUpResponseTest(port, "PUT /foobar HTTP/1.1");
+        assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToHeadRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "HEAD / HTTP/1.1");
+        assertEquals( "HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToUnknownHeadRouteWith404() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest(port, "HEAD /foobar HTTP/1.1");
         assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
     }
 

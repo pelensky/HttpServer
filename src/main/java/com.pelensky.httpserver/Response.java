@@ -10,6 +10,7 @@ class Response {
             selectionList.add(new GetCommand());
             selectionList.add(new PostCommand());
             selectionList.add(new PutCommand());
+            selectionList.add(new HeadCommand());
             return selectionList;
         }
 

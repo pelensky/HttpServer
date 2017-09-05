@@ -19,13 +19,13 @@ class HttpServer {
     void serve() {
                Executors.newSingleThreadExecutor().execute(() -> {
                    try {
-                       clientSocket = serverSocket.accept();
-                       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                       PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                       String input = in.readLine();
-                       String response = Response.findCommand(input);
-                       out.println(response);
-                       closeConnections(in, out);
+                           clientSocket = serverSocket.accept();
+                           BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                           PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+                           String input = in.readLine();
+                           String response = Response.findCommand(input);
+                           out.println(response);
+                           closeConnections(in, out);
                    } catch (IOException e) {
                        throw new UncheckedIOException(e);
                    }
