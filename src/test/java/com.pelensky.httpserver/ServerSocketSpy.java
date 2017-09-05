@@ -1,9 +1,10 @@
 package com.pelensky.httpserver;
 
-import java.io.IOException;
+import java.io.*;
 
 public class ServerSocketSpy implements ServerSocketWrapper{
-    private boolean connectionAccepted = false;
+    private Integer connections = 0;
+    private boolean closed = false;
     private Integer port;
 
     ServerSocketSpy(Integer port) {
@@ -12,12 +13,21 @@ public class ServerSocketSpy implements ServerSocketWrapper{
 
     @Override
     public SocketWrapper accept() throws IOException {
-        connectionAccepted = true;
-        return () -> {
-        };
+        connections ++;
+        closed = true;
+        return new FakeSocket();
     }
 
-    boolean isConnectionAccepted() {
-        return connectionAccepted;
+    @Override
+    public void close() {
+        closed = true;
+    }
+
+    Integer getConnections() {
+        return connections;
+    }
+
+    boolean isClosed() {
+        return closed;
     }
 }

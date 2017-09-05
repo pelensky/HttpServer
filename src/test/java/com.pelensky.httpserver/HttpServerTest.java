@@ -1,44 +1,65 @@
 package com.pelensky.httpserver;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 
 public class HttpServerTest {
 
     private HttpServer server;
     private final Integer port = 1234;
     private final String directory = "/Users/dan/Server/cob_spec/public/";
-    private final String host = "localhost";
-    private ServerSocketSpy serverSocketSpy;
+    private final ServerSocketSpy serverSocketSpy = new ServerSocketSpy(port);
 
-    @Before
-    public void setUp() throws IOException {
-        serverSocketSpy = new ServerSocketSpy(port);
-        server = new HttpServer(port, directory, serverSocketSpy);
+    public void setUp(ServerSocketWrapper serverSocket) throws IOException {
+        server = new HttpServer(port, directory, serverSocket);
     }
 
     @Test
-    public void serverHasHost() {
+    public void serverHasHost() throws IOException {
+        setUp(serverSocketSpy);
         assertEquals(server.getDirectory(), directory);
     }
 
     @Test
-    public void serverHasPort() {
+    public void serverHasPort() throws IOException {
+        setUp(serverSocketSpy);
         assertEquals(server.getPort(), port);
     }
 
     @Test
-    public void serverConnectsToClient() throws IOException {
+    public void serverConnectsToClient() throws IOException, InterruptedException {
+        setUp(serverSocketSpy);
         server.serve();
-        assertTrue(serverSocketSpy.isConnectionAccepted());
+        connect();
+        assertEquals(1, serverSocketSpy.getConnections(), 0);
+    }
+
+    @Test
+    public void serverSocketCanBeClosed() throws IOException, InterruptedException {
+        setUp(serverSocketSpy);
+        server.serve();
+        connect();
+        server.close();
+        assertTrue(serverSocketSpy.isClosed());
+    }
+
+    @Test
+    public void serverRespondsToGetRequestWith200() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = new FakeServerSocket(port, "GET /");
+        setUp(fakeServerSocket);
+        server.serve();
+        connect();
+        String twoHundredResponse = "HTTP/1.1 200 OK\n";
+        assertEquals(fakeServerSocket.getOut(), twoHundredResponse);
+    }
+
+    private void connect() throws InterruptedException, IOException {
+        FakeSocket fakeSocket = new FakeSocket();
+        Thread.sleep(100);
+        fakeSocket.close();
     }
 }

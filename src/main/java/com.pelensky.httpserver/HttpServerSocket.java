@@ -17,6 +17,26 @@ public class HttpServerSocket implements ServerSocketWrapper{
     @Override
     public SocketWrapper accept() throws IOException {
         Socket client = serverSocket.accept();
-        return client::close;
+        return new SocketWrapper() {
+            @Override
+            public InputStream getInputStream() throws IOException {
+                return client.getInputStream();
+            }
+
+            @Override
+            public OutputStream getOutputStream() throws IOException {
+                return client.getOutputStream();
+            }
+
+            @Override
+            public void close() throws IOException {
+                client.close();
+            }
+        };
+    }
+
+    @Override
+    public void close() throws IOException {
+        serverSocket.close();
     }
 }
