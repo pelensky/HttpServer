@@ -4,13 +4,11 @@ import java.io.*;
 
 public class FakeServerSocket implements ServerSocketWrapper {
 
-    private final Integer port;
     private final String in;
     private String out;
     private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-    FakeServerSocket(Integer port, String in) {
-        this.port = port;
+    FakeServerSocket(String in) {
         this.in = in;
     }
 
@@ -38,7 +36,7 @@ public class FakeServerSocket implements ServerSocketWrapper {
     public void close() throws IOException {
     }
 
-    public String getOut() {
+    String getOut() {
         return out;
     }
 }

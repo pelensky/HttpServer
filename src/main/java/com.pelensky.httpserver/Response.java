@@ -14,12 +14,13 @@ class Response {
             return selectionList;
         }
 
-        static String findCommand(String input) {
+        static String findCommand(List<String> inputs) {
+            String input = String.join("\n", inputs);
             for (ResponseCommand selection : selections()) {
                 if (selection.respondsTo(input)) {
                     return selection.execute(input);
                 }
             }
-            return Status.codes().get(404);
+            return null;
         }
     }

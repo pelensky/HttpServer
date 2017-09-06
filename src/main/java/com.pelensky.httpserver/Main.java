@@ -7,6 +7,9 @@ public class Main {
         CommandLineArgumentParser parser = new CommandLineArgumentParser(args);
         Integer port = parser.findPort();
         ServerSocketWrapper serverSocket = new HttpServerSocket(port);
-        new HttpServer(port, parser.findDirectory(), serverSocket).serve();
+        HttpServer httpServer = new HttpServer(port, parser.findDirectory(), serverSocket);
+        while (true) {
+            httpServer.serve();
+        }
     }
 }
