@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.RequestTypes;
 
 public interface ResponseCommand {
     String execute(String input);

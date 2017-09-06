@@ -1,24 +1,28 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Server;
+
+import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.Socket.ServerSocketWrapper;
+import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-class HttpServer {
+public class HttpServer {
 
     private final String directory;
     private final Integer port;
     private final ServerSocketWrapper serverSocket;
     private SocketWrapper clientSocket;
 
-    HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
+    public HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
         this.port = port;
         this.directory = directory;
         this.serverSocket = serverSocket;
     }
 
-    void serve() {
+    public void serve() {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
                         clientSocket = serverSocket.accept();
@@ -29,7 +33,6 @@ class HttpServer {
                         String response = Response.findCommand(inputs);
                         out.println(response);
                         out.flush();
-                        inputs.clear();
                         closeConnections(in, out);
                     } catch (IOException e) {
                         throw new UncheckedIOException(e);
@@ -44,15 +47,15 @@ class HttpServer {
         clientSocket.close();
     }
 
-    void closeServerSocket() throws IOException {
+    public void closeServerSocket() throws IOException {
         serverSocket.close();
     }
 
-    Integer getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    String getDirectory() {
+    public String getDirectory() {
         return directory;
     }
 

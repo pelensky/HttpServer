@@ -1,8 +1,12 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Socket;
+
+import com.pelensky.httpserver.Socket.FakeSocket;
+import com.pelensky.httpserver.Socket.ServerSocketWrapper;
+import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.*;
 
-public class ServerSocketSpy implements ServerSocketWrapper{
+public class ServerSocketSpy implements ServerSocketWrapper {
     private Integer connections = 0;
     private boolean closed = false;
 
@@ -18,11 +22,11 @@ public class ServerSocketSpy implements ServerSocketWrapper{
         closed = true;
     }
 
-    Integer getConnections() {
+    public Integer getConnections() {
         return connections;
     }
 
-    boolean isClosed() {
+    public boolean isClosed() {
         return closed;
     }
 }

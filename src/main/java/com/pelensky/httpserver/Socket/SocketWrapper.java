@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Socket;
 
 import java.io.IOException;
 import java.io.InputStream;

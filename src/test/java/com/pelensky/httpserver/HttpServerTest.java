@@ -1,5 +1,10 @@
 package com.pelensky.httpserver;
 
+import com.pelensky.httpserver.Server.HttpServer;
+import com.pelensky.httpserver.Socket.FakeServerSocket;
+import com.pelensky.httpserver.Socket.FakeSocket;
+import com.pelensky.httpserver.Socket.ServerSocketSpy;
+import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -92,6 +97,27 @@ public class HttpServerTest {
     @Test
     public void serverRespondsToUnknownHeadRouteWith404() throws IOException, InterruptedException {
         FakeServerSocket fakeServerSocket = setUpResponseTest("HEAD /foobar HTTP/1.1\n");
+        server.closeServerSocket();
+        assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToOptionRequest() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /method_options HTTP/1.1\n");
+        server.closeServerSocket();
+        assertEquals( "HTTP/1.1 200 OK\nAllow: GET,HEAD,POST,OPTIONS,PUT\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToOptionRequestWithDifferentOptions() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /method_options2 HTTP/1.1\n");
+        server.closeServerSocket();
+        assertEquals( "HTTP/1.1 200 OK\nAllow: GET,OPTIONS\n", fakeServerSocket.getOut());
+    }
+
+    @Test
+    public void serverRespondsToUnknownOptionsRouteWith404() throws IOException, InterruptedException {
+        FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /foobar HTTP/1.1\n");
         server.closeServerSocket();
         assertEquals( "HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
     }

@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Socket;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,11 +6,11 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class HttpServerSocket implements ServerSocketWrapper{
+public class HttpServerSocket implements ServerSocketWrapper {
 
     private final ServerSocket serverSocket;
 
-    HttpServerSocket(Integer port) throws IOException {
+    public HttpServerSocket(Integer port) throws IOException {
         this.serverSocket = new ServerSocket(port);
     }
 

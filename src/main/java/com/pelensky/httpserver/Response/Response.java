@@ -1,9 +1,11 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Response;
+
+import com.pelensky.httpserver.RequestTypes.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Response {
+public class Response {
 
         private static List<ResponseCommand> selections() {
             List<ResponseCommand> selectionList = new ArrayList<>();
@@ -11,10 +13,11 @@ class Response {
             selectionList.add(new PostCommand());
             selectionList.add(new PutCommand());
             selectionList.add(new HeadCommand());
+            selectionList.add(new OptionsCommand());
             return selectionList;
         }
 
-        static String findCommand(List<String> inputs) {
+        public static String findCommand(List<String> inputs) {
             String input = String.join("\n", inputs);
             for (ResponseCommand selection : selections()) {
                 if (selection.respondsTo(input)) {

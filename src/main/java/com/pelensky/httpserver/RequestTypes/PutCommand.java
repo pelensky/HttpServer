@@ -1,4 +1,7 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.RequestTypes;
+
+import Validations.Routes;
+import com.pelensky.httpserver.Response.Status;
 
 public class PutCommand implements ResponseCommand {
     @Override

@@ -1,4 +1,7 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Socket;
+
+import com.pelensky.httpserver.Socket.ServerSocketWrapper;
+import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.*;
 
@@ -8,7 +11,7 @@ public class FakeServerSocket implements ServerSocketWrapper {
     private String out;
     private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-    FakeServerSocket(String in) {
+    public FakeServerSocket(String in) {
         this.in = in;
     }
 
@@ -36,7 +39,7 @@ public class FakeServerSocket implements ServerSocketWrapper {
     public void close() throws IOException {
     }
 
-    String getOut() {
+    public String getOut() {
         return out;
     }
 }

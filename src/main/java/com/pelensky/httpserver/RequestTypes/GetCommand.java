@@ -1,6 +1,9 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.RequestTypes;
 
-public class HeadCommand implements ResponseCommand{
+import Validations.Routes;
+import com.pelensky.httpserver.Response.Status;
+
+public class GetCommand implements ResponseCommand {
     @Override
     public String execute(String input) {
         return Routes.containsValidRoute(input) ? Status.codes().get(200) : Status.codes().get(404);
@@ -8,6 +11,6 @@ public class HeadCommand implements ResponseCommand{
 
     @Override
     public boolean respondsTo(String input) {
-        return (input.startsWith("HEAD"));
+        return (input.startsWith("GET"));
     }
 }
