@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.RequestTypes;
 
-import Validations.Routes;
+import com.pelensky.httpserver.Validations.Routes;
 import com.pelensky.httpserver.Response.Status;
 
 public class GetCommand implements ResponseCommand {

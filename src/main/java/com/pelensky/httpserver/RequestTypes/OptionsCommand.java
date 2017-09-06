@@ -1,7 +1,7 @@
 package com.pelensky.httpserver.RequestTypes;
 
-import Validations.Options;
-import Validations.Routes;
+import com.pelensky.httpserver.Validations.Options;
+import com.pelensky.httpserver.Validations.Routes;
 import com.pelensky.httpserver.Response.Status;
 
 public class OptionsCommand implements ResponseCommand {

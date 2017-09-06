@@ -1,6 +1,6 @@
 package com.pelensky.httpserver;
 
-import Validations.Routes;
+import com.pelensky.httpserver.Validations.Routes;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

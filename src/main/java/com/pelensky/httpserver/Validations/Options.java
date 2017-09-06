@@ -1,4 +1,4 @@
-package Validations;
+package com.pelensky.httpserver.Validations;
 
 import java.util.HashMap;
 import java.util.Map;

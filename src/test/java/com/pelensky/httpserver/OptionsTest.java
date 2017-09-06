@@ -1,6 +1,6 @@
 package com.pelensky.httpserver;
 
-import Validations.Options;
+import com.pelensky.httpserver.Validations.Options;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
