@@ -1,5 +1,6 @@
 package com.pelensky.httpserver;
 
+import com.pelensky.httpserver.Server.CommandLineArgumentParser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
