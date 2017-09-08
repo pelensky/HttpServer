@@ -2,10 +2,12 @@ package com.pelensky.httpserver.Server;
 
 import com.pelensky.httpserver.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.ResponseProcessor;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.concurrent.Executors;
 
 public class HttpServer {
@@ -27,10 +29,8 @@ public class HttpServer {
                         clientSocket = serverSocket.accept();
                         String input = new RequestProcessor().getRequest(clientSocket);
                         String response = Response.findCommand(input);
-                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                        out.println(response);
-                        out.flush();
-                        closeConnections(out);
+                        new ResponseProcessor().sendResponse(clientSocket, response);
+                        closeConnections();
                     } catch (IOException e) {
                         throw new UncheckedIOException(e);
                     }
@@ -38,8 +38,7 @@ public class HttpServer {
         );
     }
 
-    private void closeConnections(PrintWriter out) throws IOException {
-        out.close();
+    private void closeConnections() throws IOException {
         clientSocket.close();
     }
 
