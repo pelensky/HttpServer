@@ -26,14 +26,12 @@ public class HttpServer {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
                         clientSocket = serverSocket.accept();
-                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                        List<String> inputs = new ArrayList<>();
-                        inputs.add(in.readLine());
+                        String inputs = getRequest(clientSocket);
                         String response = Response.findCommand(inputs);
+                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
                         out.println(response);
                         out.flush();
-                        closeConnections(in, out);
+                        closeConnections(out);
                     } catch (IOException e) {
                         throw new UncheckedIOException(e);
                     }
@@ -41,9 +39,13 @@ public class HttpServer {
         );
     }
 
-    private void closeConnections(BufferedReader in, PrintWriter out) throws IOException {
+    private String getRequest(SocketWrapper clientSocket) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        return in.readLine();
+    }
+
+    private void closeConnections(PrintWriter out) throws IOException {
         out.close();
-        in.close();
         clientSocket.close();
     }
 
