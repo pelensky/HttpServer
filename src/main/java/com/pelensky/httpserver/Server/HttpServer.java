@@ -41,7 +41,17 @@ public class HttpServer {
 
     private String getRequest(SocketWrapper clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        return in.readLine();
+        String line;
+        StringBuilder request = new StringBuilder();
+        while ( (line = in.readLine()) != null) {
+            if (line.isEmpty()) {
+                break;
+            } else {
+                request.append(line);
+                request.append("\n");
+            }
+        }
+        return String.valueOf(request);
     }
 
     private void closeConnections(PrintWriter out) throws IOException {
