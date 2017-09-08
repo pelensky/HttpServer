@@ -11,6 +11,6 @@ public class PutCommand implements ResponseCommand {
 
     @Override
     public boolean respondsTo(String input) {
-        return input.startsWith("PUT /");
+        return input.startsWith("PUT");
     }
 }

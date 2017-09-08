@@ -17,7 +17,7 @@ public class RequestProcessor {
                 break;
             } else {
                 request.append(line);
-                request.append("\n");
+                request.append(System.lineSeparator());
             }
         }
         return String.valueOf(request);

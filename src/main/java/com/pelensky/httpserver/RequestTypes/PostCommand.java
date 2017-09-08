@@ -11,6 +11,6 @@ public class PostCommand implements ResponseCommand {
 
     @Override
     public boolean respondsTo(String input) {
-        return input.startsWith("POST /");
+        return input.startsWith("POST");
     }
 }
