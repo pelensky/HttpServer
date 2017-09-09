@@ -23,5 +23,6 @@ public class RequestProcessorTest {
         fakeSocket = new FakeSocket("GET / HTTP/1.1\nTest\n");
         assertEquals("GET / HTTP/1.1\nTest\n", processor.getRequest(fakeSocket));
     }
+
 }
 

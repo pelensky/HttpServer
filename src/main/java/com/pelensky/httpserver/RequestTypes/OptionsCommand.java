@@ -23,6 +23,6 @@ public class OptionsCommand implements ResponseCommand {
         String route = Routes.getRoute(input);
         String statusCode = Status.codes().get(200);
         String options = Options.getOptions(route);
-        return statusCode + "\n" + "Allow: " + options;
+        return statusCode + System.lineSeparator() + "Allow: " + options;
     }
 }
