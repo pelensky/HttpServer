@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RoutesTest {
+public class RouteTest {
 
     @Test
     public void checksForValidRoute() {
