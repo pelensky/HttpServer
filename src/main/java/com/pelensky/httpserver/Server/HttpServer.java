@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Server;
 
+import com.pelensky.httpserver.Request;
 import com.pelensky.httpserver.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.ResponseProcessor;
@@ -27,8 +28,8 @@ public class HttpServer {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
                         clientSocket = serverSocket.accept();
-                        String input = new RequestProcessor().getRequest(clientSocket);
-                        String response = Response.findCommand(input);
+                        Request request = new RequestProcessor().createRequest(clientSocket);
+                        String response = Response.findCommand(request);
                         new ResponseProcessor().sendResponse(clientSocket, response);
                         closeConnections();
                     } catch (IOException e) {

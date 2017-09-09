@@ -1,12 +1,13 @@
 package com.pelensky.httpserver.RequestTypes;
 
+import com.pelensky.httpserver.Request;
 import com.pelensky.httpserver.Validations.Routes;
 import com.pelensky.httpserver.Response.Status;
 
 public class GetCommand implements ResponseCommand {
     @Override
-    public String execute(String input) {
-        return Routes.containsValidRoute(input) ? Status.codes().get(200) : Status.codes().get(404);
+    public String execute(Request request) {
+        return Routes.containsValidRoute(request.getUri()) ? Status.codes().get(200) : Status.codes().get(404);
     }
 
     @Override

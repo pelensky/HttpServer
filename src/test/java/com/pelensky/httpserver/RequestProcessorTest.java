@@ -15,13 +15,13 @@ public class RequestProcessorTest {
     @Test
     public void processorHandlesSingleLineRequest() throws IOException {
         fakeSocket = new FakeSocket("GET / HTTP/1.1\n");
-        assertEquals("GET / HTTP/1.1\n", processor.getRequest(fakeSocket));
+        assertEquals("GET / HTTP/1.1\n", processor.getRequestFromSocket(fakeSocket));
     }
 
     @Test
     public void processorHandlesMultiLineRequests() throws IOException {
         fakeSocket = new FakeSocket("GET / HTTP/1.1\nTest\n");
-        assertEquals("GET / HTTP/1.1\nTest\n", processor.getRequest(fakeSocket));
+        assertEquals("GET / HTTP/1.1\nTest\n", processor.getRequestFromSocket(fakeSocket));
     }
 
 }

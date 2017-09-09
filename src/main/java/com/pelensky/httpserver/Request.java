@@ -32,11 +32,11 @@ public class Request {
         this.headers = headers;
     }
 
-    String getMethod() {
+    public String getMethod() {
         return method;
     }
 
-    String getUri() {
+    public String getUri() {
         return uri;
     }
 

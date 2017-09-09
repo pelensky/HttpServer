@@ -11,7 +11,7 @@ public class FakeSocket implements SocketWrapper {
     }
 
     public FakeSocket() {
-        this.input = "Fake";
+        this.input = "Fake null null";
     }
 
     @Override
