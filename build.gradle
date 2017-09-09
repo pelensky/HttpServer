@@ -28,7 +28,7 @@ test {
 }
 
 jar{
-    manifest.attributes("Main-Class": 'com.pelensky.httpserver.Main')
+    manifest.attributes("Main-Class": 'com.pelensky.httpserver.Server.Main')
 }
 
 jacocoTestReport {

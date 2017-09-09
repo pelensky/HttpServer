@@ -1,12 +1,14 @@
 package com.pelensky.httpserver.Server;
 
+import com.pelensky.httpserver.Request;
+import com.pelensky.httpserver.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.ResponseProcessor;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.concurrent.Executors;
 
 public class HttpServer {
@@ -26,14 +28,10 @@ public class HttpServer {
         Executors.newSingleThreadExecutor().execute(() -> {
                     try {
                         clientSocket = serverSocket.accept();
-                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                        List<String> inputs = new ArrayList<>();
-                        inputs.add(in.readLine());
-                        String response = Response.findCommand(inputs);
-                        out.println(response);
-                        out.flush();
-                        closeConnections(in, out);
+                        Request request = new RequestProcessor().createRequest(clientSocket);
+                        String response = Response.findCommand(request);
+                        new ResponseProcessor().sendResponse(clientSocket, response);
+                        closeConnections();
                     } catch (IOException e) {
                         throw new UncheckedIOException(e);
                     }
@@ -41,9 +39,7 @@ public class HttpServer {
         );
     }
 
-    private void closeConnections(BufferedReader in, PrintWriter out) throws IOException {
-        out.close();
-        in.close();
+    private void closeConnections() throws IOException {
         clientSocket.close();
     }
 

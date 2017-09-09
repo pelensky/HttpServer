@@ -5,23 +5,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RoutesTest {
-
-    @Test
-    public void getsTheRouteFromARequest() {
-        String input = "OPTIONS / HTTP/1.1\n";
-        assertEquals("/", Routes.getRoute(input));
-    }
-
-    @Test
-    public void getsADifferentRoute() {
-        String input = "OPTIONS /foobar HTTP/1.1\n";
-        assertEquals("/foobar", Routes.getRoute(input));
-    }
+public class RouteTest {
 
     @Test
     public void checksForValidRoute() {
-        String input = "OPTIONS / HTTP/1.1\n";
+        String input = "/";
         assertTrue(Routes.containsValidRoute(input));
     }
 

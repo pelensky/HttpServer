@@ -13,13 +13,7 @@ public class Routes {
         return routesList;
     }
 
-    public static boolean containsValidRoute(String input) {
-        String route = getRoute(input);
+    public static boolean containsValidRoute(String route) {
         return list().contains(route);
-    }
-
-    public static String getRoute(String input) {
-        String[] words = input.trim().split(" ");
-        return words[1];
     }
 }
