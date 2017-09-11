@@ -1,17 +1,18 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.Response.Status;
+import com.pelensky.httpserver.Response.Response;
 
 public class Form implements Route{
 
     public String route() {
         return "/form";
     }
-    public String post() {
-        return Status.codes().get(200);
+
+    public Response post() {
+        return new Response(200);
     }
 
-    public String put() {
-        return Status.codes().get(200);
+    public Response put() {
+        return new Response(200);
     }
 }

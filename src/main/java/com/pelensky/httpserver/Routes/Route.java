@@ -1,16 +1,14 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.Response.Status;
+import com.pelensky.httpserver.Response.Response;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public interface Route {
     String route();
 
-    default String call(String method) {
+    default Response call(String method) {
         switch (method) {
             case "GET":
                 return this.get();
@@ -23,41 +21,45 @@ public interface Route {
             case "PUT":
                 return this.put();
             default:
-                return Status.codes().get(404);
+                return new Response(404);
         }
     }
 
-    default String get() {
-        return Status.codes().get(200);
+    default Response get() {
+        return new Response(200);
     };
 
-    default String head() {
-        return Status.codes().get(405);
+    default Response head() {
+        return new Response(405);
     }
 
-    default String post() {
-        return Status.codes().get(405);
+    default Response post() {
+        return new Response(405);
     }
 
-    default String options() {
-        return (optionsCode().equals(Status.codes().get(405))) ? optionsCode() : optionsCode() + "\n" + "Allow: " + getOptions();
+    default Response options() {
+        boolean isOptionsAllowed = optionsCode().getStatusCode() != 405;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Allow", getOptions());
+        Response response = new Response(optionsCode().getStatusCode(), headers);
+        return (isOptionsAllowed) ? response : optionsCode();
     }
 
-    default String optionsCode() {
-        return Status.codes().get(405);
+    default Response optionsCode() {
+        return new Response(405);
     }
 
-    default String put() {
-        return Status.codes().get(405);
+    default Response put() {
+        return new Response(405);
     }
 
     default String getOptions() {
         List<String> options = new ArrayList<>();
-        options.add((!get().equals(Status.codes().get(405))) ? "GET" : null);
-        options.add((!head().equals(Status.codes().get(405))) ? "HEAD" : null);
-        options.add((!post().equals(Status.codes().get(405))) ? "POST" : null);
-        options.add((!optionsCode().equals(Status.codes().get(405))) ? "OPTIONS" : null);
-        options.add((!put().equals(Status.codes().get(405))) ? "PUT" : null);
+        options.add((get().getStatusCode() != 405 ) ? "GET" : null);
+        options.add((head().getStatusCode() != 405 ) ? "HEAD" : null);
+        options.add((post().getStatusCode() != 405 ) ? "POST" : null);
+        options.add((optionsCode().getStatusCode() != 405 ) ? "OPTIONS" : null);
+        options.add((put().getStatusCode() != 405 ) ? "PUT" : null);
         return options.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
     }
 

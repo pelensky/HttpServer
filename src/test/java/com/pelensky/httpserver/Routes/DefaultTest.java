@@ -15,12 +15,12 @@ public class DefaultTest {
 
     @Test
     public void getReturns200Response() {
-        assertEquals("HTTP/1.1 200 OK", defaultRoute.get());
+        assertEquals(200, defaultRoute.get().getStatusCode(), 0);
     }
 
     @Test
     public void unknownReturns400Response() {
-        assertEquals("HTTP/1.1 405 Method Not Allowed", defaultRoute.post());
+        assertEquals(405, defaultRoute.post().getStatusCode(), 0);
     }
 
 }

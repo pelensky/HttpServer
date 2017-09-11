@@ -1,6 +1,5 @@
 package com.pelensky.httpserver.Response;
 
-import com.pelensky.httpserver.ResponseProcessor;
 import com.pelensky.httpserver.Socket.SocketSpy;
 import org.junit.Test;
 

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class FormTest {
 
-    Form form;
+    private Form form;
 
     @Before
     public void setUp() {
@@ -16,12 +16,12 @@ public class FormTest {
 
     @Test
     public void returns200ForPost() {
-        assertEquals("HTTP/1.1 200 OK", form.post());
+        assertEquals(200, form.post().getStatusCode(), 0);
     }
 
     @Test
     public void returns200ForPut() {
-        assertEquals("HTTP/1.1 200 OK", form.put());
+        assertEquals(200, form.put().getStatusCode(), 0);
     }
 
 }

@@ -1,19 +1,23 @@
 package com.pelensky.httpserver.Response;
 
-import com.pelensky.httpserver.Request.Request;
-import com.pelensky.httpserver.Routes.Route;
-import com.pelensky.httpserver.Routes.Routes;
+import java.util.Map;
 
 public class ResponseFormatter {
 
-  public static String getResponse(Request request) {
-    String method = request.getMethod();
-    String uri = request.getUri();
-    for (Route selection : Routes.routes()) {
-      if (selection.route().equals(uri)) {
-        return selection.call(method);
-      }
+    public String format(Response response) {
+        String statusLine = Status.codes().get(response.getStatusCode());
+        String responseHeaders = getHeaders(response);
+        return statusLine + System.lineSeparator() + responseHeaders;
     }
-    return Status.codes().get(404);
-  }
+
+    private String getHeaders(Response response) {
+        if (response.getResponseHeader() != null) {
+            Map<String, String> responseHeaders = response.getResponseHeader();
+            StringBuilder headers = new StringBuilder();
+            responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
+            return String.valueOf(headers);
+        } else {
+            return "";
+        }
+    }
 }

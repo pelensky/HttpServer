@@ -2,8 +2,10 @@ package com.pelensky.httpserver.Server;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestProcessor;
+import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.Response.ResponseFinder;
 import com.pelensky.httpserver.Response.ResponseFormatter;
-import com.pelensky.httpserver.ResponseProcessor;
+import com.pelensky.httpserver.Response.ResponseProcessor;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
@@ -33,8 +35,8 @@ class HttpServer {
                   try {
                     clientSocket = serverSocket.accept();
                     Request request = new RequestProcessor().createRequest(clientSocket);
-                    String response = ResponseFormatter.getResponse(request);
-                    new ResponseProcessor().sendResponse(clientSocket, response);
+                    Response response = ResponseFinder.getResponse(request);
+                    new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().format(response));
                     closeConnections();
                   } catch (IOException e) {
                     throw new UncheckedIOException(e);

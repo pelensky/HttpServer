@@ -1,6 +1,9 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.Response.Status;
+import com.pelensky.httpserver.Response.Response;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Redirect implements Route {
 
@@ -8,7 +11,9 @@ public class Redirect implements Route {
         return "/redirect";
     }
 
-    public String get() {
-        return Status.codes().get(302) + System.lineSeparator() + "Location: /";
+    public Response get() {
+        Map<String, String> responseHeaders = new HashMap<>();
+        responseHeaders.put("Location", "/");
+        return new Response(302, responseHeaders);
     }
 }

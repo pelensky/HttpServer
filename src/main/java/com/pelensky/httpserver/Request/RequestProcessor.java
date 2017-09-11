@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 
 public class RequestProcessor {
 
-    public Request createRequest(SocketWrapper clientSockt) throws IOException {
-        return new RequestParser(getRequestFromSocket(clientSockt)).parseRequest();
+    public Request createRequest(SocketWrapper clientSocket) throws IOException {
+        return new RequestParser(getRequestFromSocket(clientSocket)).parseRequest();
     }
 
     public String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {

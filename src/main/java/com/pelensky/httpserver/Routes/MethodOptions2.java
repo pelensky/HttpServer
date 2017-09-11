@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.Response.Status;
+import com.pelensky.httpserver.Response.Response;
 
 public class MethodOptions2 implements Route {
 
@@ -8,7 +8,7 @@ public class MethodOptions2 implements Route {
         return "/method_options2";
     }
 
-    public String optionsCode() {
-        return Status.codes().get(200);
+    public Response optionsCode() {
+        return new Response(200);
     }
 }
