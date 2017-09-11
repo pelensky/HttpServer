@@ -39,7 +39,8 @@ public class HttpServerTest {
     setUp(serverSocketSpy);
     server.serve();
     connect();
-    assertEquals(1, serverSocketSpy.getConnections(), 0);
+    server.killServer();
+    assertTrue(serverSocketSpy.isConnected());
   }
 
   @Test
@@ -50,91 +51,10 @@ public class HttpServerTest {
     assertTrue(serverSocketSpy.isClosed());
   }
 
-  @Test
-  public void serverRespondsToGetRequestWith200() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("GET / HTTP/1.1\n");
-    assertEquals("HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToUnknownGetRouteWith404() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("GET /foobar HTTP/1.1\n");
-    assertEquals("HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToPostRequestWith200() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket =
-        setUpResponseTest("POST /form HTTP/1.1\nContent-Length: 348\n\n\"My\"=\"Data\"\n");
-    assertEquals("HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToUnknownPostRouteWith404() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("POST /foobar HTTP/1.1\n");
-    assertEquals("HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToPutRequestWith200() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("PUT /form HTTP/1.1\n");
-    assertEquals("HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToUnknownPutRouteWith404() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("PUT /foobar HTTP/1.1\n");
-    assertEquals("HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToHeadRequestWith200() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("HEAD / HTTP/1.1\n");
-    server.closeServerSocket();
-    assertEquals("HTTP/1.1 200 OK\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToUnknownHeadRouteWith404() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("HEAD /foobar HTTP/1.1\n");
-    server.closeServerSocket();
-    assertEquals("HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToOptionRequest() throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /method_options HTTP/1.1\n");
-    server.closeServerSocket();
-    assertEquals("HTTP/1.1 200 OK\nAllow: GET,HEAD,POST,OPTIONS,PUT\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToOptionRequestWithDifferentOptions()
-      throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /method_options2 HTTP/1.1\n");
-    server.closeServerSocket();
-    assertEquals("HTTP/1.1 200 OK\nAllow: GET,OPTIONS\n", fakeServerSocket.getOut());
-  }
-
-  @Test
-  public void serverRespondsToUnknownOptionsRouteWith404()
-      throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = setUpResponseTest("OPTIONS /foobar HTTP/1.1\n");
-    server.closeServerSocket();
-    assertEquals("HTTP/1.1 404 Not Found\n", fakeServerSocket.getOut());
-  }
-
-  private FakeServerSocket setUpResponseTest(String in) throws IOException, InterruptedException {
-    FakeServerSocket fakeServerSocket = new FakeServerSocket(in);
-    setUp(fakeServerSocket);
-    server.serve();
-    connect();
-    return fakeServerSocket;
-  }
-
   private void connect() throws InterruptedException, IOException {
     FakeSocket fakeSocket = new FakeSocket();
     Thread.sleep(100);
     fakeSocket.close();
+    server.killServer();
   }
 }

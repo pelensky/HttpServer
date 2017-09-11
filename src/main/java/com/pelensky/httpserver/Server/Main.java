@@ -10,9 +10,6 @@ public class Main {
         CommandLineArgumentParser parser = new CommandLineArgumentParser(args);
         Integer port = parser.findPort();
         ServerSocketWrapper serverSocket = new HttpServerSocket(port);
-        HttpServer httpServer = new HttpServer(port, parser.findDirectory(), serverSocket);
-        while (true) { //TODO move this into the server
-            httpServer.serve();
-        }
+        new HttpServer(port, parser.findDirectory(), serverSocket).serve();
     }
 }

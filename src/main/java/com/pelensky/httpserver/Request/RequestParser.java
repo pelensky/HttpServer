@@ -1,8 +1,7 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Request.Request;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestParser {
     

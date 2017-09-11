@@ -1,18 +1,14 @@
 package com.pelensky.httpserver.Socket;
 
-import com.pelensky.httpserver.Socket.FakeSocket;
-import com.pelensky.httpserver.Socket.ServerSocketWrapper;
-import com.pelensky.httpserver.Socket.SocketWrapper;
-
-import java.io.*;
+import java.io.IOException;
 
 public class ServerSocketSpy implements ServerSocketWrapper {
-    private Integer connections = 0;
+    private boolean connected = false;
     private boolean closed = false;
 
     @Override
     public SocketWrapper accept() throws IOException {
-        connections ++;
+        connected = true;
         closed = true;
         return new FakeSocket();
     }
@@ -22,8 +18,8 @@ public class ServerSocketSpy implements ServerSocketWrapper {
         closed = true;
     }
 
-    public Integer getConnections() {
-        return connections;
+    public boolean isConnected() {
+        return connected;
     }
 
     public boolean isClosed() {

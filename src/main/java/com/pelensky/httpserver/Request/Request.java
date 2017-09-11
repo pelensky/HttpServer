@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class Request {
 
-    private String method;
-    private String uri;
-    private String httpVersion;
+    private final String method;
+    private final String uri;
+    private final String httpVersion;
     private Map<String, String> headers;
     private Map <String, String> body;
 
-    public Request(String method, String uri, String httpVersion, Map<String, String> headers, Map<String, String> body) {
+    Request(String method, String uri, String httpVersion, Map<String, String> headers, Map<String, String> body) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
@@ -19,13 +19,13 @@ public class Request {
         this.body = body;
     }
 
-    public Request(String method, String uri, String httpVersion) {
+    Request(String method, String uri, String httpVersion) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
     }
 
-    public Request(String method, String uri, String httpVersion, Map<String, String> headers) {
+    Request(String method, String uri, String httpVersion, Map<String, String> headers) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
@@ -40,15 +40,15 @@ public class Request {
         return uri;
     }
 
-    public String getHttpVersion() {
+    String getHttpVersion() {
         return httpVersion;
     }
 
-    public Map<String, String> getHeaders() {
+    Map<String, String> getHeaders() {
         return headers;
     }
 
-    public Map<String,String> getBody() {
+    Map<String,String> getBody() {
         return body;
     }
 }

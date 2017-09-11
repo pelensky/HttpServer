@@ -11,32 +11,34 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.Executors;
 
-public class HttpServer {
+class HttpServer {
 
   private final String directory;
   private final Integer port;
   private final ServerSocketWrapper serverSocket;
   private SocketWrapper clientSocket;
-  private boolean running = true;
+  private boolean inProgress = true;
 
-  public HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
+  HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
     this.port = port;
     this.directory = directory;
     this.serverSocket = serverSocket;
   }
 
-  public void serve() {
+  void serve() {
     Executors.newSingleThreadExecutor()
         .execute(
             () -> {
-                try {
-                  clientSocket = serverSocket.accept();
-                  Request request = new RequestProcessor().createRequest(clientSocket);
-                  String response = Response.getResponse(request);
-                  new ResponseProcessor().sendResponse(clientSocket, response);
-                  closeConnections();
-                } catch (IOException e) {
-                  throw new UncheckedIOException(e);
+                while (inProgress) {
+                  try {
+                    clientSocket = serverSocket.accept();
+                    Request request = new RequestProcessor().createRequest(clientSocket);
+                    String response = Response.getResponse(request);
+                    new ResponseProcessor().sendResponse(clientSocket, response);
+                    closeConnections();
+                  } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                  }
                 }
             });
   }
@@ -45,20 +47,19 @@ public class HttpServer {
     clientSocket.close();
   }
 
-  public void closeServerSocket() throws IOException {
+  void closeServerSocket() throws IOException {
     serverSocket.close();
   }
 
-  public Integer getPort() {
+  Integer getPort() {
     return port;
   }
 
-  public String getDirectory() {
+  String getDirectory() {
     return directory;
   }
 
-  boolean isRunning() {
-    return running;
+  void killServer() {
+      inProgress = false;
   }
-
 }
