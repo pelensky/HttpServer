@@ -7,10 +7,6 @@ public class Default implements Route {
         return "/";
     }
 
-    public String get(){
-        return Status.codes().get(200);
-    }
-
     public String head() {
         return Status.codes().get(200);
     }

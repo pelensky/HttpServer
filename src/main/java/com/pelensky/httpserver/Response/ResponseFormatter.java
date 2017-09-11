@@ -4,7 +4,7 @@ import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
-public class Response {
+public class ResponseFormatter {
 
   public static String getResponse(Request request) {
     String method = request.getMethod();

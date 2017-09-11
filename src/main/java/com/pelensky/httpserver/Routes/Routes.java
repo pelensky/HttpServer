@@ -10,6 +10,7 @@ public class Routes {
         routesList.add("/form");
         routesList.add("/method_options");
         routesList.add("/method_options2");
+        routesList.add("/redirect");
         return routesList;
     }
 
@@ -19,6 +20,7 @@ public class Routes {
         routesList.add(new Form());
         routesList.add(new MethodOptions());
         routesList.add(new MethodOptions2());
+        routesList.add(new Redirect());
         return routesList;
     }
 
