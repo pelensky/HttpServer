@@ -1,5 +1,6 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.Request.RequestParser;
 import org.junit.Before;
 import org.junit.Test;
 

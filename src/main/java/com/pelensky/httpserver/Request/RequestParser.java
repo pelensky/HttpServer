@@ -1,4 +1,6 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Request;
+
+import com.pelensky.httpserver.Request.Request;
 
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class RequestParser {
         this.request = request;
     }
 
-    Request parseRequest() {
+    public Request parseRequest() {
         splitRequest();
         splitRequestLineComponents();
         return new Request(method, uri, httpVersion, headers, body);
@@ -63,27 +65,27 @@ public class RequestParser {
         httpVersion = splitRequestLine[2];
     }
 
-    String getMethod() {
+    public String getMethod() {
         return method;
     }
 
-    String getUri() {
+    public String getUri() {
         return uri;
     }
 
-    String getHttpVersion() {
+    public String getHttpVersion() {
         return httpVersion;
     }
 
-    String getRequestLine() {
+    public String getRequestLine() {
         return requestLine;
     }
 
-    Map<String, String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
 
-    Map<String, String> getBody() {
+    public Map<String, String> getBody() {
         return body;
     }
 

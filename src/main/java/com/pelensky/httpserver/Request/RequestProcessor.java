@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Request;
 
 import com.pelensky.httpserver.Socket.SocketWrapper;
 

@@ -11,7 +11,7 @@ public class Main {
         Integer port = parser.findPort();
         ServerSocketWrapper serverSocket = new HttpServerSocket(port);
         HttpServer httpServer = new HttpServer(port, parser.findDirectory(), serverSocket);
-        while (true) {
+        while (true) { //TODO move this into the server
             httpServer.serve();
         }
     }

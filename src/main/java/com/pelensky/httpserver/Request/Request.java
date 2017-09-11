@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Request;
 
 import java.util.Map;
 
@@ -40,15 +40,15 @@ public class Request {
         return uri;
     }
 
-    String getHttpVersion() {
+    public String getHttpVersion() {
         return httpVersion;
     }
 
-    Map<String, String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
 
-    Map<String,String> getBody() {
+    public Map<String,String> getBody() {
         return body;
     }
 }

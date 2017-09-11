@@ -1,4 +1,4 @@
-package com.pelensky.httpserver.Validations;
+package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.Routes.*;
 
