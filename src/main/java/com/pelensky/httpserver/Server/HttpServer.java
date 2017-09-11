@@ -29,7 +29,7 @@ public class HttpServer {
                     try {
                         clientSocket = serverSocket.accept();
                         Request request = new RequestProcessor().createRequest(clientSocket);
-                        String response = Response.findCommand(request);
+                        String response = Response.getResponse(request);
                         new ResponseProcessor().sendResponse(clientSocket, response);
                         closeConnections();
                     } catch (IOException e) {

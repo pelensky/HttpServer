@@ -1,8 +1,5 @@
 package com.pelensky.httpserver.Socket;
 
-import com.pelensky.httpserver.Socket.ServerSocketWrapper;
-import com.pelensky.httpserver.Socket.SocketWrapper;
-
 import java.io.*;
 
 public class FakeServerSocket implements ServerSocketWrapper {
