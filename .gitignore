@@ -21,6 +21,9 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 
+# Build
+build/
+
 # Gradle:
 .gradle
 .idea/**/gradle.xml
