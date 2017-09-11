@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Status {
 
     public static HashMap<Integer, String> codes() {
-        HashMap<Integer, String> statusCodes = new HashMap<Integer, String>();
+        HashMap<Integer, String> statusCodes = new HashMap<>();
         statusCodes.put(200, "HTTP/1.1 200 OK");
         statusCodes.put(302, "HTTP/1.1 302 Found");
         statusCodes.put(404, "HTTP/1.1 404 Not Found");
