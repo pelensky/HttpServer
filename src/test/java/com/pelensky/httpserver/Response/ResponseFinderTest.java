@@ -70,7 +70,7 @@ public class ResponseFinderTest {
     public void serverRespondsWith404ifTypeOfRequestIsWrong() throws IOException {
         Request request = new RequestParser("GETTING / HTTP/1.1\n").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 404 Not Found\n", response);
+        assertEquals("HTTP/1.1 405 Method Not Allowed\n", response);
     }
 
     @Test
@@ -93,6 +93,13 @@ public class ResponseFinderTest {
     @Test
     public void File1GetsContentsOfFile() throws IOException {
         Request request = new RequestParser("GET /file1 HTTP/1.1\n").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents\n", response);
+    }
+
+    @Test
+    public void TextFileAllowsGetButNotPost() throws IOException {
+        Request request = new RequestParser("GET /text-file.txt HTTP/1.1\n").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
         assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents\n", response);
     }

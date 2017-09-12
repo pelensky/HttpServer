@@ -5,14 +5,14 @@ import com.pelensky.httpserver.Response.Response;
 
 import java.io.IOException;
 
-public class File1 implements Route {
+public class TextFile implements Route {
     @Override
     public String route() {
-        return "/file1";
+        return "/text-file.txt";
     }
 
     @Override
     public Response get(Request request) throws IOException {
-        return new Response(200, null, readFile("file1"));
+        return new Response(200, null, readFile("text-file.txt"));
     }
 }
