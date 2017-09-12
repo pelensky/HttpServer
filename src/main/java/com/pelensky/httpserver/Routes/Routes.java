@@ -11,6 +11,7 @@ public class Routes {
     private static final Route redirect = new Redirect();
     private static final Route file1 = new File1();
     private static final Route textFile = new TextFile();
+    private static final Route partialContent = new PartialContent();
 
 
     public static List<Route> routes() {
@@ -22,6 +23,7 @@ public class Routes {
         routesList.add(redirect);
         routesList.add(file1);
         routesList.add(textFile);
+        routesList.add(partialContent);
         return routesList;
     }
 }

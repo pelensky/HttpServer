@@ -103,4 +103,18 @@ public class ResponseFinderTest {
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
         assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents\n", response);
     }
+
+    @Test
+    public void PartialContentFirstFourBytes() throws IOException {
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-4").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 0-4/76\nContent-Length: 4\n\nThis\n", response);
+    }
+
+    @Test
+    public void PartialContentLastSixBytes() throws IOException {
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-0,-6").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 70-76/76\nContent-Length: 6\n\na 206.\n", response);
+    }
 }

@@ -26,7 +26,7 @@ public class ResponseFormatter {
     private String getHeaders(Response response) {
         Map<String, String> responseHeaders = response.getResponseHeader();
         StringBuilder headers = new StringBuilder();
-        responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
+        responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value));
         return String.valueOf(headers);
     }
 
