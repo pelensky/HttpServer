@@ -4,14 +4,15 @@ import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
+import java.io.IOException;
+
 public class ResponseFinder {
 
-  public static Response getResponse(Request request) {
-    String method = request.getMethod();
+  public static Response getResponse(Request request) throws IOException {
     String uri = request.getUri();
     for (Route selection : Routes.routes()) {
       if (selection.route().equals(uri)) {
-        return selection.call(method);
+        return selection.call(request);
       }
     }
     return new Response(404);

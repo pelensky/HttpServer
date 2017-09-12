@@ -8,7 +8,7 @@ public class RequestParser {
     private final String request;
     private String requestLine;
     private Map<String, String> headers;
-    private Map<String, String> body;
+    private String body;
     private String method;
     private String uri;
     private String httpVersion;
@@ -29,7 +29,7 @@ public class RequestParser {
         requestLine = splitRequest[0];
         extractHeaders(splitRequest);
         if (bodyBegins != null) {
-            extractBody(splitRequest);
+            body = extractBody(splitRequest);
         }
     }
 
@@ -46,15 +46,12 @@ public class RequestParser {
         }
     }
 
-    private void extractBody(String[] splitRequest) {
-        body = new HashMap<>();
+    private String extractBody(String[] splitRequest) {
+        StringBuilder body = new StringBuilder();
         for (int i = bodyBegins + 1; i < splitRequest.length; i++) {
-            String[] splitBody = splitRequest[i].split("[&]");
-            for (String all : splitBody) {
-                String[] splitBodyComponent = all.split("[=]");
-                body.put(splitBodyComponent[0], splitBodyComponent[1]);
-            }
+            body.append(splitRequest[i]).append(System.lineSeparator());
         }
+        return String.valueOf(body);
     }
 
     private void splitRequestLineComponents() {
@@ -84,7 +81,7 @@ public class RequestParser {
         return headers;
     }
 
-    public Map<String, String> getBody() {
+    public String getBody() {
         return body;
     }
 

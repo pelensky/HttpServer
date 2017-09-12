@@ -14,7 +14,7 @@ public class RequestTest {
 
     @Before
     public void setUp() {
-        request = new Request("POST", "/form", "HTTP/1.1", setUpHeaders(), setUpBody());
+        request = new Request("POST", "/form", "HTTP/1.1", setUpHeaders(), "name=dan&data=fatcat");
     }
 
     @Test
@@ -41,8 +41,7 @@ public class RequestTest {
 
     @Test
     public void getBody() {
-        assertEquals("dan", request.getBody().get("name"));
-        assertEquals("fatcat", request.getBody().get("data"));
+        assertEquals("name=dan&data=fatcat", request.getBody());
     }
 
     @Test
@@ -65,10 +64,4 @@ public class RequestTest {
         return headers;
     }
 
-    private Map<String, String> setUpBody() {
-        Map<String, String> body = new HashMap<>();
-        body.put("name", "dan");
-        body.put("data", "fatcat");
-        return body;
-    }
 }

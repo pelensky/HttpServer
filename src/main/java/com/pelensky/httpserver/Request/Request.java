@@ -9,9 +9,9 @@ public class Request {
     private final String uri;
     private final String httpVersion;
     private Map<String, String> headers;
-    private Map <String, String> body;
+    private String body;
 
-    Request(String method, String uri, String httpVersion, Map<String, String> headers, Map<String, String> body) {
+    Request(String method, String uri, String httpVersion, Map<String, String> headers, String body) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
@@ -19,7 +19,7 @@ public class Request {
         this.body = body;
     }
 
-    Request(String method, String uri, String httpVersion) {
+    public Request(String method, String uri, String httpVersion) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
@@ -40,15 +40,15 @@ public class Request {
         return uri;
     }
 
-    String getHttpVersion() {
+    public String getHttpVersion() {
         return httpVersion;
     }
 
-    Map<String, String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
 
-    Map<String,String> getBody() {
+    public String getBody() {
         return body;
     }
 }

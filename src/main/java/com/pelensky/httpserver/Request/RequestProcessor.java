@@ -12,8 +12,16 @@ public class RequestProcessor {
         return new RequestParser(getRequestFromSocket(clientSocket)).parseRequest();
     }
 
-    public String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {
+    String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        String request = getHeader(in);
+        if (request.contains("Content-Length")) {
+            request += getBody(in, request);
+        }
+        return request;
+    }
+
+    private String getHeader(BufferedReader in) throws IOException {
         String line;
         StringBuilder request = new StringBuilder();
         while ( (line = in.readLine()) != null) {
@@ -26,4 +34,28 @@ public class RequestProcessor {
         }
         return String.valueOf(request);
     }
+
+    private String getBody(BufferedReader in, String request) throws IOException {
+        String[] headerLines = request.split(System.lineSeparator());
+        Integer contentLength = getContentLength(headerLines);
+        return System.lineSeparator() + getBodyContent(in, contentLength) + System.lineSeparator();
+    }
+
+    private Integer getContentLength(String[] header) {
+        Integer contentLength = 0;
+        for (String line : header) {
+            String[] lineWords = line.split(":");
+            if (lineWords[0].trim().equals("Content-Length")) {
+                contentLength = Integer.parseInt(lineWords[1].trim());
+            }
+        }
+        return contentLength;
+    }
+
+    private String getBodyContent(BufferedReader in, Integer contentLength) throws IOException {
+        char[] buffer = new char[contentLength];
+        in.read(buffer, 0, contentLength);
+        return String.valueOf(buffer);
+    }
+
 }

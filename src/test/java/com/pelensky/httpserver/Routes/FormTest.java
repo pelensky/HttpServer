@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Routes;
 
+import com.pelensky.httpserver.Request.Request;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,12 +17,14 @@ public class FormTest {
 
     @Test
     public void returns200ForPost() {
-        assertEquals(200, form.post().getStatusCode(), 0);
+        Request request = new Request("POST", "/form", null);
+        assertEquals(200, form.post(request).getStatusCode(), 0);
     }
 
     @Test
     public void returns200ForPut() {
-        assertEquals(200, form.put().getStatusCode(), 0);
+        Request request = new Request("PUT", "/form", null);
+        assertEquals(200, form.put(request).getStatusCode(), 0);
     }
 
 }

@@ -1,7 +1,10 @@
 package com.pelensky.httpserver.Routes;
 
+import com.pelensky.httpserver.Request.Request;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -15,12 +18,13 @@ public class MethodOptionsTest {
     }
 
     @Test
-    public void respondsAllForOptions() {
-        assertThat(methodOptions.getOptions(), containsString("GET"));
-        assertThat(methodOptions.getOptions(), containsString("HEAD"));
-        assertThat(methodOptions.getOptions(), containsString("POST"));
-        assertThat(methodOptions.getOptions(), containsString("OPTIONS"));
-        assertThat(methodOptions.getOptions(), containsString("PUT"));
+    public void respondsAllForOptions() throws IOException {
+        Request request = new Request("OPTIONS", "/method_options", null);
+        assertThat(methodOptions.getOptions(request), containsString("GET"));
+        assertThat(methodOptions.getOptions(request), containsString("HEAD"));
+        assertThat(methodOptions.getOptions(request), containsString("POST"));
+        assertThat(methodOptions.getOptions(request), containsString("OPTIONS"));
+        assertThat(methodOptions.getOptions(request), containsString("PUT"));
 
     }
 }
