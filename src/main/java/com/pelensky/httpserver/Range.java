@@ -38,10 +38,15 @@ public class Range {
         String[] splitUnitFromStartAndEnd = request.getHeaders().get("Range").split("=");
         String unit = splitUnitFromStartAndEnd[0];
         String[] splitStartAndEnd = splitUnitFromStartAndEnd[1].split("-");
-        if (splitUnitFromStartAndEnd[1].contains("0-0")) {
-            int lastBytes = Integer.parseInt(splitStartAndEnd[splitStartAndEnd.length - 1]);
-            splitStartAndEnd[0] = String.valueOf(getFileSize() - lastBytes);
+        if (splitStartAndEnd[0].isEmpty()) {
+            splitStartAndEnd[0] = String.valueOf(getFileSize() - Integer.valueOf(splitStartAndEnd[1]));
             splitStartAndEnd[1] = String.valueOf(getFileSize());
+        }
+        if (splitStartAndEnd.length == 1) {
+            String[] newArray = new String[2];
+            newArray[0] = splitStartAndEnd[0];
+            newArray[1] = String.valueOf(getFileSize());
+            splitStartAndEnd = newArray;
         }
         return new String[]{ unit, splitStartAndEnd[0], splitStartAndEnd[1]};
     }

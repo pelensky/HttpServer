@@ -37,10 +37,20 @@ public class RangeTest {
 
     @Test
     public void endOfRange() throws IOException {
-        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-0,-6").parseRequest();
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=-6").parseRequest();
         Range range = new Range(request);
         Map<String, String> header = new HashMap<>();
         header.put("Content-Range", "bytes 70-76/76");
+        range.getRangeInfo();
+        assertEquals(header, range.getResponseHeader());
+    }
+
+    @Test
+    public void startOfRange() throws IOException {
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=4-").parseRequest();
+        Range range = new Range(request);
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Range", "bytes 4-76/76");
         range.getRangeInfo();
         assertEquals(header, range.getResponseHeader());
     }

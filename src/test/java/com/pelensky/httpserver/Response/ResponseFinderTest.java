@@ -113,8 +113,15 @@ public class ResponseFinderTest {
 
     @Test
     public void PartialContentLastSixBytes() throws IOException {
-        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-0,-6").parseRequest();
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=-6").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
         assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 70-76/76\nContent-Length: 6\n\na 206.\n", response);
+    }
+
+    @Test
+    public void PartialContentAllFromFour() throws IOException {
+        Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=4-").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 4-76/76\nContent-Length: 72\n\n is a file that contains text to read part of in order to fulfill a 206.\n", response);
     }
 }
