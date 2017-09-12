@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class Response {
     private final Integer statusCode;
-    private Map<String, String> responseHeader;
-    private String body;
+    private final Map<String, String> responseHeader;
+    private final String body;
 
 
     public Response(Integer statusCode) {

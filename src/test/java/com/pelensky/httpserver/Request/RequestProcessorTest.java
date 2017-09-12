@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RequestProcessorTest {
     private FakeSocket fakeSocket;
-    private RequestProcessor processor = new RequestProcessor();
+    private final RequestProcessor processor = new RequestProcessor();
 
     @Test
     public void processorHandlesSingleLineRequest() throws IOException {
@@ -25,5 +25,20 @@ public class RequestProcessorTest {
         assertEquals("GET / HTTP/1.1\nTest\n", processor.getRequestFromSocket(fakeSocket));
     }
 
+    @Test
+    public void processorHandlesRequestWithBody() throws IOException {
+        fakeSocket = new FakeSocket("POST /form HTTP/1.1\n" +
+                "User-Agent: HTTPTool/1.0\n" +
+                "Content-Type: application/x-www-form-urlencoded\n" +
+                "Content-Length: 20\n" +
+                "\n" +
+                "name=dan&data=fatcat");
+        assertEquals("POST /form HTTP/1.1\n" +
+                "User-Agent: HTTPTool/1.0\n" +
+                "Content-Type: application/x-www-form-urlencoded\n" +
+                "Content-Length: 20\n" +
+                "\n" +
+                "name=dan&data=fatcat\n", processor.getRequestFromSocket(fakeSocket));
+    }
 }
 
