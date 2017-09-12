@@ -31,9 +31,7 @@ public class ResponseFormatterTest {
 
     @Test
     public void processesAResponseWithABody(){
-        Map<String, String> body = new HashMap<>();
-        body.put("data", "fatcat");
-        Response response = new Response(200, null, body);
+        Response response = new Response(200, null, "data=fatcat\n");
         assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat\n", new ResponseFormatter().format(response));
     }
 }

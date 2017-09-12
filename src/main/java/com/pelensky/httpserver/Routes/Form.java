@@ -3,10 +3,8 @@ package com.pelensky.httpserver.Routes;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
-import java.util.Map;
-
 public class Form implements Route {
-    private Map<String, String> body;
+    private String body;
 
     @Override
     public String route() {

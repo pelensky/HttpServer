@@ -4,6 +4,8 @@ import com.pelensky.httpserver.Request.Request;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -16,7 +18,7 @@ public class MethodOptionsTest {
     }
 
     @Test
-    public void respondsAllForOptions() {
+    public void respondsAllForOptions() throws IOException {
         Request request = new Request("OPTIONS", "/method_options", null);
         assertThat(methodOptions.getOptions(request), containsString("GET"));
         assertThat(methodOptions.getOptions(request), containsString("HEAD"));

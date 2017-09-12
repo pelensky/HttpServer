@@ -4,6 +4,8 @@ import com.pelensky.httpserver.Request.Request;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
@@ -19,13 +21,13 @@ public class MethodOptions2Test {
     }
 
     @Test
-    public void respondsAllForAllowedOptions() {
+    public void respondsAllForAllowedOptions() throws IOException {
         assertThat(methodOptions2.getOptions(request), containsString("GET"));
         assertThat(methodOptions2.getOptions(request), containsString("OPTIONS"));
     }
 
     @Test
-    public void doesNotRespondWithOptionsThatArentAllowed() {
+    public void doesNotRespondWithOptionsThatArentAllowed() throws IOException {
         assertThat(methodOptions2.getOptions(request), not(containsString("HEAD")));
         assertThat(methodOptions2.getOptions(request), not(containsString("POST")));
         assertThat(methodOptions2.getOptions(request), not(containsString("PUT")));

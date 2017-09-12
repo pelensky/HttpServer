@@ -1,6 +1,5 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Request.RequestParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 public class RequestParserTest {
 
     private RequestParser requestParser;
-    private RequestParser shortRequestParser;
 
     @Before
     public void setUp() {
@@ -51,8 +49,7 @@ public class RequestParserTest {
 
     @Test
     public void getBody() {
-        assertEquals("dan", requestParser.getBody().get("name"));
-        assertEquals("fatcat", requestParser.getBody().get("data"));
+        assertEquals("name=dan&data=fatcat\n", requestParser.getBody());
     }
 
     @Test
@@ -62,7 +59,7 @@ public class RequestParserTest {
 
     @Test
     public void handlesRequestWithNoHeadersOrBody() {
-        shortRequestParser = new RequestParser("GET / HTTP/1.1\n");
+        final RequestParser shortRequestParser = new RequestParser("GET / HTTP/1.1\n");
         shortRequestParser.parseRequest();
         assertEquals("GET", shortRequestParser.parseRequest().getMethod());
     }

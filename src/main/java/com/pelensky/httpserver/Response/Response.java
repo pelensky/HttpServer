@@ -5,7 +5,7 @@ import java.util.Map;
 public class Response {
     private final Integer statusCode;
     private final Map<String, String> responseHeader;
-    private final Map<String, String> body;
+    private final String body;
 
 
     public Response(Integer statusCode) {
@@ -20,7 +20,7 @@ public class Response {
         this.body = null;
     }
 
-    public Response(Integer statusCode, Map<String, String> responseHeader, Map<String, String> body){
+    public Response(Integer statusCode, Map<String, String> responseHeader, String body){
         this.statusCode = statusCode;
         this.responseHeader = responseHeader;
         this.body = body;
@@ -34,7 +34,7 @@ public class Response {
         return responseHeader;
     }
 
-    public Map<String, String> getBody() {
+    public String getBody() {
         return body;
     }
 }

@@ -16,7 +16,7 @@ public class ResponseFormatter {
             responseString.append(responseHeaders);
         }
         if (response.getBody() != null) {
-            body = getBody(response);
+            body = response.getBody();
             contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
             responseString.append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
         }
@@ -28,13 +28,6 @@ public class ResponseFormatter {
         StringBuilder headers = new StringBuilder();
         responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
         return String.valueOf(headers);
-    }
-
-    private String getBody(Response response) {
-        Map<String, String> bodyData = response.getBody();
-        StringBuilder body = new StringBuilder();
-        bodyData.forEach((key, value) ->body.append(key).append("=").append(value).append(System.lineSeparator()));
-        return String.valueOf(body);
     }
 
     private Integer getContentLength(String body) {

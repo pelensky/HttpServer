@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Routes {
-    private static Route defaultRoute = new Default();
-    private static Route form = new Form();
-    private static Route methodOptions = new MethodOptions();
-    private static Route methodOptions2 = new MethodOptions2();
-    private static Route redirect = new Redirect();
+    private static final Route defaultRoute = new Default();
+    private static final Route form = new Form();
+    private static final Route methodOptions = new MethodOptions();
+    private static final Route methodOptions2 = new MethodOptions2();
+    private static final Route redirect = new Redirect();
+    private static final Route file1 = new File1();
+
 
     public static List<Route> routes() {
         List<Route> routesList = new ArrayList<>();
@@ -17,6 +19,7 @@ public class Routes {
         routesList.add(methodOptions);
         routesList.add(methodOptions2);
         routesList.add(redirect);
+        routesList.add(file1);
         return routesList;
     }
 }
