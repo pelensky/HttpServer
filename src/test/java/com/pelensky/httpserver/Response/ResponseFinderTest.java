@@ -26,7 +26,7 @@ public class ResponseFinderTest {
 
     @Test
     public void serverRespondsToPostRequestWith200() throws IOException {
-        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 348\n\nMy=Data\n").parseRequest();
+        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 348\n\nMy=Data").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
         assertEquals("HTTP/1.1 200 OK\nContent-Length: 8\n\nMy=Data\n", response);
     }
@@ -94,6 +94,6 @@ public class ResponseFinderTest {
     public void File1GetsContentsOfFile() throws IOException {
         Request request = new RequestParser("GET /file1 HTTP/1.1\n").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents", response);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents\n", response);
     }
 }

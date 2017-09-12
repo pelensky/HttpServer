@@ -10,17 +10,17 @@ public class ResponseFormatter {
         String contentLength;
         String body;
         StringBuilder responseString = new StringBuilder();
-        responseString.append(statusLine).append(System.lineSeparator());
+        responseString.append(statusLine);
         if (response.getResponseHeader() != null) {
             responseHeaders = getHeaders(response);
-            responseString.append(responseHeaders);
+            responseString.append(System.lineSeparator()).append(responseHeaders);
         }
         if (response.getBody() != null) {
             body = response.getBody();
             contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
-            responseString.append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
+            responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
         }
-        return String.valueOf(responseString);
+        return String.valueOf(responseString).trim()+ System.lineSeparator();
     }
 
     private String getHeaders(Response response) {
