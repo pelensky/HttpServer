@@ -24,9 +24,16 @@ public class ResponseFinderTest {
 
     @Test
     public void serverRespondsToPostRequestWith200() {
-        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 348\n\n\"My\"=\"Data\"\n").parseRequest();
+        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 348\n\nMy=Data\n").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 200 OK\n", response);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 8\n\nMy=Data\n", response);
+    }
+
+    @Test
+    public void serverRespondsToPostRequestWithBody() {
+        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat\n", response);
     }
 
     @Test
@@ -69,5 +76,15 @@ public class ResponseFinderTest {
         Request request = new RequestParser("GET /redirect HTTP/1.1\n").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
         assertEquals("HTTP/1.1 302 Found\nLocation: /\n", response);
+    }
+
+    @Test
+    public void PostGetPutGetDeleteGet() {
+        Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat\n", response);
+        Request getRequest = new RequestParser("GET /form HTTP/1.1\n").parseRequest();
+        String getResponse = new ResponseFormatter().format(ResponseFinder.getResponse(getRequest));
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat\n", getResponse);
     }
 }

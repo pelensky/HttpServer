@@ -29,7 +29,9 @@ public class ResponseTest {
     public void responseCanHaveStatusCodeHeaderAndBody() {
         Map<String, String> header = new HashMap<>();
         header.put("Content-Length", "32");
-        response = new Response(200, header, "data=fatcat");
-        assertEquals("data=fatcat", response.getBody());
+        Map<String, String> body = new HashMap<>();
+        body.put("data", "fatcat");
+        response = new Response(200, header, body);
+        assertEquals("fatcat", response.getBody().get("data"));
     }
 }
