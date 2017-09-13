@@ -87,7 +87,7 @@ public class ResponseFinderTest {
     @Test
     public void TextFileAllowsGetButNotPost() throws IOException {
         Request request = setUpRequest("GET /text-file.txt HTTP/1.1\n");
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 14\n\nfile1 contents", getResponse(request));
+        assertEquals("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents", getResponse(request));
     }
 
     @Test

@@ -29,17 +29,18 @@ public class RequestParserTest {
 
     @Test
     public void handlesRequestWithNoHeadersOrBody() {
-        final RequestParser shortRequestParser = new RequestParser();
-        assertEquals("GET", shortRequestParser.parseRequest("GET / HTTP/1.1\n").getMethod());
+        assertEquals("GET", requestParser.parseRequest("GET / HTTP/1.1\n").getMethod());
     }
 
     @Test
     public void handlesRequestWithHeadersButNoBody() {
-        RequestParser noBodyRequestParser = new RequestParser();
-        assertEquals( "/form", noBodyRequestParser.parseRequest("POST /form HTTP/1.1\n" +
+        assertEquals( "/form", requestParser.parseRequest("POST /form HTTP/1.1\n" +
                 "User-Agent: HTTPTool/1.0\n" +
                 "Content-Type: application/x-www-form-urlencoded\n" +
                 "Content-Length: 32\n").getUri());
     }
+
+
+
 
 }

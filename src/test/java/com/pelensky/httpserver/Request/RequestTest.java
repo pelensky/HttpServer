@@ -56,6 +56,12 @@ public class RequestTest {
         assertEquals("/", request.getUri());
     }
 
+    @Test
+    public void findsFileType() {
+        request = new Request("GET", "/image.jpeg", "HTTP/1.1");
+        assertEquals("jpeg", request.getFileType());
+    }
+
     private Map<String, String> setUpHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Length", "32");

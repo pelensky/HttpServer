@@ -1,6 +1,5 @@
 package com.pelensky.httpserver.File;
 
-import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ public class Range {
         String[] rangeRequest = splitRangeRequest();
         Map<String, String> responseHeader = new HashMap<>();
         responseHeader.put("Content-Range", rangeRequest[0] + " " + rangeRequest[1] + "-" + rangeRequest[2] + "/" + String.valueOf(getFileSize()));
-        responseHeader.put("Content-Type", fileProcessor.getContentType(routeWithoutPath.substring(1))); //TODO move this
         return responseHeader;
     }
 
