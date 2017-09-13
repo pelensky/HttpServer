@@ -11,6 +11,7 @@ class Status {
         statusCodes.put(302, "HTTP/1.1 302 Found");
         statusCodes.put(404, "HTTP/1.1 404 Not Found");
         statusCodes.put(405, "HTTP/1.1 405 Method Not Allowed");
+        statusCodes.put(418, "HTTP/1.1 418 I'm a teapot");
         return statusCodes;
     }
 }

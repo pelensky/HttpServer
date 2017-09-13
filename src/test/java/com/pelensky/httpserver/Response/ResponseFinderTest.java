@@ -109,9 +109,21 @@ public class ResponseFinderTest {
     }
 
     @Test
-    public void FindsJpegImage() throws IOException {
+    public void FindsImages() throws IOException {
         Request request = setUpRequest("GET /image.jpeg HTTP/1.1\n");
         assertEquals("HTTP/1.1 200 OK\nContent-Type: image/jpeg", getResponse(request));
+    }
+
+    @Test
+    public void ResponseToCoffeeWith418() throws IOException {
+        Request request = setUpRequest("GET /coffee HTTP/1.1\n");
+        assertEquals("HTTP/1.1 418 I'm a teapot\nContent-Length: 12\n\nI'm a teapot", getResponse(request));
+    }
+
+    @Test
+    public void ResponseToTea() throws IOException {
+        Request request = setUpRequest("GET /tea HTTP/1.1\n");
+        assertEquals("HTTP/1.1 200 OK", getResponse(request));
     }
 
     private Request setUpRequest(String request) {
