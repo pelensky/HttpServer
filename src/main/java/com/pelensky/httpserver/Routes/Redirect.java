@@ -10,7 +10,7 @@ public class Redirect implements Route {
 
     @Override
     public String route() {
-        return "/redirect";
+        return "redirect";
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.pelensky.httpserver.Response.Response;
 public class Default implements Route {
     @Override
     public String route() {
-        return "/";
+        return "";
     }
 
     @Override

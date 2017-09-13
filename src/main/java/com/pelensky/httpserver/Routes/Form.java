@@ -8,7 +8,7 @@ public class Form implements Route {
 
     @Override
     public String route() {
-        return "/form";
+        return "form";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.pelensky.httpserver;
 
+import com.pelensky.httpserver.File.FileProcessor;
 import org.junit.Before;
 import org.junit.Test;
 

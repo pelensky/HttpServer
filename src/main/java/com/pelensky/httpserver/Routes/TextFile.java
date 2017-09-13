@@ -8,7 +8,7 @@ import java.io.IOException;
 public class TextFile implements Route {
     @Override
     public String route() {
-        return "/text-file.txt";
+        return "text-file.txt";
     }
 
     @Override

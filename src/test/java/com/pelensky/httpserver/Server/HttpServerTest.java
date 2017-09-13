@@ -1,6 +1,5 @@
 package com.pelensky.httpserver.Server;
 
-import com.pelensky.httpserver.Socket.FakeServerSocket;
 import com.pelensky.httpserver.Socket.FakeSocket;
 import com.pelensky.httpserver.Socket.ServerSocketSpy;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
@@ -20,18 +19,6 @@ public class HttpServerTest {
 
   public void setUp(ServerSocketWrapper serverSocket) throws IOException {
     server = new HttpServer(port, directory, serverSocket);
-  }
-
-  @Test
-  public void serverHasHost() throws IOException {
-    setUp(serverSocketSpy);
-    assertEquals(server.getDirectory(), directory);
-  }
-
-  @Test
-  public void serverHasPort() throws IOException {
-    setUp(serverSocketSpy);
-    assertEquals(server.getPort(), port);
   }
 
   @Test

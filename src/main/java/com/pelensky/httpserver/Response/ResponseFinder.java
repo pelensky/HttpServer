@@ -8,10 +8,10 @@ import java.io.IOException;
 
 public class ResponseFinder {
 
-  public static Response getResponse(Request request) throws IOException {
+  public static Response findResponse(Request request) throws IOException {
     String uri = request.getUri();
     for (Route selection : Routes.routes()) {
-      if (selection.route().equals(uri)) {
+      if (("/" + selection.route()).equals(uri)) {
         return selection.call(request);
       }
     }

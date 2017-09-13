@@ -7,7 +7,7 @@ public class MethodOptions2 implements Route {
 
     @Override
     public String route() {
-        return "/method_options2";
+        return "method_options2";
     }
 
     @Override

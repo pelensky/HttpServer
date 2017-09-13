@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.File;
 
 import java.io.*;
 import java.util.regex.Pattern;
@@ -21,7 +21,7 @@ public class FileProcessor {
         return String.valueOf(file);
     }
 
-    String readRange(String fileName, String[] data) throws IOException {
+    public String readRange(String fileName, String[] data) throws IOException {
         setUp(fileName);
         Integer start = Integer.parseInt(data[1]);
         Integer end = Integer.parseInt(data[2]);

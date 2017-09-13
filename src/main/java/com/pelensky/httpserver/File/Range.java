@@ -1,5 +1,6 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.File;
 
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 
 import java.io.IOException;
@@ -10,27 +11,27 @@ public class Range {
 
     private final Request request;
     private final FileProcessor fileProcessor = new FileProcessor();
-    private final String route;
+    private final String routeWithoutPath;
 
     public Range(Request request) {
         this.request = request;
-        this.route = request.getUri();
+        this.routeWithoutPath = request.getUri().substring(1);
     }
 
     public Map<String, String> getRangeHeaders() throws IOException {
         String[] rangeRequest = splitRangeRequest();
         Map<String, String> responseHeader = new HashMap<>();
         responseHeader.put("Content-Range", rangeRequest[0] + " " + rangeRequest[1] + "-" + rangeRequest[2] + "/" + String.valueOf(getFileSize()));
-        responseHeader.put("Content-Type", fileProcessor.getContentType(route.substring(1))); //TODO move this
+        responseHeader.put("Content-Type", fileProcessor.getContentType(routeWithoutPath.substring(1))); //TODO move this
         return responseHeader;
     }
 
     private Integer getFileSize() throws IOException {
-        return fileProcessor.getFileSize(route.substring(1));
+        return fileProcessor.getFileSize(routeWithoutPath);
     }
 
    public String getRangeBody() throws IOException {
-        return fileProcessor.readRange(route.substring(1), splitRangeRequest());
+        return fileProcessor.readRange(routeWithoutPath, splitRangeRequest());
    }
 
     private String[] splitRangeRequest() throws IOException {

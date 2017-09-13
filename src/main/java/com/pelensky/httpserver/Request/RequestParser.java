@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class RequestParser {
     
-    private final String request;
+    private String request;
     private String requestLine;
     private Map<String, String> headers;
     private String body;
@@ -14,11 +14,8 @@ public class RequestParser {
     private String httpVersion;
     private Integer bodyBegins;
     
-    public RequestParser(String request) {
+    public Request parseRequest(String request) {
         this.request = request;
-    }
-
-    public Request parseRequest() {
         splitRequest();
         splitRequestLineComponents();
         return new Request(method, uri, httpVersion, headers, body);
@@ -61,28 +58,5 @@ public class RequestParser {
         httpVersion = splitRequestLine[2];
     }
 
-    public String getMethod() {
-        return method;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public String getHttpVersion() {
-        return httpVersion;
-    }
-
-    public String getRequestLine() {
-        return requestLine;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public String getBody() {
-        return body;
-    }
 
 }

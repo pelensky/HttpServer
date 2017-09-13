@@ -40,7 +40,7 @@ public class Request {
         return uri;
     }
 
-    public String getHttpVersion() {
+    String getHttpVersion() {
         return httpVersion;
     }
 

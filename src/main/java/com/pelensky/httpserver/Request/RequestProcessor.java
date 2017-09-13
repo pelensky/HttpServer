@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class RequestProcessor {
 
     public Request createRequest(SocketWrapper clientSocket) throws IOException {
-        return new RequestParser(getRequestFromSocket(clientSocket)).parseRequest();
+        return new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
     }
 
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {

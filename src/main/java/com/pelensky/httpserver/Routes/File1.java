@@ -8,7 +8,7 @@ import java.io.IOException;
 public class File1 implements Route {
     @Override
     public String route() {
-        return "/file1";
+        return "file1";
     }
 
     @Override

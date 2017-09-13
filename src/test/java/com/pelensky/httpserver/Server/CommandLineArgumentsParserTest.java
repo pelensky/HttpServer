@@ -15,25 +15,25 @@ public class CommandLineArgumentsParserTest {
     @Test
     public void parsesPortNumberAsInteger() {
         setUp(new String[]{"-p", "9090", "-d", "/Users/dan/Server/cob_spec/public/"});
-        assertEquals(parser.findPort(), 9090);
+        assertEquals(parser.findPort(), 9090, 0);
     }
 
     @Test
     public void parsesOtherPortNumberAsInteger() {
         setUp(new String[]{"-p", "8080", "-d", "/Users/dan/Server/cob_spec/public/"});
-        assertEquals(parser.findPort(), 8080);
+        assertEquals(parser.findPort(), 8080, 0);
     }
 
     @Test
     public void findsPortNumberIfSecond() {
         setUp(new String[]{"-d", "/Users/dan/Server/cob_spec/public/", "-p", "8080"});
-        assertEquals(parser.findPort(), 8080);
+        assertEquals(parser.findPort(), 8080, 0);
     }
 
     @Test
     public void returnsDefaultPortIfNotSpecified() {
         setUp(new String[0]);
-        assertEquals(parser.findPort(), 5000);
+        assertEquals(parser.findPort(), 5000, 0);
     }
 
     @Test

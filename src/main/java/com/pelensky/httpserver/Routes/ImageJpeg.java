@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.FileProcessor;
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
@@ -12,7 +12,7 @@ public class ImageJpeg implements Route {
 
     @Override
     public String route() {
-        return "/image.jpeg";
+        return "image.jpeg";
     }
 
     @Override
