@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Routes;
 
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
@@ -27,7 +28,7 @@ public interface Route {
             case "DELETE":
                 return this.delete(request);
             default:
-                return new Response(404);
+                return new Response(405);
         }
     }
 
@@ -72,6 +73,10 @@ public interface Route {
         options.add((put(request).getStatusCode() != 405 ) ? "PUT" : null);
         options.add((delete(request).getStatusCode() != 405) ? "DELETE" : null);
         return options.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
+    }
+
+    default String readFile(String fileName) throws IOException {
+        return new FileProcessor().readLines(fileName);
     }
 
 }

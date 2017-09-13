@@ -10,6 +10,11 @@ public class Routes {
     private static final Route methodOptions2 = new MethodOptions2();
     private static final Route redirect = new Redirect();
     private static final Route file1 = new File1();
+    private static final Route textFile = new TextFile();
+    private static final Route partialContent = new PartialContent();
+    private static final Route image = new Image();
+    private static final Route coffee = new Coffee();
+    private static final Route tea = new Tea();
 
 
     public static List<Route> routes() {
@@ -20,6 +25,11 @@ public class Routes {
         routesList.add(methodOptions2);
         routesList.add(redirect);
         routesList.add(file1);
+        routesList.add(textFile);
+        routesList.add(partialContent);
+        routesList.add(image);
+        routesList.add(coffee);
+        routesList.add(tea);
         return routesList;
     }
 }

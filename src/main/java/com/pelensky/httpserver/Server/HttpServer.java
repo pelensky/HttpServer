@@ -35,7 +35,7 @@ class HttpServer {
                   try {
                     clientSocket = serverSocket.accept();
                     Request request = new RequestProcessor().createRequest(clientSocket);
-                    Response response = ResponseFinder.getResponse(request);
+                    Response response = ResponseFinder.findResponse(request);
                     new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().format(response));
                     closeConnections();
                   } catch (IOException e) {
@@ -51,14 +51,6 @@ class HttpServer {
 
   void closeServerSocket() throws IOException {
     serverSocket.close();
-  }
-
-  Integer getPort() {
-    return port;
-  }
-
-  String getDirectory() {
-    return directory;
   }
 
   void killServer() {

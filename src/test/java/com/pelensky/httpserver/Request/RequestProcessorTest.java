@@ -38,7 +38,7 @@ public class RequestProcessorTest {
                 "Content-Type: application/x-www-form-urlencoded\n" +
                 "Content-Length: 20\n" +
                 "\n" +
-                "name=dan&data=fatcat\n", processor.getRequestFromSocket(fakeSocket));
+                "name=dan&data=fatcat", processor.getRequestFromSocket(fakeSocket));
     }
 }
 

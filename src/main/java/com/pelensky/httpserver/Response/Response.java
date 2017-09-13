@@ -30,11 +30,11 @@ public class Response {
         return statusCode;
     }
 
-    public Map<String,String> getResponseHeader() {
+    Map<String,String> getResponseHeader() {
         return responseHeader;
     }
 
-    public String getBody() {
+    String getBody() {
         return body;
     }
 }

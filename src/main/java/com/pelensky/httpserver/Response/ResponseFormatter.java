@@ -5,33 +5,37 @@ import java.util.Map;
 public class ResponseFormatter {
 
     public String format(Response response) {
-        String statusLine = Status.codes().get(response.getStatusCode());
-        String responseHeaders;
-        String contentLength;
-        String body;
         StringBuilder responseString = new StringBuilder();
-        responseString.append(statusLine);
+        responseString.append(Status.codes().get(response.getStatusCode()));
         if (response.getResponseHeader() != null) {
-            responseHeaders = getHeaders(response);
-            responseString.append(System.lineSeparator()).append(responseHeaders);
+           formatHeaders(response, responseString);
         }
         if (response.getBody() != null) {
-            body = response.getBody();
-            contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
-            responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
+            formatBody(response, responseString);
         }
-        return String.valueOf(responseString).trim()+ System.lineSeparator();
+        return String.valueOf(responseString);
+    }
+
+    private void formatHeaders(Response response, StringBuilder responseString) {
+        responseString.append(System.lineSeparator()).append(getHeaders(response));
+    }
+
+    private void formatBody(Response response, StringBuilder responseString) {
+        String body = response.getBody();
+        String contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
+        responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
     }
 
     private String getHeaders(Response response) {
         Map<String, String> responseHeaders = response.getResponseHeader();
         StringBuilder headers = new StringBuilder();
         responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
-        return String.valueOf(headers);
+        return String.valueOf(headers).trim();
     }
 
     private Integer getContentLength(String body) {
         byte[] bytes = body.getBytes();
         return bytes.length;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.Request;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 public class Request {
@@ -40,7 +41,7 @@ public class Request {
         return uri;
     }
 
-    public String getHttpVersion() {
+    String getHttpVersion() {
         return httpVersion;
     }
 
@@ -50,5 +51,12 @@ public class Request {
 
     public String getBody() {
         return body;
+    }
+
+    public String getFileType() {
+        if (uri.contains(".")) {
+            return uri.split(Pattern.quote("."))[1];
+        }
+        return null;
     }
 }

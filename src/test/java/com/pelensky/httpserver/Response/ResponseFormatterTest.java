@@ -12,13 +12,13 @@ public class ResponseFormatterTest {
     @Test
     public void processesABasicGetRequestResponse() {
         Response response = new Response(200);
-        assertEquals("HTTP/1.1 200 OK\n", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 200 OK", new ResponseFormatter().format(response));
     }
 
     @Test
     public void processA404Response() {
         Response response = new Response(404);
-        assertEquals("HTTP/1.1 404 Not Found\n", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 404 Not Found", new ResponseFormatter().format(response));
     }
 
     @Test
@@ -26,12 +26,12 @@ public class ResponseFormatterTest {
         Map<String, String> headers= new HashMap<>();
         headers.put("Location", "/");
         Response response = new Response(302, headers);
-        assertEquals("HTTP/1.1 302 Found\nLocation: /\n", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 302 Found\nLocation: /", new ResponseFormatter().format(response));
     }
 
     @Test
     public void processesAResponseWithABody(){
-        Response response = new Response(200, null, "data=fatcat\n");
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat\n", new ResponseFormatter().format(response));
+        Response response = new Response(200, null, "data=fatcat");
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 11\n\ndata=fatcat", new ResponseFormatter().format(response));
     }
 }
