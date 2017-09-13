@@ -1,9 +1,7 @@
 package com.pelensky.httpserver;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.regex.Pattern;
 
 public class FileProcessor {
 
@@ -23,14 +21,14 @@ public class FileProcessor {
     }
 
     Integer getFileSize(String fileName) throws IOException {
-       return readLines(fileName).getBytes().length;
+        return readLines(fileName).getBytes().length;
     }
 
     String readRange(String fileName, String[] data) throws IOException {
         InputStream in = getClass().getResourceAsStream(path + fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         int start = Integer.parseInt(data[1]);
-        int end = Integer.parseInt(data[2]);
+        int end = Integer.parseInt(data[2]) + 1;
         int length = end - start;
         char[] buffer = new char[length];
         reader.skip(start);
@@ -38,5 +36,11 @@ public class FileProcessor {
         in.close();
         reader.close();
         return String.valueOf(buffer);
+    }
+
+    public String getContentType(String filename) {
+        String[] splitFileName = filename.split(Pattern.quote("."));
+        String fileType = splitFileName[splitFileName.length - 1];
+        return ContentType.list().get(fileType);
     }
 }

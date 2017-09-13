@@ -28,14 +28,14 @@ public class ResponseFinderTest {
     public void serverRespondsToPostRequestWith200() throws IOException {
         Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 348\n\nMy=Data").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 8\n\nMy=Data", response);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 7\n\nMy=Data", response);
     }
 
     @Test
     public void serverRespondsToPostRequestWithBody() throws IOException {
         Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat", response);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 11\n\ndata=fatcat", response);
     }
 
     @Test
@@ -84,10 +84,10 @@ public class ResponseFinderTest {
     public void PostGetPutGetDeleteGet() throws IOException {
         Request request = new RequestParser("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat", response);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 11\n\ndata=fatcat", response);
         Request getRequest = new RequestParser("GET /form HTTP/1.1\n").parseRequest();
         String getResponse = new ResponseFormatter().format(ResponseFinder.getResponse(getRequest));
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat", getResponse);
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 11\n\ndata=fatcat", getResponse);
     }
 
     @Test
@@ -108,20 +108,28 @@ public class ResponseFinderTest {
     public void PartialContentFirstFourBytes() throws IOException {
         Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-4").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 0-4/76\nContent-Length: 4\n\nThis", response);
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 0-4/76\nContent-Type: text/plain\nContent-Length: 5\n\nThis ", response);
     }
 
     @Test
     public void PartialContentLastSixBytes() throws IOException {
         Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=-6").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 70-76/76\nContent-Length: 6\n\na 206.", response);
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 71-76/76\nContent-Type: text/plain\nContent-Length: 6\n\n 206.\n", response);
     }
 
     @Test
     public void PartialContentAllFromFour() throws IOException {
         Request request = new RequestParser("GET /partial_content.txt HTTP/1.1\nRange: bytes=4-").parseRequest();
         String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
-        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 4-76/76\nContent-Length: 72\n\n is a file that contains text to read part of in order to fulfill a 206.", response);
+        assertEquals("HTTP/1.1 206 Partial Content\nContent-Range: bytes 4-76/76\nContent-Type: text/plain\nContent-Length: 73\n\n is a file that contains text to read part of in order to fulfill a 206.\n", response);
     }
+
+    @Test
+    public void FindsJpegImage() throws IOException {
+        Request request = new RequestParser("GET /image.jpeg HTTP/1.1\n").parseRequest();
+        String response = new ResponseFormatter().format(ResponseFinder.getResponse(request));
+        assertEquals("HTTP/1.1 200 OK\nContent-Type: image/jpeg", response);
+    }
+
 }

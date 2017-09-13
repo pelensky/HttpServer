@@ -49,7 +49,7 @@ public class RequestParser {
     private String extractBody(String[] splitRequest) {
         StringBuilder body = new StringBuilder();
         for (int i = bodyBegins + 1; i < splitRequest.length; i++) {
-            body.append(splitRequest[i]).append(System.lineSeparator());
+            body.append(splitRequest[i]);
         }
         return String.valueOf(body);
     }

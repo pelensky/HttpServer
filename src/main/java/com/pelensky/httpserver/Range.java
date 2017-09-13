@@ -23,6 +23,7 @@ public class Range {
         String[] rangeRequest = splitRangeRequest();
         String value = rangeRequest[0] + " " + rangeRequest[1] + "-" + rangeRequest[2] + "/" + String.valueOf(getFileSize());
         responseHeader.put("Content-Range", value);
+        responseHeader.put("Content-Type", fileProcessor.getContentType(route.substring(1)));
         responseBody = getRequestedRange(rangeRequest);
     }
 
@@ -39,7 +40,7 @@ public class Range {
         String unit = splitUnitFromStartAndEnd[0];
         String[] splitStartAndEnd = splitUnitFromStartAndEnd[1].split("-");
         if (splitStartAndEnd[0].isEmpty()) {
-            splitStartAndEnd[0] = String.valueOf(getFileSize() - Integer.valueOf(splitStartAndEnd[1]));
+            splitStartAndEnd[0] = String.valueOf(getFileSize() - Integer.valueOf(splitStartAndEnd[1]) + 1);
             splitStartAndEnd[1] = String.valueOf(getFileSize());
         }
         if (splitStartAndEnd.length == 1) {

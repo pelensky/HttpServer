@@ -12,6 +12,7 @@ public class Routes {
     private static final Route file1 = new File1();
     private static final Route textFile = new TextFile();
     private static final Route partialContent = new PartialContent();
+    private static final Route imageJpeg = new ImageJpeg();
 
 
     public static List<Route> routes() {
@@ -24,6 +25,7 @@ public class Routes {
         routesList.add(file1);
         routesList.add(textFile);
         routesList.add(partialContent);
+        routesList.add(imageJpeg);
         return routesList;
     }
 }

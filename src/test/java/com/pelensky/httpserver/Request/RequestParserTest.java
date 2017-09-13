@@ -49,7 +49,7 @@ public class RequestParserTest {
 
     @Test
     public void getBody() {
-        assertEquals("name=dan&data=fatcat\n", requestParser.getBody());
+        assertEquals("name=dan&data=fatcat", requestParser.getBody());
     }
 
     @Test

@@ -38,7 +38,7 @@ public class RequestProcessor {
     private String getBody(BufferedReader in, String request) throws IOException {
         String[] headerLines = request.split(System.lineSeparator());
         Integer contentLength = getContentLength(headerLines);
-        return System.lineSeparator() + getBodyContent(in, contentLength) + System.lineSeparator();
+        return System.lineSeparator() + getBodyContent(in, contentLength);
     }
 
     private Integer getContentLength(String[] header) {

@@ -31,7 +31,7 @@ public class ResponseFormatterTest {
 
     @Test
     public void processesAResponseWithABody(){
-        Response response = new Response(200, null, "data=fatcat\n");
-        assertEquals("HTTP/1.1 200 OK\nContent-Length: 12\n\ndata=fatcat", new ResponseFormatter().format(response));
+        Response response = new Response(200, null, "data=fatcat");
+        assertEquals("HTTP/1.1 200 OK\nContent-Length: 11\n\ndata=fatcat", new ResponseFormatter().format(response));
     }
 }
