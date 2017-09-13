@@ -27,11 +27,11 @@ public class Range {
     }
 
     private Integer getFileSize() throws IOException {
-        return fileProcessor.getFileSize(route);
+        return fileProcessor.getFileSize(route.substring(1));
     }
 
     private String getRequestedRange(String[] requestDetails) throws IOException {
-        return fileProcessor.readRange(route, requestDetails);
+        return fileProcessor.readRange(route.substring(1), requestDetails);
    }
 
     private String[] splitRangeRequest() throws IOException {
@@ -58,4 +58,5 @@ public class Range {
     public String getResponseBody() {
         return responseBody;
     }
+
 }

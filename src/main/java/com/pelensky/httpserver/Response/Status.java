@@ -2,9 +2,9 @@ package com.pelensky.httpserver.Response;
 
 import java.util.HashMap;
 
-public class Status {
+class Status {
 
-    public static HashMap<Integer, String> codes() {
+    static HashMap<Integer, String> codes() {
         HashMap<Integer, String> statusCodes = new HashMap<>();
         statusCodes.put(200, "HTTP/1.1 200 OK");
         statusCodes.put(206, "HTTP/1.1 206 Partial Content");

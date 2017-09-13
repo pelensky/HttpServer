@@ -20,7 +20,7 @@ public class ResponseFormatter {
             contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
             responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
         }
-        return String.valueOf(responseString).trim()+ System.lineSeparator();
+        return String.valueOf(responseString).trim();
     }
 
     private String getHeaders(Response response) {
