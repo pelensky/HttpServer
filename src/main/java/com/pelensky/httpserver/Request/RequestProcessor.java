@@ -15,9 +15,7 @@ public class RequestProcessor {
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String request = getHeader(in);
-        if (request.contains("Content-Length")) {
-            request += getBody(in, request);
-        }
+        if (request.contains("Content-Length")) request += getBody(in, request);
         return request;
     }
 
@@ -28,17 +26,19 @@ public class RequestProcessor {
             if (line.isEmpty()) {
                 break;
             } else {
-                request.append(line);
-                request.append(System.lineSeparator());
+                addLine(line, request);
             }
         }
         return String.valueOf(request);
     }
 
+    private void addLine(String line, StringBuilder request) {
+        request.append(line);
+        request.append(System.lineSeparator());
+    }
+
     private String getBody(BufferedReader in, String request) throws IOException {
-        String[] headerLines = request.split(System.lineSeparator());
-        Integer contentLength = getContentLength(headerLines);
-        return System.lineSeparator() + getBodyContent(in, contentLength);
+        return System.lineSeparator() + getBodyContent(in, getContentLength(request.split(System.lineSeparator())));
     }
 
     private Integer getContentLength(String[] header) {

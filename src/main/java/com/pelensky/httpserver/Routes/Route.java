@@ -34,7 +34,7 @@ public interface Route {
 
     default Response get(Request request) throws IOException {
         return new Response(200);
-    };
+    }
 
     default Response head(Request request) {
         return new Response(405);
@@ -45,11 +45,10 @@ public interface Route {
     }
 
     default Response options(Request request) throws IOException {
-        boolean isOptionsAllowed = optionsCode(request).getStatusCode() != 405;
         Map<String, String> headers = new HashMap<>();
         headers.put("Allow", getOptions(request));
         Response response = new Response(optionsCode(request).getStatusCode(), headers);
-        return (isOptionsAllowed) ? response : optionsCode(request);
+        return (optionsCode(request).getStatusCode() != 405) ? response : optionsCode(request);
     }
 
     default Response optionsCode(Request request) {

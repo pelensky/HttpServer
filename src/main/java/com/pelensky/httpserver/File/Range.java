@@ -35,12 +35,8 @@ public class Range {
     private String[] splitRangeRequest() throws IOException {
         String[] requestTypeAndData = request.getHeaders().get("Range").split("=");
         String[] startAndEndOfRange = requestTypeAndData[1].split("-");
-        if (startAndEndOfRange[0].isEmpty()) {
-            startAndEndOfRange = setStartAndEndOfRange(startAndEndOfRange);
-        }
-        if (startAndEndOfRange.length == 1) {
-            startAndEndOfRange = keepStartChangeEndToEndOfFile(startAndEndOfRange);
-        }
+        if (startAndEndOfRange[0].isEmpty()) startAndEndOfRange = setStartAndEndOfRange(startAndEndOfRange);
+        if (startAndEndOfRange.length == 1) startAndEndOfRange = keepStartChangeEndToEndOfFile(startAndEndOfRange);
         return new String[]{requestTypeAndData[0], startAndEndOfRange[0], startAndEndOfRange[1]};
     }
 

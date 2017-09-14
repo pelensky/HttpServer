@@ -13,6 +13,6 @@ public class File1 implements Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        return new Response(200, null, readFile("file1"));
+        return new Response(200, null, readFile(route()));
     }
 }

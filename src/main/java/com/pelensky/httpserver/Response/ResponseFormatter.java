@@ -7,12 +7,8 @@ public class ResponseFormatter {
     public String format(Response response) {
         StringBuilder responseString = new StringBuilder();
         responseString.append(Status.codes().get(response.getStatusCode()));
-        if (response.getResponseHeader() != null) {
-           formatHeaders(response, responseString);
-        }
-        if (response.getBody() != null) {
-            formatBody(response, responseString);
-        }
+        if (response.getResponseHeader() != null) formatHeaders(response, responseString);
+        if (response.getBody() != null) formatContentLengthAndBody(response, responseString);
         return String.valueOf(responseString);
     }
 
@@ -20,7 +16,7 @@ public class ResponseFormatter {
         responseString.append(System.lineSeparator()).append(getHeaders(response));
     }
 
-    private void formatBody(Response response, StringBuilder responseString) {
+    private void formatContentLengthAndBody(Response response, StringBuilder responseString) {
         String body = response.getBody();
         String contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
         responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
@@ -34,8 +30,7 @@ public class ResponseFormatter {
     }
 
     private Integer getContentLength(String body) {
-        byte[] bytes = body.getBytes();
-        return bytes.length;
+        return body.getBytes().length;
     }
 
 }

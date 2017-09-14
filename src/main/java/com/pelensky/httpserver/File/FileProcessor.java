@@ -1,14 +1,8 @@
 package com.pelensky.httpserver.File;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class FileProcessor {
 
@@ -18,47 +12,54 @@ public class FileProcessor {
     private BufferedReader reader;
 
     public String readLines(String fileName) throws IOException {
-        setUp(fileName);
+        setUpText(fileName);
         String line;
         StringBuilder file = new StringBuilder();
         while ((line = reader.readLine()) != null) {
             file.append(line);
         }
-        tearDown();
+        tearDownText();
         return String.valueOf(file);
     }
 
     public String readRange(String fileName, String[] data) throws IOException {
-        setUp(fileName);
+        setUpText(fileName);
         Integer start = Integer.parseInt(data[1]);
         Integer end = Integer.parseInt(data[2]);
         Integer length = end + offset - start;
         char[] buffer = new char[length];
         reader.skip(start);
         reader.read(buffer, 0, length);
-        tearDown();
+        tearDownText();
         return String.valueOf(buffer);
     }
 
     public byte[] readImage(String fileName, String fileType) throws IOException {
-        // TODO FIX THIS
         String filePath = path + fileName + "." + fileType;
-        in = getClass().getResourceAsStream(filePath);
-        BufferedImage image = ImageIO.read(in);
+        BufferedImage image = setUpImage(filePath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ImageIO.write(image, fileType, byteArrayOutputStream);
         byteArrayOutputStream.flush();
-        byte[] imageInByte = byteArrayOutputStream.toByteArray();
-        byteArrayOutputStream.close();
-        return imageInByte;
+        tearDownImage(byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
-    private void setUp(String fileName) {
+    private void tearDownImage(ByteArrayOutputStream byteArrayOutputStream) throws IOException {
+        in.close();
+        byteArrayOutputStream.close();
+    }
+
+    private BufferedImage setUpImage(String filePath) throws IOException {
+        in = getClass().getResourceAsStream(filePath);
+        return ImageIO.read(in);
+    }
+
+    private void setUpText(String fileName) {
         in = getClass().getResourceAsStream(path + fileName);
         reader = new BufferedReader(new InputStreamReader(in));
     }
 
-    private void tearDown() throws IOException {
+    private void tearDownText() throws IOException {
         in.close();
         reader.close();
     }

@@ -13,12 +13,10 @@ import static org.junit.Assert.assertTrue;
 public class HttpServerTest {
 
   private HttpServer server;
-  private final Integer port = 1234;
-  private final String directory = "/Users/dan/Server/cob_spec/public/";
   private final ServerSocketSpy serverSocketSpy = new ServerSocketSpy();
 
   public void setUp(ServerSocketWrapper serverSocket) throws IOException {
-    server = new HttpServer(port, directory, serverSocket);
+    server = new HttpServer(serverSocket);
   }
 
   @Test

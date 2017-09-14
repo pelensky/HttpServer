@@ -11,7 +11,6 @@ public class RequestParser {
     private String body;
     private String method;
     private String uri;
-    private String fileType;
     private String httpVersion;
     private Integer bodyBegins;
     
