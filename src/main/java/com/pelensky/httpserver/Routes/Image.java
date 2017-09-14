@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.File.ContentType;
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
@@ -19,6 +20,7 @@ public class Image implements Route {
     public Response get(Request request) throws IOException {
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", ContentType.list().get(request.getFileType()));
-        return new Response(200, header);
+        String byteArray = new String(new FileProcessor().readImage(route(), request.getFileType()), "UTF-8");
+        return new Response(200, header, byteArray);
     }
 }

@@ -29,16 +29,4 @@ public class FileProcessorTest {
         assertEquals("This ", partialFile);
     }
 
-    @Test
-    public void getsContentType() {
-        assertEquals("text/plain", fileProcessor.getContentType("/partial_content.txt"));
-    }
-
-    @Test
-    public void getsContentTypeForImages() {
-        assertEquals("image/jpeg", fileProcessor.getContentType("/image.jpeg"));
-        assertEquals("image/gif", fileProcessor.getContentType("/image.gif"));
-        assertEquals("image/png", fileProcessor.getContentType("/image.png"));
-    }
-
 }

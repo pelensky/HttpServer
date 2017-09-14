@@ -1,7 +1,14 @@
 package com.pelensky.httpserver.File;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.regex.Pattern;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class FileProcessor {
 
@@ -33,6 +40,19 @@ public class FileProcessor {
         return String.valueOf(buffer);
     }
 
+    public byte[] readImage(String fileName, String fileType) throws IOException {
+        // TODO FIX THIS
+        String filePath = path + fileName + "." + fileType;
+        in = getClass().getResourceAsStream(filePath);
+        BufferedImage image = ImageIO.read(in);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, fileType, byteArrayOutputStream);
+        byteArrayOutputStream.flush();
+        byte[] imageInByte = byteArrayOutputStream.toByteArray();
+        byteArrayOutputStream.close();
+        return imageInByte;
+    }
+
     private void setUp(String fileName) {
         in = getClass().getResourceAsStream(path + fileName);
         reader = new BufferedReader(new InputStreamReader(in));
@@ -47,9 +67,4 @@ public class FileProcessor {
         return readLines(fileName).getBytes().length;
     }
 
-    public String getContentType(String filename) {
-        String[] splitFileName = filename.split(Pattern.quote("."));
-        String fileType = splitFileName[splitFileName.length - 1];
-        return ContentType.list().get(fileType);
-    }
 }
