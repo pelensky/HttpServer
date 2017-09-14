@@ -17,7 +17,7 @@ public class MethodOptions2Test {
     @Before
     public void setUp() {
         methodOptions2 = new MethodOptions2();
-        request = new Request("OPTIONS", "/method_options2", null);
+        request = new Request("OPTIONS", "/method_options2", null, null, null);
     }
 
     @Test

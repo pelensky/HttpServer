@@ -20,7 +20,7 @@ public class Image implements Route {
     public Response get(Request request) throws IOException {
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", ContentType.list().get(request.getFileType()));
-        String byteArray = new String(new FileProcessor().readImage(route(), request.getFileType()), "UTF-8");
-        return new Response(200, header, byteArray);
+        byte[] byteArray = new FileProcessor().readLines(route() + "." + request.getFileType());
+        return new Response(200, header, new String(byteArray));
     }
 }

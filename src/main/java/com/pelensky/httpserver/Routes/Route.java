@@ -33,7 +33,7 @@ public interface Route {
     }
 
     default Response get(Request request) throws IOException {
-        return new Response(200);
+        return new Response(405);
     }
 
     default Response head(Request request) {
@@ -75,7 +75,7 @@ public interface Route {
     }
 
     default String readFile(String fileName) throws IOException {
-        return new FileProcessor().readLines(fileName);
+        return new String(new FileProcessor().readLines(fileName));
     }
 
 }

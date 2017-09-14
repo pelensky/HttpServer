@@ -11,6 +11,11 @@ public class MethodOptions2 implements Route {
     }
 
     @Override
+    public Response get(Request request) {
+        return new Response(200);
+    }
+
+    @Override
     public Response optionsCode(Request request) {
         return new Response(200);
     }

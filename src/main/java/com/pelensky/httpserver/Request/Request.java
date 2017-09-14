@@ -12,25 +12,12 @@ public class Request {
     private Map<String, String> headers;
     private String body;
 
-    Request(String method, String uri, String httpVersion, Map<String, String> headers, String body) {
+    public Request(String method, String uri, String httpVersion, Map<String, String> headers, String body) {
         this.method = method;
         this.uri = uri;
         this.httpVersion = httpVersion;
         this.headers = headers;
         this.body = body;
-    }
-
-    public Request(String method, String uri, String httpVersion) {
-        this.method = method;
-        this.uri = uri;
-        this.httpVersion = httpVersion;
-    }
-
-    Request(String method, String uri, String httpVersion, Map<String, String> headers) {
-        this.method = method;
-        this.uri = uri;
-        this.httpVersion = httpVersion;
-        this.headers = headers;
     }
 
     public String getMethod() {

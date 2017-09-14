@@ -10,6 +10,12 @@ public class MethodOptions implements Route {
         return "method_options";
     }
 
+
+    @Override
+    public Response get(Request request) {
+        return new Response(200);
+    }
+
     @Override
     public Response head(Request request) {
         return new Response(200);

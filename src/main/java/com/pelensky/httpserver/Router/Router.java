@@ -1,13 +1,14 @@
-package com.pelensky.httpserver.Response;
+package com.pelensky.httpserver.Router;
 
 import com.pelensky.httpserver.Request.Request;
+import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class ResponseFinder {
+public class Router {
 
   public static Response findResponse(Request request) throws IOException {
     String uri = formatUri(request);

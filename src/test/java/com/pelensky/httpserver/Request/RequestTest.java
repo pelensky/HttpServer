@@ -45,20 +45,8 @@ public class RequestTest {
     }
 
     @Test
-    public void handlesRequestsWithoutHeadersOrABody() {
-        request = new Request("GET", "/", "HTTP/1.1");
-        assertEquals("GET", request.getMethod());
-    }
-
-    @Test
-    public void handlesRequestsWithHeadersButWithoutBody() {
-        request = new Request("GET", "/", "HTTP/1.1", setUpHeaders());
-        assertEquals("/", request.getUri());
-    }
-
-    @Test
     public void findsFileType() {
-        request = new Request("GET", "/image.jpeg", "HTTP/1.1");
+        request = new Request("GET", "/image.jpeg", "HTTP/1.1", null, null);
         assertEquals("jpeg", request.getFileType());
     }
 

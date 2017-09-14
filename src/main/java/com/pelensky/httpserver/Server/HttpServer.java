@@ -3,7 +3,7 @@ package com.pelensky.httpserver.Server;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.ResponseFinder;
+import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Response.ResponseFormatter;
 import com.pelensky.httpserver.Response.ResponseProcessor;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
@@ -31,7 +31,7 @@ class HttpServer {
                         try {
                           clientSocket = serverSocket.accept();
                           Request request = new RequestProcessor().createRequest(clientSocket);
-                          Response response = ResponseFinder.findResponse(request);
+                          Response response = Router.findResponse(request);
                           new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().format(response));
                           closeConnections();
                         } catch (IOException e) {
