@@ -2,6 +2,7 @@ package com.pelensky.httpserver.Request;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RequestParser {
     
@@ -12,13 +13,14 @@ public class RequestParser {
     private String method;
     private String uri;
     private String httpVersion;
+    private String fileType;
     private Integer bodyBegins;
     
     public Request parseRequest(String request) {
         this.request = request;
         splitRequest();
         splitRequestLineComponents();
-        return new Request(method, uri, httpVersion, headers, body);
+        return new Request(method, uri, fileType, httpVersion, headers, body);
     }
 
     private void splitRequest() {
@@ -54,8 +56,18 @@ public class RequestParser {
     private void splitRequestLineComponents() {
         String[] splitRequestLine = requestLine.split(" ");
         method = splitRequestLine[0];
-        uri = splitRequestLine[1].substring(1);
+        getUri(splitRequestLine);
         httpVersion = splitRequestLine[2];
+    }
+
+    private String getUri(String[] splitRequestLine) {
+        uri = splitRequestLine[1].substring(1);
+        if (uri.contains(".")) {
+            String[] splitRoute = uri.split(Pattern.quote("."));
+            uri = splitRoute[0];
+            fileType = splitRoute[1];
+        }
+        return uri;
     }
 
 
