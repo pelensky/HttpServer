@@ -54,7 +54,7 @@ public class RequestParser {
     private void splitRequestLineComponents() {
         String[] splitRequestLine = requestLine.split(" ");
         method = splitRequestLine[0];
-        uri = splitRequestLine[1];
+        uri = splitRequestLine[1].substring(1);
         httpVersion = splitRequestLine[2];
     }
 

@@ -13,7 +13,7 @@ public class Router {
   public static Response findResponse(Request request) throws IOException {
     String uri = formatUri(request);
     for (Route selection : Routes.routes()) {
-      if (("/" + selection.route()).equals(uri)) {
+      if ((selection.route()).equals(uri)) {
         return selection.call(request);
       }
     }

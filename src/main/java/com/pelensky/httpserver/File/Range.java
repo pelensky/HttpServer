@@ -11,12 +11,10 @@ public class Range {
 
     private final Request request;
     private final FileProcessor fileProcessor = new FileProcessor();
-    private final String routeWithoutPath;
     private final Integer offset = 1;
 
     public Range(Request request) {
         this.request = request;
-        this.routeWithoutPath = request.getUri().substring(1);
     }
 
     public Map<String, String> getRangeHeaders() throws IOException {
@@ -31,11 +29,11 @@ public class Range {
     }
 
     private Integer getFileSize() throws IOException {
-        return fileProcessor.getFileSize(routeWithoutPath);
+        return fileProcessor.getFileSize(request.getUri());
     }
 
    public String getRangeBody() throws IOException {
-        return new String(fileProcessor.readRange(routeWithoutPath, splitRangeRequest()));
+        return new String(fileProcessor.readRange(request.getUri(), splitRangeRequest()));
    }
 
     private String[] splitRangeRequest() throws IOException {
