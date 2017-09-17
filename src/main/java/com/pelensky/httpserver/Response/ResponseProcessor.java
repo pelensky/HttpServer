@@ -2,12 +2,10 @@ package com.pelensky.httpserver.Response;
 
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class ResponseProcessor {
-    private OutputStreamWriter out;
+private OutputStream out;
 
     public void sendResponse(SocketWrapper clientSocket, byte[] response) throws IOException {
         setUp(clientSocket);
@@ -18,7 +16,7 @@ public class ResponseProcessor {
     }
 
     private void setUp(SocketWrapper clientSocket) throws IOException {
-        out = new OutputStreamWriter(clientSocket.getOutputStream());
+     out = new BufferedOutputStream(clientSocket.getOutputStream());
     }
 
     private void tearDown() throws IOException {
