@@ -3,7 +3,7 @@ package com.pelensky.httpserver.Routes;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
-public class MethodOptions implements Route {
+public class MethodOptions extends Route {
 
     @Override
     public String route() {

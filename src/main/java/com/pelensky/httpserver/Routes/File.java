@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class File implements Route {
+public class File extends Route {
     @Override
     public String route() {
         return "file";

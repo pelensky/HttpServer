@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class Router {
 
   public static Response findResponse(Request request) throws IOException {
-    if (publicDirectoryContainsFile(request) && !request.getUri().isEmpty()) return new File().call(request);
+    if (publicDirectoryContainsFile(request)) return new File().call(request);
     for (Route selection : Routes.routes()) {
       if (existingRoute(selection, request)) {
         return selection.call(request);
@@ -28,7 +28,7 @@ public class Router {
 
   private static Boolean publicDirectoryContainsFile(Request request) {
     String fileNameAndType = (request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri();
-    return new FileProcessor().directoryContainsFile(fileNameAndType);
+    return new FileProcessor().directoryContainsFile(fileNameAndType) && !request.getUri().isEmpty();
   }
 
 }

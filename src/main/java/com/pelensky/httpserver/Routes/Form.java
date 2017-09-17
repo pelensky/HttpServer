@@ -3,7 +3,7 @@ package com.pelensky.httpserver.Routes;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
-public class Form implements Route {
+public class Form extends Route {
 private byte[] body;
 
     @Override
