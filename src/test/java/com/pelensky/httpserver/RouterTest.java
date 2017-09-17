@@ -83,7 +83,7 @@ public class RouterTest {
     @Test
     public void File1GetsContentsOfFile() throws IOException {
         Request request = setUpRequest("GET /file1 HTTP/1.1\n");
-        assertEquals("HTTP/1.1 200\nContent-Length: 14\n\nfile1 contents", getResponse(request));
+        assertEquals("HTTP/1.1 200\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents", getResponse(request));
     }
 
     @Test
@@ -110,9 +110,21 @@ public class RouterTest {
         assertEquals("HTTP/1.1 206\nContent-Range: bytes 4-76/76\nContent-Type: text/plain\nContent-Length: 73\n\n is a file that contains text to read part of in order to fulfill a 206.\n", getResponse(request));
     }
 
-//    @Test
-//    public void FindsImages() throws IOException {
+//@Test
+//    public void findsJpeg() throws IOException {
 //        Request request = setUpRequest("GET /image.jpeg HTTP/1.1\n");
+//        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
+//    }
+
+//    @Test
+//    public void findsGif() throws IOException {
+//        Request request = setUpRequest("GET /image.gif HTTP/1.1\n");
+//        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
+//    }
+//
+//    @Test
+//    public void findsPng() throws IOException {
+//        Request request = setUpRequest("GET /image.png HTTP/1.1\n");
 //        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
 //    }
 

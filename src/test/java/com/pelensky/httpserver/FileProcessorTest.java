@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FileProcessorTest {
     private FileProcessor fileProcessor;
@@ -27,6 +28,11 @@ public class FileProcessorTest {
         String[] data = new String[] { "bytes", "0", "4" };
         String partialFile = new String(fileProcessor.readRange("partial_content.txt", data));
         assertEquals("This ", partialFile);
+    }
+
+    @Test
+    public void checksAFileExists() {
+        assertTrue(fileProcessor.directoryContainsFile("partial_content.txt"));
     }
 
 }

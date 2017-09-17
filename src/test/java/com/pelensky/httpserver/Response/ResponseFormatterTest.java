@@ -2,6 +2,7 @@ package com.pelensky.httpserver.Response;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class ResponseFormatterTest {
     }
 
     @Test
-    public void processesAResponseWithABody(){
+    public void processesAResponseWithABody() {
         Response response = new Response(200, null, "data=fatcat");
         assertEquals("HTTP/1.1 200\nContent-Length: 11\n\ndata=fatcat", new ResponseFormatter().format(response));
     }

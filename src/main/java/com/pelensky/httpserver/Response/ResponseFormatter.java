@@ -9,7 +9,7 @@ public class ResponseFormatter {
         StringBuilder responseString = new StringBuilder();
         responseString.append(httpVersion).append(" ").append(String.valueOf(response.getStatusCode()));
         formatHeaders(response, responseString);
-        formatContentLengthAndBody(response, responseString);
+        formatContactLengthAndBody(response, responseString);
         return String.valueOf(responseString);
     }
 
@@ -17,7 +17,7 @@ public class ResponseFormatter {
         if (response.getResponseHeader() != null ) responseString.append(System.lineSeparator()).append(getHeaders(response));
     }
 
-    private void formatContentLengthAndBody(Response response, StringBuilder responseString) {
+    private void formatContactLengthAndBody(Response response, StringBuilder responseString) {
         if (response.getBody() != null) {
             String body = response.getBody();
             String contentLength = "Content-Length: " + String.valueOf(getContentLength(body));

@@ -74,8 +74,4 @@ public interface Route {
         return options.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
     }
 
-    default String readFile(String fileName) throws IOException {
-        return new String(new FileProcessor().readLines(fileName));
-    }
-
 }

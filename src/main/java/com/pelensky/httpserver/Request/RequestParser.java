@@ -61,7 +61,7 @@ public class RequestParser {
     }
 
     private String getUri(String[] splitRequestLine) {
-        uri = splitRequestLine[1].substring(1);
+        uri = (splitRequestLine[1].length() > 0) ? splitRequestLine[1].substring(1) : "";
         if (uri.contains(".")) {
             String[] splitRoute = uri.split(Pattern.quote("."));
             uri = splitRoute[0];
