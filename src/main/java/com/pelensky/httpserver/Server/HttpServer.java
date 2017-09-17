@@ -32,7 +32,7 @@ class HttpServer {
                           clientSocket = serverSocket.accept();
                           Request request = new RequestProcessor().createRequest(clientSocket);
                           Response response = Router.findResponse(request);
-                          new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().format(response));
+                          new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
                           closeConnections();
                         } catch (IOException e) {
                           throw new UncheckedIOException(e);

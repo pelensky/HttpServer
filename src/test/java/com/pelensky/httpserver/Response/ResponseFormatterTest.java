@@ -37,6 +37,6 @@ public class ResponseFormatterTest {
     }
 
     private String stringifiedVersionOfResponse(Response response) throws IOException {
-        return new String(new ResponseFormatter().format(response));
+        return new String(new ResponseFormatter().formatResponse(response));
     }
 }
