@@ -30,8 +30,7 @@ public class File extends Route {
             statusCode = 200;
             body = new FileProcessor().readLines((request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri());
         }
-        String contentType = new ContentType().list().get(request.getFileType());
-        header.put("Content-Type", contentType);
+        header.put("Content-Type", new ContentType().list().get(request.getFileType()));
         return new Response(statusCode, header, body);
     }
 

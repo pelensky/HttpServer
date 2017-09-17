@@ -13,19 +13,20 @@ public abstract class Route {
 
     public Response call(Request request) throws IOException {
         String method = request.getMethod();
+
         switch (method) {
             case "GET":
                 return get(request);
             case "HEAD":
-                return this.head(request);
+                return head(request);
             case "POST":
-                return this.post(request);
+                return post(request);
             case "OPTIONS":
-                return this.options(request);
+                return options(request);
             case "PUT":
-                return this.put(request);
+                return put(request);
             case "DELETE":
-                return this.delete(request);
+                return delete(request);
             default:
                 return new Response(405);
         }
@@ -62,7 +63,7 @@ public abstract class Route {
         return new Response(405);
     }
 
-    public String getOptions(Request request) throws IOException {
+    String getOptions(Request request) throws IOException {
         List<String> options = new ArrayList<>();
         options.add((get(request).getStatusCode() != 405 ) ? "GET" : null);
         options.add((head(request).getStatusCode() != 405 ) ? "HEAD" : null);

@@ -15,7 +15,16 @@ public class RouterTest {
     @Test
     public void serverRespondsToGetRequestWith200() throws IOException {
         Request request = setUpRequest("GET / HTTP/1.1\n");
-        assertEquals("HTTP/1.1 200", getResponse(request));
+        assertEquals("HTTP/1.1 200\nContent-Length: 94\n" +
+                "\n" +
+                "file1\n" +
+                "file2\n" +
+                "image.gif\n" +
+                "image.jpeg\n" +
+                "image.png\n" +
+                "partial_content.txt\n" +
+                "patch-content.txt\n" +
+                "text-file.txt", getResponse(request));
     }
 
     @Test

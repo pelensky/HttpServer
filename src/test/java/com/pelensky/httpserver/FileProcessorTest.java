@@ -35,4 +35,16 @@ public class FileProcessorTest {
         assertTrue(fileProcessor.directoryContainsFile("partial_content.txt"));
     }
 
+    @Test
+    public void listDirectoryContents() throws IOException {
+        assertEquals("file1\n" +
+                "file2\n" +
+                "image.gif\n" +
+                "image.jpeg\n" +
+                "image.png\n" +
+                "partial_content.txt\n" +
+                "patch-content.txt\n" +
+                "text-file.txt", new String(fileProcessor.listDirectoryContents()));
+    }
+
 }

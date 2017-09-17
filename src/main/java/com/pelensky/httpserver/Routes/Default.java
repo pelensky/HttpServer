@@ -1,7 +1,10 @@
 package com.pelensky.httpserver.Routes;
 
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
+
+import java.io.IOException;
 
 public class Default extends Route {
     @Override
@@ -10,8 +13,9 @@ public class Default extends Route {
     }
 
     @Override
-    public Response get(Request request) {
-        return new Response(200);
+    public Response get(Request request) throws IOException {
+        byte[] body = new FileProcessor().listDirectoryContents();
+        return new Response(200, null, body);
     }
 
     @Override

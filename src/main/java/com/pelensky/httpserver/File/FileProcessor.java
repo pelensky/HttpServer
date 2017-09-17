@@ -1,5 +1,7 @@
 package com.pelensky.httpserver.File;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +33,13 @@ public class FileProcessor {
 
     private Path getPath(String fileName) {
         return Paths.get("./public/" + fileName);
-
     }
 
+    public byte[] listDirectoryContents() throws IOException {
+        String[] files = new File("./public/").list();
+        if (files != null) {
+            return String.join(System.lineSeparator(), files).getBytes();
+        }
+        return "".getBytes();
+    }
 }
