@@ -11,28 +11,32 @@ import static org.junit.Assert.assertEquals;
 public class ResponseFormatterTest {
 
     @Test
-    public void processesABasicGetRequestResponse() {
+    public void processesABasicGetRequestResponse() throws IOException {
         Response response = new Response(200);
-        assertEquals("HTTP/1.1 200", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 200", stringifiedVersionOfResponse(response));
     }
 
     @Test
-    public void processA404Response() {
+    public void processA404Response() throws IOException {
         Response response = new Response(404);
-        assertEquals("HTTP/1.1 404", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 404", stringifiedVersionOfResponse(response));
     }
 
     @Test
-    public void processesAResponseWithHeaders() {
+    public void processesAResponseWithHeaders() throws IOException {
         Map<String, String> headers= new HashMap<>();
         headers.put("Location", "/");
         Response response = new Response(302, headers);
-        assertEquals("HTTP/1.1 302\nLocation: /", new ResponseFormatter().format(response));
+        assertEquals("HTTP/1.1 302\nLocation: /", stringifiedVersionOfResponse(response));
     }
 
     @Test
-    public void processesAResponseWithABody() {
-        Response response = new Response(200, null, "data=fatcat");
-        assertEquals("HTTP/1.1 200\nContent-Length: 11\n\ndata=fatcat", new ResponseFormatter().format(response));
+    public void processesAResponseWithABody() throws IOException {
+        Response response = new Response(200, null, "data=fatcat".getBytes());
+        assertEquals("HTTP/1.1 200\nContent-Length: 11\n\ndata=fatcat", stringifiedVersionOfResponse(response));
+    }
+
+    private String stringifiedVersionOfResponse(Response response) throws IOException {
+        return new String(new ResponseFormatter().format(response));
     }
 }

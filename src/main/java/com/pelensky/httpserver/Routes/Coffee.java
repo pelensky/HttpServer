@@ -13,6 +13,6 @@ public class Coffee implements Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        return new Response(418, null, "I'm a teapot");
+        return new Response(418, null, "I'm a teapot".getBytes());
     }
 }

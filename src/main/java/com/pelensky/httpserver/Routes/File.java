@@ -20,7 +20,7 @@ public class File implements Route {
     public Response get(Request request) throws IOException {
         Integer statusCode;
         Map<String, String> header = new HashMap<>();
-        String body;
+        byte[] body;
         if (request.getHeaders().get("Range") != null) {
             statusCode = 206;
             Range range = new Range(request);
@@ -28,19 +28,12 @@ public class File implements Route {
             body = range.getRangeBody();
         } else {
             statusCode = 200;
-//            body = new FileProcessor().readLines((request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri());
-            body = readFileAsString((request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri());
+            body = new FileProcessor().readLines((request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri());
         }
         String contentType = new ContentType().list().get(request.getFileType());
-//        if (contentType.contains("image")) {
-//            body = "data:" + contentType + ";base64," + Base64.getUrlEncoder().encodeToString(new FileProcessor().readLines(request.getUri() + "." + request.getFileType()));
-//        }
         header.put("Content-Type", contentType);
         return new Response(statusCode, header, body);
     }
 
-    private String readFileAsString(String fileName) throws IOException {
-        return new String(new FileProcessor().readLines(fileName));
-    }
 }
 

@@ -44,4 +44,8 @@ public class Request {
         return body;
     }
 
+    public boolean hasBody() {
+        return body != null;
+    }
+
 }

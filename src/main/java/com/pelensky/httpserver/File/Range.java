@@ -34,8 +34,8 @@ public class Range {
         return fileProcessor.getFileSize(fileNameAndType);
     }
 
-   public String getRangeBody() throws IOException {
-        return new String(fileProcessor.readRange(fileNameAndType, splitRangeRequest()));
+   public byte[] getRangeBody() throws IOException {
+        return fileProcessor.readRange(fileNameAndType, splitRangeRequest());
    }
 
     private String[] splitRangeRequest() throws IOException {

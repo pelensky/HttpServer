@@ -145,7 +145,7 @@ public class RouterTest {
     }
 
     private String getResponse(Request request) throws IOException {
-        return new ResponseFormatter().format(Router.findResponse(request));
+        return new String(new ResponseFormatter().format(Router.findResponse(request)));
     }
 
 

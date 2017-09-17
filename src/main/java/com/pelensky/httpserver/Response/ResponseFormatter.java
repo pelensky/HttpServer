@@ -1,27 +1,33 @@
 package com.pelensky.httpserver.Response;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Map;
 
 public class ResponseFormatter {
 
-    public String format(Response response) {
+    public byte[] format(Response response) throws IOException {
         String httpVersion = "HTTP/1.1";
         StringBuilder responseString = new StringBuilder();
         responseString.append(httpVersion).append(" ").append(String.valueOf(response.getStatusCode()));
         formatHeaders(response, responseString);
-        formatContactLengthAndBody(response, responseString);
-        return String.valueOf(responseString);
+        formatContactLength(response, responseString);
+        String statusCodeAndHeaders = String.valueOf(responseString);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+        outputStream.write(statusCodeAndHeaders.getBytes());
+        outputStream.write(response.getBody());
+        return outputStream.toByteArray( );
     }
 
     private void formatHeaders(Response response, StringBuilder responseString) {
         if (response.getResponseHeader() != null ) responseString.append(System.lineSeparator()).append(getHeaders(response));
     }
 
-    private void formatContactLengthAndBody(Response response, StringBuilder responseString) {
-        if (response.getBody() != null) {
-            String body = response.getBody();
-            String contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
-            responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
+    private void formatContactLength(Response response, StringBuilder responseString) {
+        if (!response.isBodyEmpty()) {
+            byte[] body = response.getBody();
+            String contentLength = "Content-Length: " + String.valueOf(body.length);
+            responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator());
         }
     }
 
@@ -30,10 +36,6 @@ public class ResponseFormatter {
         StringBuilder headers = new StringBuilder();
         responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
         return String.valueOf(headers).trim(); //TODO Don't add a new line then remove it. ForEach with Index?
-    }
-
-    private Integer getContentLength(String body) {
-        return body.getBytes().length;
     }
 
 }
