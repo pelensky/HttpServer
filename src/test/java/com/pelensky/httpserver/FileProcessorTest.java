@@ -37,14 +37,7 @@ public class FileProcessorTest {
 
     @Test
     public void listDirectoryContents() throws IOException {
-        assertEquals("file1\n" +
-                "file2\n" +
-                "image.gif\n" +
-                "image.jpeg\n" +
-                "image.png\n" +
-                "partial_content.txt\n" +
-                "patch-content.txt\n" +
-                "text-file.txt", new String(fileProcessor.listDirectoryContents()));
+        assertEquals("<a href=\"file1\">file1</a><br><a href=\"file2\">file2</a><br><a href=\"image.gif\">image.gif</a><br><a href=\"image.jpeg\">image.jpeg</a><br><a href=\"image.png\">image.png</a><br><a href=\"partial_content.txt\">partial_content.txt</a><br><a href=\"patch-content.txt\">patch-content.txt</a><br><a href=\"text-file.txt\">text-file.txt</a><br>", new String(fileProcessor.listDirectoryContents()));
     }
 
 }
