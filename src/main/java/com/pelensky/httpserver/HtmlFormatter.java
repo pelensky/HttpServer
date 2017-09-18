@@ -18,7 +18,7 @@ public class HtmlFormatter {
         StringBuilder links = new StringBuilder();
         if (directoryContents != null) {
             for (String file : directoryContents) {
-                links.append("<a href=\"").append(file).append("\">").append(file).append("</a>").append("<br>").append(System.lineSeparator());
+                links.append("<a href=\"/").append(file).append("\">").append(file).append("</a>").append("<br>").append(System.lineSeparator());
             }
         }
         return String.valueOf(links);

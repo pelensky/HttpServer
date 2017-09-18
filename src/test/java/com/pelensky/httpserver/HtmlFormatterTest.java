@@ -20,14 +20,14 @@ public class HtmlFormatterTest {
     @Test
     public void formatsAListWithASingleValue() {
         String[] fileContents = new String[] { "file1.txt"};
-        String formattedLinks = "<a href=\"file1.txt\">file1.txt</a><br>\n";
+        String formattedLinks = "<a href=\"/file1.txt\">file1.txt</a><br>\n";
         assertEquals(expectedStart +  formattedLinks+ expectedEnd, htmlFormatter.format("title", fileContents));
     }
 
     @Test
     public void formatsAListWithMultipleValuesToValidHTML() {
         String[] fileContents = new String[] { "file1.txt", "file2.jpg" };
-        String formattedLinks = "<a href=\"file1.txt\">file1.txt</a><br>\n<a href=\"file2.jpg\">file2.jpg</a><br>\n";
+        String formattedLinks = "<a href=\"/file1.txt\">file1.txt</a><br>\n<a href=\"/file2.jpg\">file2.jpg</a><br>\n";
         assertEquals(expectedStart +  formattedLinks+ expectedEnd, htmlFormatter.format("title", fileContents));
     }
 }

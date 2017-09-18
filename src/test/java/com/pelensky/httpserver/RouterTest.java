@@ -15,8 +15,8 @@ public class RouterTest {
     @Test
     public void serverRespondsToGetRequestWith200() throws IOException {
         Request request = setUpRequest("GET / HTTP/1.1\n");
-        assertEquals("HTTP/1.1 200\nContent-Length: 420\n" +
-                "\n" + "<!DOCTYPE html>\n<HTML>\n<HEAD>\n<TITLE>HttpServer</TITLE>\n</HEAD>\n<BODY>\n" + "<a href=\"file1\">file1</a><br>\n<a href=\"file2\">file2</a><br>\n<a href=\"image.gif\">image.gif</a><br>\n<a href=\"image.jpeg\">image.jpeg</a><br>\n<a href=\"image.png\">image.png</a><br>\n<a href=\"partial_content.txt\">partial_content.txt</a><br>\n<a href=\"patch-content.txt\">patch-content.txt</a><br>\n<a href=\"text-file.txt\">text-file.txt</a><br>\n" + "</BODY>\n</HTML>", getResponse(request));
+        assertEquals("HTTP/1.1 200\nContent-Length: 428\n" +
+                "\n" + "<!DOCTYPE html>\n<HTML>\n<HEAD>\n<TITLE>HttpServer</TITLE>\n</HEAD>\n<BODY>\n" + "<a href=\"/file1\">file1</a><br>\n<a href=\"/file2\">file2</a><br>\n<a href=\"/image.gif\">image.gif</a><br>\n<a href=\"/image.jpeg\">image.jpeg</a><br>\n<a href=\"/image.png\">image.png</a><br>\n<a href=\"/partial_content.txt\">partial_content.txt</a><br>\n<a href=\"/patch-content.txt\">patch-content.txt</a><br>\n<a href=\"/text-file.txt\">text-file.txt</a><br>\n" + "</BODY>\n</HTML>", getResponse(request));
     }
 
     @Test
