@@ -32,7 +32,8 @@ public class Request {
     public String getFileType() {
         return fileType;
     }
-    String getHttpVersion() {
+
+    public String getHttpVersion() {
         return httpVersion;
     }
 
@@ -47,5 +48,6 @@ public class Request {
     public boolean hasBody() {
         return body != null;
     }
+
 
 }

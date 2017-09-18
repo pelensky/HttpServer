@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.Authentication;
+import com.pelensky.httpserver.LogRequests;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
@@ -19,7 +20,7 @@ public class Logs extends Route {
     @Override
     public Response get(Request request) {
         if (new Authentication(username, password).isAuthenticated(request)) {
-            return new Response(200);
+            return new Response(200, null, LogRequests.showLogs().getBytes());
         } else {
             Map<String, String> header = new HashMap<>();
             header.put("WWW-Authenticate", "Basic realm=\"Authentication required\"");
