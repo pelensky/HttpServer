@@ -11,6 +11,7 @@ public class Routes {
     private static final Route redirect = new Redirect();
     private static final Route coffee = new Coffee();
     private static final Route tea = new Tea();
+    private static final Route logs = new Logs();
 
 
     public static List<Route> routes() {
@@ -22,6 +23,7 @@ public class Routes {
         routesList.add(redirect);
         routesList.add(coffee);
         routesList.add(tea);
+        routesList.add(logs);
         return routesList;
     }
 }

@@ -32,7 +32,7 @@ public class FileProcessorTest {
 
     @Test
     public void checksAFileExists() {
-        assertTrue(fileProcessor.directoryContainsFile("partial_content.txt"));
+        assertTrue(fileProcessor.doesFileExistInDirectory("partial_content.txt"));
     }
 
 }

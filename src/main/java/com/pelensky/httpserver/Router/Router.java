@@ -8,7 +8,6 @@ import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 public class Router {
 
@@ -28,7 +27,7 @@ public class Router {
 
   private static Boolean publicDirectoryContainsFile(Request request) {
     String fileNameAndType = (request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri();
-    return new FileProcessor().directoryContainsFile(fileNameAndType) && !request.getUri().isEmpty();
+    return new FileProcessor().doesFileExistInDirectory(fileNameAndType) && !request.getUri().isEmpty();
   }
 
 }

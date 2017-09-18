@@ -111,24 +111,6 @@ public class RouterTest {
         assertEquals("HTTP/1.1 206\nContent-Range: bytes 4-76/76\nContent-Type: text/plain\nContent-Length: 73\n\n is a file that contains text to read part of in order to fulfill a 206.\n", getResponse(request));
     }
 
-//@Test
-//    public void findsJpeg() throws IOException {
-//        Request request = setUpRequest("GET /image.jpeg HTTP/1.1\n");
-//        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
-//    }
-
-//    @Test
-//    public void findsGif() throws IOException {
-//        Request request = setUpRequest("GET /image.gif HTTP/1.1\n");
-//        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
-//    }
-//
-//    @Test
-//    public void findsPng() throws IOException {
-//        Request request = setUpRequest("GET /image.png HTTP/1.1\n");
-//        assertEquals("HTTP/1.1 200\nContent-Type: image/jpeg", getResponse(request));
-//    }
-
     @Test
     public void ResponseToCoffeeWith418() throws IOException {
         Request request = setUpRequest("GET /coffee HTTP/1.1\n");
@@ -139,6 +121,12 @@ public class RouterTest {
     public void ResponseToTea() throws IOException {
         Request request = setUpRequest("GET /tea HTTP/1.1\n");
         assertEquals("HTTP/1.1 200", getResponse(request));
+    }
+
+    @Test
+    public void BasicAuthRequired() throws IOException {
+        Request request = setUpRequest("GET /logs HTTP/1.1\n");
+        assertEquals("HTTP/1.1 401\nWWW-Authenticate: Basic realm=\"Authentication required\"", getResponse(request));
     }
 
     private Request setUpRequest(String request) {
