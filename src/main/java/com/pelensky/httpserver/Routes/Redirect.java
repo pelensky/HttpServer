@@ -6,7 +6,7 @@ import com.pelensky.httpserver.Response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Redirect implements Route {
+public class Redirect extends Route {
 
     @Override
     public String route() {

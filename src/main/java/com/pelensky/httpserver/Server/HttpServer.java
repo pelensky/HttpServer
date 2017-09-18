@@ -3,7 +3,7 @@ package com.pelensky.httpserver.Server;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.ResponseFinder;
+import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Response.ResponseFormatter;
 import com.pelensky.httpserver.Response.ResponseProcessor;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
@@ -15,34 +15,31 @@ import java.util.concurrent.Executors;
 
 class HttpServer {
 
-  private final String directory;
-  private final Integer port;
   private final ServerSocketWrapper serverSocket;
   private SocketWrapper clientSocket;
   private boolean inProgress = true;
 
-  HttpServer(Integer port, String directory, ServerSocketWrapper serverSocket) {
-    this.port = port;
-    this.directory = directory;
+  HttpServer(ServerSocketWrapper serverSocket) {
     this.serverSocket = serverSocket;
   }
 
   void serve() {
     Executors.newSingleThreadExecutor()
-        .execute(
-            () -> {
-                while (inProgress) {
-                  try {
-                    clientSocket = serverSocket.accept();
-                    Request request = new RequestProcessor().createRequest(clientSocket);
-                    Response response = ResponseFinder.findResponse(request);
-                    new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().format(response));
-                    closeConnections();
-                  } catch (IOException e) {
-                    throw new UncheckedIOException(e);
-                  }
-                }
-            });
+            .execute(
+                    () -> {
+                      while (inProgress) {
+                        try {
+                          clientSocket = serverSocket.accept();
+                          Request request = new RequestProcessor().createRequest(clientSocket);
+                          Response response = Router.findResponse(request);
+                          new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
+                          closeConnections();
+                        } catch (IOException e) {
+                          throw new UncheckedIOException(e);
+                        }
+                      }
+                    }
+            );
   }
 
   private void closeConnections() throws IOException {
@@ -54,6 +51,6 @@ class HttpServer {
   }
 
   void killServer() {
-      inProgress = false;
+    inProgress = false;
   }
 }

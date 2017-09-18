@@ -5,7 +5,7 @@ import com.pelensky.httpserver.Response.Response;
 
 import java.io.IOException;
 
-public class Coffee implements Route {
+public class Coffee extends Route {
     @Override
     public String route() {
         return "coffee";
@@ -13,6 +13,6 @@ public class Coffee implements Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        return new Response(418, null, "I'm a teapot");
+        return new Response(418, null, "I'm a teapot".getBytes());
     }
 }

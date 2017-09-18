@@ -13,7 +13,7 @@ public class ResponseProcessorTest {
     public void createsAPrintWriterUsingTheClientSocket() throws IOException {
         SocketSpy socketSpy = new SocketSpy();
         ResponseProcessor responseProcessor = new ResponseProcessor();
-        responseProcessor.sendResponse(socketSpy, "test");
+        responseProcessor.sendResponse(socketSpy, "test".getBytes());
         assertTrue(socketSpy.getWasCalled());
     }
 }

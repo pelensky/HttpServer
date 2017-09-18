@@ -34,7 +34,7 @@ public class RequestParserTest {
 
     @Test
     public void handlesRequestWithHeadersButNoBody() {
-        assertEquals( "/form", requestParser.parseRequest("POST /form HTTP/1.1\n" +
+        assertEquals( "form", requestParser.parseRequest("POST /form HTTP/1.1\n" +
                 "User-Agent: HTTPTool/1.0\n" +
                 "Content-Type: application/x-www-form-urlencoded\n" +
                 "Content-Length: 32\n").getUri());

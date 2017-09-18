@@ -1,41 +1,46 @@
 package com.pelensky.httpserver.Response;
 
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ResponseFormatter {
 
-    public String format(Response response) {
-        StringBuilder responseString = new StringBuilder();
-        responseString.append(Status.codes().get(response.getStatusCode()));
-        if (response.getResponseHeader() != null) {
-           formatHeaders(response, responseString);
+    public byte[] formatResponse(Response response) throws IOException {
+        return combineHeaderWithBody(response, formatStatusCodeAndHeaders(response));
+    }
+
+    private String formatStatusCodeAndHeaders(Response response) {
+        String httpVersion = "HTTP/1.1";
+        StringBuilder headerString = new StringBuilder();
+        headerString.append(httpVersion).append(" ").append(String.valueOf(response.getStatusCode()));
+        addHeaders(response, headerString);
+        addContentLength(response, headerString);
+        return String.valueOf(headerString);
+    }
+
+    private byte[] combineHeaderWithBody(Response response, String statusCodeAndHeaders) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+        outputStream.write(statusCodeAndHeaders.getBytes());
+        outputStream.write(response.getBody());
+        return outputStream.toByteArray( );
+    }
+
+    private void addHeaders(Response response, StringBuilder responseString) {
+        if (response.getResponseHeader() != null ) responseString.append(System.lineSeparator()).append(formatHeaders(response));
+    }
+
+    private void addContentLength(Response response, StringBuilder responseString) {
+        if (!response.isBodyEmpty()) {
+            byte[] body = response.getBody();
+            String contentLength = "Content-Length: " + String.valueOf(body.length);
+            responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator());
         }
-        if (response.getBody() != null) {
-            formatBody(response, responseString);
-        }
-        return String.valueOf(responseString);
     }
 
-    private void formatHeaders(Response response, StringBuilder responseString) {
-        responseString.append(System.lineSeparator()).append(getHeaders(response));
-    }
-
-    private void formatBody(Response response, StringBuilder responseString) {
-        String body = response.getBody();
-        String contentLength = "Content-Length: " + String.valueOf(getContentLength(body));
-        responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator()).append(body);
-    }
-
-    private String getHeaders(Response response) {
-        Map<String, String> responseHeaders = response.getResponseHeader();
+    private String formatHeaders(Response response) {
         StringBuilder headers = new StringBuilder();
-        responseHeaders.forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
-        return String.valueOf(headers).trim();
-    }
-
-    private Integer getContentLength(String body) {
-        byte[] bytes = body.getBytes();
-        return bytes.length;
+        response.getResponseHeader().forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
+        return String.valueOf(headers).trim(); //TODO Don't add a new line then remove it. ForEach with Index?
     }
 
 }

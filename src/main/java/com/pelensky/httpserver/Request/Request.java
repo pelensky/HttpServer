@@ -1,36 +1,24 @@
 package com.pelensky.httpserver.Request;
 
 import java.util.Map;
-import java.util.regex.Pattern;
 
 
 public class Request {
 
     private final String method;
     private final String uri;
+    private final String fileType;
     private final String httpVersion;
-    private Map<String, String> headers;
-    private String body;
+    private final Map<String, String> headers;
+    private final String body;
 
-    Request(String method, String uri, String httpVersion, Map<String, String> headers, String body) {
+    public Request(String method, String uri, String fileType, String httpVersion, Map<String, String> headers, String body) {
         this.method = method;
         this.uri = uri;
+        this.fileType = fileType;
         this.httpVersion = httpVersion;
         this.headers = headers;
         this.body = body;
-    }
-
-    public Request(String method, String uri, String httpVersion) {
-        this.method = method;
-        this.uri = uri;
-        this.httpVersion = httpVersion;
-    }
-
-    Request(String method, String uri, String httpVersion, Map<String, String> headers) {
-        this.method = method;
-        this.uri = uri;
-        this.httpVersion = httpVersion;
-        this.headers = headers;
     }
 
     public String getMethod() {
@@ -41,6 +29,9 @@ public class Request {
         return uri;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
     String getHttpVersion() {
         return httpVersion;
     }
@@ -53,10 +44,8 @@ public class Request {
         return body;
     }
 
-    public String getFileType() {
-        if (uri.contains(".")) {
-            return uri.split(Pattern.quote("."))[1];
-        }
-        return null;
+    public boolean hasBody() {
+        return body != null;
     }
+
 }

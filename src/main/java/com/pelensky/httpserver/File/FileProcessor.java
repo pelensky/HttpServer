@@ -1,55 +1,48 @@
 package com.pelensky.httpserver.File;
 
-import java.io.*;
-import java.util.regex.Pattern;
+import com.pelensky.httpserver.HtmlFormatter;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileProcessor {
 
-    private final String path = "/public/";
-    private final Integer offset = 1;
-    private InputStream in;
-    private BufferedReader reader;
-
-    public String readLines(String fileName) throws IOException {
-        setUp(fileName);
-        String line;
-        StringBuilder file = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            file.append(line);
-        }
-        tearDown();
-        return String.valueOf(file);
+    public byte[] readLines(String fileName) throws IOException {
+        return Files.readAllBytes(getPath(fileName));
     }
 
-    public String readRange(String fileName, String[] data) throws IOException {
-        setUp(fileName);
+    public byte[] readRange(String fileName, String[] data) throws IOException {
+        final Integer arrayOffset = 1;
         Integer start = Integer.parseInt(data[1]);
-        Integer end = Integer.parseInt(data[2]);
-        Integer length = end + offset - start;
-        char[] buffer = new char[length];
-        reader.skip(start);
-        reader.read(buffer, 0, length);
-        tearDown();
-        return String.valueOf(buffer);
-    }
-
-    private void setUp(String fileName) {
-        in = getClass().getResourceAsStream(path + fileName);
-        reader = new BufferedReader(new InputStreamReader(in));
-    }
-
-    private void tearDown() throws IOException {
-        in.close();
-        reader.close();
+        Integer end = Integer.parseInt(data[2]) + arrayOffset;
+        RandomAccessFile randomAccessFile = new RandomAccessFile("./public/" + fileName, "r");
+        byte[] buffer = new byte[end - start];
+        for (int i=0; i<buffer.length; i++ ) {
+            randomAccessFile.seek(start + i);
+            buffer[i] = randomAccessFile.readByte();
+        }
+        return buffer;
     }
 
     Integer getFileSize(String fileName) throws IOException {
-        return readLines(fileName).getBytes().length;
+        return readLines(fileName).length;
     }
 
-    public String getContentType(String filename) {
-        String[] splitFileName = filename.split(Pattern.quote("."));
-        String fileType = splitFileName[splitFileName.length - 1];
-        return ContentType.list().get(fileType);
+    public Boolean directoryContainsFile(String filename) {
+       return Files.exists(getPath(filename));
+    }
+
+    private Path getPath(String fileName) {
+        return Paths.get("./public/" + fileName);
+    }
+
+    public byte[] displayDirectoryContentsAsLinks() throws IOException {
+        String[] files = new File("./public/").list();
+        return new HtmlFormatter().format("HttpServer", files).getBytes();
+
     }
 }

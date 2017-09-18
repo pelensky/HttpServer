@@ -17,7 +17,7 @@ public class RangeTest {
     public void splitRange() throws IOException {
         Request request = new RequestParser().parseRequest("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-4");
         range = new Range(request);
-        assertEquals("This ", range.getRangeBody());
+        assertEquals("This ", new String(range.getRangeBody()));
     }
 
     @Test

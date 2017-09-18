@@ -1,6 +1,5 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
@@ -8,63 +7,63 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public interface Route {
+public abstract class Route {
 
-    String route();
+    public abstract String route();
 
-    default Response call(Request request) throws IOException {
+    public Response call(Request request) throws IOException {
         String method = request.getMethod();
+
         switch (method) {
             case "GET":
                 return get(request);
             case "HEAD":
-                return this.head(request);
+                return head(request);
             case "POST":
-                return this.post(request);
+                return post(request);
             case "OPTIONS":
-                return this.options(request);
+                return options(request);
             case "PUT":
-                return this.put(request);
+                return put(request);
             case "DELETE":
-                return this.delete(request);
+                return delete(request);
             default:
                 return new Response(405);
         }
     }
 
-    default Response get(Request request) throws IOException {
-        return new Response(200);
-    };
-
-    default Response head(Request request) {
+    public Response get(Request request) throws IOException {
         return new Response(405);
     }
 
-    default Response post(Request request) {
+    public Response head(Request request) {
         return new Response(405);
     }
 
-    default Response options(Request request) throws IOException {
-        boolean isOptionsAllowed = optionsCode(request).getStatusCode() != 405;
+    public Response post(Request request) {
+        return new Response(405);
+    }
+
+    private Response options(Request request) throws IOException {
         Map<String, String> headers = new HashMap<>();
         headers.put("Allow", getOptions(request));
         Response response = new Response(optionsCode(request).getStatusCode(), headers);
-        return (isOptionsAllowed) ? response : optionsCode(request);
+        return (optionsCode(request).getStatusCode() != 405) ? response : optionsCode(request);
     }
 
-    default Response optionsCode(Request request) {
+    public Response optionsCode(Request request) {
         return new Response(405);
     }
 
-    default Response put(Request request) {
+    public Response put(Request request) {
         return new Response(405);
     }
 
-    default Response delete(Request request) {
+    public Response delete(Request request) {
         return new Response(405);
     }
 
-    default String getOptions(Request request) throws IOException {
+    String getOptions(Request request) throws IOException {
         List<String> options = new ArrayList<>();
         options.add((get(request).getStatusCode() != 405 ) ? "GET" : null);
         options.add((head(request).getStatusCode() != 405 ) ? "HEAD" : null);
@@ -73,10 +72,6 @@ public interface Route {
         options.add((put(request).getStatusCode() != 405 ) ? "PUT" : null);
         options.add((delete(request).getStatusCode() != 405) ? "DELETE" : null);
         return options.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
-    }
-
-    default String readFile(String fileName) throws IOException {
-        return new FileProcessor().readLines(fileName);
     }
 
 }
