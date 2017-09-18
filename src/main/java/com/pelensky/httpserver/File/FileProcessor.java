@@ -1,5 +1,7 @@
 package com.pelensky.httpserver.File;
 
+import com.pelensky.httpserver.HtmlFormatter;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,14 +35,9 @@ public class FileProcessor {
         return Paths.get("./public/" + fileName);
     }
 
-    public byte[] listDirectoryContents() throws IOException {
+    public byte[] displayDirectoryContentsAsLinks() throws IOException {
         String[] files = new File("./public/").list();
-        StringBuilder links = new StringBuilder();
-        if (files != null) {
-            for (String file : files) {
-                links.append("<a href=\"").append(file).append("\">").append(file).append("</a>").append("<br>");
-            }
-        }
-        return String.valueOf(links).getBytes();
+        return new HtmlFormatter().format("HttpServer", files).getBytes();
+
     }
 }
