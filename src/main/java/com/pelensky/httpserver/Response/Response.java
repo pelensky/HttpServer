@@ -33,7 +33,7 @@ public class Response {
         return responseHeader;
     }
 
-    public Boolean isBodyEmpty() {
+    Boolean isBodyEmpty() {
        return body == null;
     }
 

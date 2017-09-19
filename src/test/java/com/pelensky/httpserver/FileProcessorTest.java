@@ -19,7 +19,7 @@ public class FileProcessorTest {
 
     @Test
     public void readsAFile() throws IOException {
-        String allLines = new String(fileProcessor.readLines("file1"));
+        String allLines = new String(fileProcessor.readEntireFile("file1"));
         assertEquals("file1 contents", allLines);
     }
 
@@ -31,8 +31,18 @@ public class FileProcessorTest {
     }
 
     @Test
+    public void updatesAFile() throws  IOException {
+        String oldFileContents = "THIS IS A TEST FILE\n";
+        String newFileContents = "THIS TEST FILE IS SLIGHTLY DIFFERENT\n";
+        fileProcessor.patchFile("test.txt", oldFileContents);
+        assertEquals(oldFileContents, new String(fileProcessor.readEntireFile("test.txt")));
+        assertEquals(newFileContents, new String(fileProcessor.patchFile("test.txt", newFileContents)));
+        fileProcessor.deleteFile("test.txt");
+    }
+
+    @Test
     public void checksAFileExists() {
-        assertTrue(fileProcessor.directoryContainsFile("partial_content.txt"));
+        assertTrue(fileProcessor.doesFileExistInDirectory("partial_content.txt"));
     }
 
 }

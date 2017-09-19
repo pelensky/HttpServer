@@ -8,11 +8,11 @@ import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
+import java.security.NoSuchAlgorithmException;
 
 public class Router {
 
-  public static Response findResponse(Request request) throws IOException {
+  public static Response findResponse(Request request) throws IOException, NoSuchAlgorithmException {
     if (publicDirectoryContainsFile(request)) return new File().call(request);
     for (Route selection : Routes.routes()) {
       if (existingRoute(selection, request)) {
@@ -28,7 +28,7 @@ public class Router {
 
   private static Boolean publicDirectoryContainsFile(Request request) {
     String fileNameAndType = (request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri();
-    return new FileProcessor().directoryContainsFile(fileNameAndType) && !request.getUri().isEmpty();
+    return new FileProcessor().doesFileExistInDirectory(fileNameAndType) && !request.getUri().isEmpty();
   }
 
 }

@@ -11,6 +11,7 @@ import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.Executors;
 
 class HttpServer {
@@ -36,6 +37,8 @@ class HttpServer {
                           closeConnections();
                         } catch (IOException e) {
                           throw new UncheckedIOException(e);
+                        } catch (NoSuchAlgorithmException e) {
+                          e.printStackTrace();
                         }
                       }
                     }

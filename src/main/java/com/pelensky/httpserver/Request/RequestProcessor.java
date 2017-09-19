@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.LogRequests;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.BufferedReader;
@@ -9,7 +10,9 @@ import java.io.InputStreamReader;
 public class RequestProcessor {
 
     public Request createRequest(SocketWrapper clientSocket) throws IOException {
-        return new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
+        Request request = new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
+        LogRequests.add(request);
+        return request;
     }
 
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {

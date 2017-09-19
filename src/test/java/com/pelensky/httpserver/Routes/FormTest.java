@@ -17,13 +17,13 @@ public class FormTest {
 
     @Test
     public void returns200ForPost() {
-        Request request = new Request("POST", "form",null, null, null, null);
+        Request request = new Request("POST", "form",null, null, null, null, null);
         assertEquals(200, form.post(request).getStatusCode(), 0);
     }
 
     @Test
     public void returns200ForPut() {
-        Request request = new Request("PUT", "form", null, null, null, null);
+        Request request = new Request("PUT", "form", null, null, null, null, null);
         assertEquals(200, form.put(request).getStatusCode(), 0);
     }
 
