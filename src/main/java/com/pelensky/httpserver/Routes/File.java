@@ -30,7 +30,7 @@ public class File extends Route {
             body = range.getRangeBody();
         } else {
             statusCode = 200;
-            body = new FileProcessor().readEntireFile((request.getFileType() != null) ? request.getUri() + "." + request.getFileType() : request.getUri());
+            body = new FileProcessor().readEntireFile((request.getFileType() != null) ? request.findFileName() : request.getUri());
         }
         header.put("Content-Type", new ContentType().list().get(request.getFileType()));
         return new Response(statusCode, header, body);
@@ -38,21 +38,20 @@ public class File extends Route {
 
     @Override
     public Response patch(Request request) throws IOException, NoSuchAlgorithmException {
-        String fileName = request.getUri() + "." + request.getFileType();
         Integer statusCode = 405;
         Map<String, String> headers = new HashMap<>();
-        if (request.getFileType() != null) {
-            if (request.getHeaders().get("If-Match").equals(getETag(fileName))) {
-                new FileProcessor().patchFile(fileName, request.getBody());
+        if (request.isAFile()) {
+            if (request.findETag().equals(createETagFromFile(request.findFileName()))) {
+                new FileProcessor().patchFile(request.findFileName(), request.getBody());
                 statusCode = 204;
-                headers.put("ETag", getETag(fileName));
+                headers.put("ETag", createETagFromFile(request.findFileName()));
             }
         }
         return new Response(statusCode, headers);
     }
 
-    private String getETag(String fileName) throws NoSuchAlgorithmException, IOException {
-        return new ETag().convert(new FileProcessor().readEntireFile(fileName));
+    private String createETagFromFile(String fileName) throws NoSuchAlgorithmException, IOException {
+        return new ETag().createETagFromFileContents(new FileProcessor().readEntireFile(fileName));
     }
 
 
