@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
@@ -21,13 +22,13 @@ public class MethodOptions2Test {
     }
 
     @Test
-    public void respondsAllForAllowedOptions() throws IOException {
+    public void respondsAllForAllowedOptions() throws IOException, NoSuchAlgorithmException {
         assertThat(methodOptions2.getOptions(request), containsString("GET"));
         assertThat(methodOptions2.getOptions(request), containsString("OPTIONS"));
     }
 
     @Test
-    public void doesNotRespondWithOptionsThatArentAllowed() throws IOException {
+    public void doesNotRespondWithOptionsThatArentAllowed() throws IOException, NoSuchAlgorithmException {
         assertThat(methodOptions2.getOptions(request), not(containsString("HEAD")));
         assertThat(methodOptions2.getOptions(request), not(containsString("POST")));
         assertThat(methodOptions2.getOptions(request), not(containsString("PUT")));

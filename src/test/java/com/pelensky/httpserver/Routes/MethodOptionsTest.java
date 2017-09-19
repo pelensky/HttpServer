@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -18,7 +19,7 @@ public class MethodOptionsTest {
     }
 
     @Test
-    public void respondsAllForOptions() throws IOException {
+    public void respondsAllForOptions() throws IOException, NoSuchAlgorithmException {
         Request request = new Request("OPTIONS", "method_options", null,  null, null, null, null);
         assertThat(methodOptions.getOptions(request), containsString("GET"));
         assertThat(methodOptions.getOptions(request), containsString("HEAD"));

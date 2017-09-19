@@ -8,10 +8,11 @@ import com.pelensky.httpserver.Routes.Route;
 import com.pelensky.httpserver.Routes.Routes;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public class Router {
 
-  public static Response findResponse(Request request) throws IOException {
+  public static Response findResponse(Request request) throws IOException, NoSuchAlgorithmException {
     if (publicDirectoryContainsFile(request)) return new File().call(request);
     for (Route selection : Routes.routes()) {
       if (existingRoute(selection, request)) {

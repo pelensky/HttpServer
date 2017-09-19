@@ -4,6 +4,7 @@ import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public abstract class Route {
 
     public abstract String route();
 
-    public Response call(Request request) throws IOException {
+    public Response call(Request request) throws IOException, NoSuchAlgorithmException {
         String method = request.getMethod();
 
         switch (method) {
@@ -27,6 +28,8 @@ public abstract class Route {
                 return put(request);
             case "DELETE":
                 return delete(request);
+            case "PATCH":
+                return patch(request);
             default:
                 return new Response(405);
         }
@@ -44,7 +47,7 @@ public abstract class Route {
         return new Response(405);
     }
 
-    private Response options(Request request) throws IOException {
+    private Response options(Request request) throws IOException, NoSuchAlgorithmException {
         Map<String, String> headers = new HashMap<>();
         headers.put("Allow", getOptions(request));
         Response response = new Response(optionsCode(request).getStatusCode(), headers);
@@ -63,7 +66,11 @@ public abstract class Route {
         return new Response(405);
     }
 
-    String getOptions(Request request) throws IOException {
+    public Response patch(Request request) throws IOException, NoSuchAlgorithmException {
+        return new Response(405);
+    }
+
+    String getOptions(Request request) throws IOException, NoSuchAlgorithmException {
         List<String> options = new ArrayList<>();
         options.add((get(request).getStatusCode() != 405 ) ? "GET" : null);
         options.add((head(request).getStatusCode() != 405 ) ? "HEAD" : null);
@@ -71,6 +78,7 @@ public abstract class Route {
         options.add((optionsCode(request).getStatusCode() != 405 ) ? "OPTIONS" : null);
         options.add((put(request).getStatusCode() != 405 ) ? "PUT" : null);
         options.add((delete(request).getStatusCode() != 405) ? "DELETE" : null);
+        options.add((patch(request).getStatusCode() != 405) ? "PATCH" : null);
         return options.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
     }
 
