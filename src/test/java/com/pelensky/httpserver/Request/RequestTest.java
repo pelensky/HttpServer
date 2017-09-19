@@ -3,10 +3,13 @@ package com.pelensky.httpserver.Request;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class RequestTest {
 
@@ -48,6 +51,79 @@ public class RequestTest {
     public void findsFileType() {
         request = new Request("GET", "image", "jpeg", "HTTP/1.1", null, null, null);
         assertEquals("jpeg", request.getFileType());
+    }
+
+    @Test
+    public void findsETagIfApplicable() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /test HTTP/1.1\nIf-Match: hello");
+        assertEquals("hello", request.findETag());
+    }
+
+    @Test
+    public void returnFileName() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /file.jpg HTTP/1.1");
+        assertEquals("file.jpg", request.findFileName());
+    }
+
+    @Test
+    public void checksIfURIIsAFile() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /file.jpg HTTP/1.1");
+        assertTrue(request.isAFile());
+    }
+
+    @Test
+    public void checksIfURIIsNotAFile() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET / HTTP/1.1");
+        assertFalse(request.isAFile());
+    }
+
+    @Test
+    public void checksForParameters() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /cookie?type=chocolate HTTP/1.1\\n");
+        assertTrue(request.hasParameters());
+    }
+
+    @Test
+    public void checksForNoParameters() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET / HTTP/1.1");
+        assertFalse(request.hasParameters());
+    }
+
+    @Test
+    public void checkForHeaders() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /test HTTP/1.1\nIf-Match: hello");
+        assertTrue(request.hasHeader());
+    }
+
+    @Test
+    public void checksForNoHeaders() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET / HTTP/1.1\n");
+        assertFalse(request.hasHeader());
+    }
+
+    @Test
+    public void getsASingleCookie() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nCookie: yummy_cookie=choco\n");
+        assertEquals("choco", request.getCookie().get("yummy_cookie"));
+    }
+
+    @Test
+    public void getsMultipleCookies() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nCookie: yummy_cookie=choco; tasty_cookie=strawberry\n");
+        assertEquals("choco", request.getCookie().get("yummy_cookie"));
+        assertEquals("strawberry", request.getCookie().get("tasty_cookie"));
+    }
+
+    @Test
+    public void checkForCookies() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nCookie: yummy_cookie=choco\n");
+        assertTrue(request.hasCookies());
+    }
+
+    @Test
+    public void checksForNoCookies() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET / HTTP/1.1\n");
+        assertFalse(request.hasCookies());
     }
 
     private Map<String, String> setUpHeaders() {

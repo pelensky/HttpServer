@@ -1,5 +1,7 @@
 package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.File.Cookies;
+
 import java.util.Map;
 
 
@@ -51,8 +53,35 @@ public class Request {
         return body != null;
     }
 
-
     public Map<String, String> getParameters() {
         return parameters;
+    }
+
+    public String findETag() {
+        return headers.get("If-Match");
+    }
+
+    public String findFileName() {
+        return uri + "." + fileType;
+    }
+
+    public boolean isAFile() {
+        return getFileType() != null;
+    }
+
+    public boolean hasParameters() {
+        return parameters != null;
+    }
+
+    public boolean hasHeader() {
+        return !headers.isEmpty();
+    }
+
+    public boolean hasCookies() {
+        return headers.containsKey("Cookie");
+    }
+
+    public Map<String,String> getCookie() {
+        return (hasCookies()) ? new Cookies().getCookie(headers) : null;
     }
 }
