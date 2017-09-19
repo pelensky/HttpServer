@@ -12,7 +12,9 @@ public class Routes {
     private static final Route coffee = new Coffee();
     private static final Route tea = new Tea();
     private static final Route logs = new Logs();
-
+    private static final Route parameters = new Parameters();
+    private static final Route cookie = new Cookie();
+    private static final Route eatCookie = new EatCookie();
 
     public static List<Route> routes() {
         List<Route> routesList = new ArrayList<>();
@@ -24,6 +26,9 @@ public class Routes {
         routesList.add(coffee);
         routesList.add(tea);
         routesList.add(logs);
+        routesList.add(parameters);
+        routesList.add(cookie);
+        routesList.add(eatCookie);
         return routesList;
     }
 }

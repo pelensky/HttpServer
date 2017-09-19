@@ -14,7 +14,7 @@ public class RequestTest {
 
     @Before
     public void setUp() {
-        request = new Request("POST", "form", null, "HTTP/1.1", setUpHeaders(), "name=dan&data=fatcat");
+        request = new Request("POST", "form", null, "HTTP/1.1", setUpHeaders(), "name=dan&data=fatcat", null);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class RequestTest {
 
     @Test
     public void findsFileType() {
-        request = new Request("GET", "image", "jpeg", "HTTP/1.1", null, null);
+        request = new Request("GET", "image", "jpeg", "HTTP/1.1", null, null, null);
         assertEquals("jpeg", request.getFileType());
     }
 

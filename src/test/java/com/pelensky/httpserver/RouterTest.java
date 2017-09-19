@@ -7,6 +7,7 @@ import com.pelensky.httpserver.Router.Router;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -129,7 +130,26 @@ public class RouterTest {
         assertEquals("HTTP/1.1 401\nWWW-Authenticate: Basic realm=\"Authentication required\"", getResponse(request));
     }
 
-    private Request setUpRequest(String request) {
+    @Test
+    public void decodesParameters() throws IOException {
+        Request request = setUpRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1\n");
+        assertEquals("HTTP/1.1 200\nContent-Length: 96\n\nvariable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"?\nvariable_2 = stuff", getResponse(request));
+    }
+
+
+    @Test
+    public void setCookieToChocolate() throws IOException {
+        Request request = setUpRequest("GET /cookie?type=chocolate HTTP/1.1\n");
+        assertEquals("HTTP/1.1 200\nSet-Cookie: type=chocolate\nContent-Length: 3\n\nEat", getResponse(request));
+    }
+
+    @Test
+    public void displayCookieData() throws IOException {
+        Request request = setUpRequest("GET /eat_cookie HTTP/1.1\nCookie: type=chocolate\n");
+        assertEquals("HTTP/1.1 200\nContent-Length: 14\n\nmmmm chocolate", getResponse(request));
+    }
+
+    private Request setUpRequest(String request) throws UnsupportedEncodingException {
         return new RequestParser().parseRequest(request);
     }
 
