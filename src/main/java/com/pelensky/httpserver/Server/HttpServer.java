@@ -3,9 +3,9 @@ package com.pelensky.httpserver.Server;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestProcessor;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Response.ResponseFormatter;
 import com.pelensky.httpserver.Response.ResponseProcessor;
+import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
@@ -25,28 +25,28 @@ class HttpServer {
   }
 
   void serve() {
-    Executors.newSingleThreadExecutor()
-            .execute(
-                    () -> {
-                      while (inProgress) {
-                        try {
-                          clientSocket = serverSocket.accept();
-                          Request request = new RequestProcessor().createRequest(clientSocket);
-                          Response response = Router.findResponse(request);
-                          new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
-                          closeConnections();
-                        } catch (IOException e) {
-                          throw new UncheckedIOException(e);
-                        } catch (NoSuchAlgorithmException e) {
-                          e.printStackTrace();
-                        }
-                      }
-                    }
-            );
-  }
-
-  private void closeConnections() throws IOException {
-    clientSocket.close();
+    Executors.newSingleThreadExecutor().execute(
+            () -> {
+              while (inProgress) {
+                try {
+                  clientSocket = serverSocket.accept();
+                  Request request = new RequestProcessor().createRequest(clientSocket);
+                  Response response = Router.findResponse(request);
+                  new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
+                  clientSocket.close();
+                } catch (IOException e) {
+                  try {
+                    serverSocket.close();
+                  } catch (IOException e1) {
+                    e1.printStackTrace();
+                  }
+                  throw new UncheckedIOException(e);
+                } catch (NoSuchAlgorithmException e) {
+                  e.printStackTrace();
+                }
+              }
+            }
+    );
   }
 
   void closeServerSocket() throws IOException {
