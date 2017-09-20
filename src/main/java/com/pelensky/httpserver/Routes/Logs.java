@@ -4,7 +4,7 @@ import com.pelensky.httpserver.Authentication;
 import com.pelensky.httpserver.LogRequests;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.StatusCodes;
+import com.pelensky.httpserver.Response.Status;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,11 +21,11 @@ public class Logs extends Route {
     @Override
     public Response get(Request request) {
         if (new Authentication(username, password).isAuthenticated(request)) {
-            return new Response(StatusCodes.OK, null, LogRequests.showLogs().getBytes());
+            return new Response(Status.OK.code(), null, LogRequests.showLogs().getBytes());
         } else {
             Map<String, String> header = new HashMap<>();
             header.put("WWW-Authenticate", "Basic realm=\"Authentication required\"");
-            return new Response(StatusCodes.UNAUTHORIZED, header);
+            return new Response(Status.UNAUTHORIZED.code(), header);
         }
     }
 }
