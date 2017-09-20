@@ -4,16 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cookies {
+
     public Map<String, String> getCookie(Map<String,String> headers) {
         Map<String, String> cookies = new HashMap<>();
-        String cookiesString = headers.get("Cookie");
-        if (cookiesString.contains(";")) {
-            String[] splitCookies = cookiesString.split(";");
+        String requestCookies = headers.get("Cookie");
+        if (requestCookies.contains(";")) {
+            String[] splitCookies = requestCookies.split(";");
             for (String individualCookie : splitCookies) {
                 collectCookies(cookies, individualCookie);
             }
         } else {
-            collectCookies(cookies, cookiesString);
+            collectCookies(cookies, requestCookies);
         }
         return cookies;
     }

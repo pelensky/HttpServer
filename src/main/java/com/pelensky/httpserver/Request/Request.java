@@ -39,16 +39,24 @@ public class Request {
         return httpVersion;
     }
 
+    boolean hasHeaders() {
+        return !headers.isEmpty();
+    }
+
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public boolean hasBody() {
+        return body != null;
     }
 
     public String getBody() {
         return body;
     }
 
-    public boolean hasBody() {
-        return body != null;
+    public boolean hasParameters() {
+        return parameters != null;
     }
 
     public Map<String, String> getParameters() {
@@ -67,23 +75,15 @@ public class Request {
         return getFileType() != null;
     }
 
-    public boolean hasParameters() {
-        return parameters != null;
-    }
-
-    public boolean hasHeader() {
-        return !headers.isEmpty();
-    }
-
     public boolean hasCookies() {
         return headers.containsKey("Cookie");
     }
 
-    public boolean hasRange() {
-        return headers.containsKey("Range");
+    public Map<String,String> findCookies() {
+        return (hasCookies()) ? new Cookies().getCookie(headers) : null;
     }
 
-    public Map<String,String> getCookie() {
-        return (hasCookies()) ? new Cookies().getCookie(headers) : null;
+    public boolean hasRange() {
+        return headers.containsKey("Range");
     }
 }

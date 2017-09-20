@@ -33,8 +33,8 @@ public class File extends Route {
         Map<String, String> headers = new HashMap<>();
         if (request.isAFile()) {
             if (request.findETag().equals(createETagFromFile(request.findFileName()))) {
-                new FileProcessor().patchFile(request.findFileName(), request.getBody());
                 statusCode = Status.NO_CONTENT.code();
+                new FileProcessor().patchFile(request.findFileName(), request.getBody());
                 headers.put("ETag", createETagFromFile(request.findFileName()));
             }
         }

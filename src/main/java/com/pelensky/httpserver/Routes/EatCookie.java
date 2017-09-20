@@ -15,7 +15,7 @@ public class EatCookie extends Route {
         StringBuilder body = new StringBuilder();
         body.append("mmmm ");
         if (request.hasCookies()) {
-            body.append(request.getCookie().get("type"));
+            body.append(request.findCookies().get("type"));
         }
         return new Response(Status.OK.code(), null, String.valueOf(body).getBytes());
     }
