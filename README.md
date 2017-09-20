@@ -16,6 +16,7 @@ This is a HTTP server built to pass these [Cob Spec Specifications](https://gith
 - Response processed
 
 #### Server tests
+The tests I was required to pass are the following:
 ![tests](https://i.imgur.com/2T0QVTm.png)
 
 #### Prerequisites 
