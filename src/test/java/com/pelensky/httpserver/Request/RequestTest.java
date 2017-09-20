@@ -92,26 +92,26 @@ public class RequestTest {
     @Test
     public void checkForHeaders() throws UnsupportedEncodingException {
         request = new RequestParser().parseRequest("GET /test HTTP/1.1\nIf-Match: hello");
-        assertTrue(request.hasHeader());
+        assertTrue(request.hasHeaders());
     }
 
     @Test
     public void checksForNoHeaders() throws UnsupportedEncodingException {
         request = new RequestParser().parseRequest("GET / HTTP/1.1\n");
-        assertFalse(request.hasHeader());
+        assertFalse(request.hasHeaders());
     }
 
     @Test
     public void getsASingleCookie() throws UnsupportedEncodingException {
         request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nCookie: yummy_cookie=choco\n");
-        assertEquals("choco", request.getCookie().get("yummy_cookie"));
+        assertEquals("choco", request.findCookies().get("yummy_cookie"));
     }
 
     @Test
     public void getsMultipleCookies() throws UnsupportedEncodingException {
         request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nCookie: yummy_cookie=choco; tasty_cookie=strawberry\n");
-        assertEquals("choco", request.getCookie().get("yummy_cookie"));
-        assertEquals("strawberry", request.getCookie().get("tasty_cookie"));
+        assertEquals("choco", request.findCookies().get("yummy_cookie"));
+        assertEquals("strawberry", request.findCookies().get("tasty_cookie"));
     }
 
     @Test

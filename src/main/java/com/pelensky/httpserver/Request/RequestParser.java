@@ -60,22 +60,22 @@ public class RequestParser {
         String[] splitRequestLine = requestLine.split(" ");
         parameters = findParameters(splitRequestLine[1]);
         method = splitRequestLine[0];
-        getUri(splitRequestLine);
+        uri = getUri(splitRequestLine);
         httpVersion = splitRequestLine[2];
     }
 
     private String getUri(String[] splitRequestLine) {
-        uri = (splitRequestLine[1].length() > 0) ? splitRequestLine[1].substring(1) : "";
-        if (uri.contains(".")) {
-            String[] splitRoute = uri.split(Pattern.quote("."));
-            uri = splitRoute[0];
+        String route = (splitRequestLine[1].length() > 0) ? splitRequestLine[1].substring(1) : "";
+        if (route.contains(".")) {
+            String[] splitRoute = route.split(Pattern.quote("."));
+            route = splitRoute[0];
             fileType = splitRoute[1];
         }
-        if (uri.contains("?")) {
-            String[] splitRoute = uri.split(Pattern.quote("?"));
-            uri = splitRoute[0];
+        if (route.contains("?")) {
+            String[] splitRoute = route.split(Pattern.quote("?"));
+            route = splitRoute[0];
         }
-        return uri;
+        return route;
     }
 
     private Map<String, String> findParameters(String uriAndParams) throws UnsupportedEncodingException {
