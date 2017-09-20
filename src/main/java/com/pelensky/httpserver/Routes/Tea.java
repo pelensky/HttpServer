@@ -2,7 +2,7 @@ package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.StatusCodes;
+import com.pelensky.httpserver.Response.Status;
 
 public class Tea extends Route {
     @Override
@@ -12,6 +12,6 @@ public class Tea extends Route {
 
     @Override
     public Response get(Request request) {
-        return new Response(StatusCodes.OK);
+        return new Response(Status.OK.code());
     }
 }

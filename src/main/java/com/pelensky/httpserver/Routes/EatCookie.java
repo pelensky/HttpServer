@@ -2,7 +2,7 @@ package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.StatusCodes;
+import com.pelensky.httpserver.Response.Status;
 
 public class EatCookie extends Route {
     @Override
@@ -17,6 +17,6 @@ public class EatCookie extends Route {
         if (request.hasCookies()) {
             body.append(request.getCookie().get("type"));
         }
-        return new Response(StatusCodes.OK, null, String.valueOf(body).getBytes());
+        return new Response(Status.OK.code(), null, String.valueOf(body).getBytes());
     }
 }
