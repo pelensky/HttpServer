@@ -21,20 +21,10 @@ public class File extends Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        Integer statusCode;
-        Map<String, String> header = new HashMap<>();
-        byte[] body;
-        if (request.getHeaders().get("Range") != null) {
-            statusCode = Status.PARTIAL_CONTENT.code();
-            Range range = new Range(request);
-            header = range.getRangeHeaders();
-            body = range.getRangeBody();
-        } else {
-            statusCode = Status.OK.code();
-            body = new FileProcessor().readEntireFile((request.getFileType() != null) ? request.findFileName() : request.getUri());
+        if (request.hasRange()) {
+         return getPartialFile(request);
         }
-        header.put("Content-Type", new ContentType().list().get(request.getFileType()));
-        return new Response(statusCode, header, body);
+        return getEntireFile(request);
     }
 
     @Override
@@ -51,10 +41,25 @@ public class File extends Route {
         return new Response(statusCode, headers);
     }
 
+    private Response getPartialFile(Request request) throws IOException {
+        Map <String, String> header = new Range(request).getRangeHeaders();
+        addContentTypeToHeader(request, header);
+        return new Response(Status.PARTIAL_CONTENT.code(), header, new Range(request).getRangeBody());
+    }
+
+    private Response getEntireFile(Request request) throws IOException {
+        Map<String, String> header = new HashMap<>();
+        addContentTypeToHeader(request, header);
+        return new Response(Status.OK.code(), header, new FileProcessor().readEntireFile((request.getFileType() != null) ? request.findFileName() : request.getUri()));
+    }
+
+    private void addContentTypeToHeader(Request request, Map<String, String> header) {
+        header.put("Content-Type", new ContentType().list().get(request.getFileType()));
+    }
+
     private String createETagFromFile(String fileName) throws NoSuchAlgorithmException, IOException {
         return new ETag().createETagFromFileContents(new FileProcessor().readEntireFile(fileName));
     }
-
 
 }
 

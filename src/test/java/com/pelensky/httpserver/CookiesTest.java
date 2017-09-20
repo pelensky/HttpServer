@@ -1,8 +1,6 @@
 package com.pelensky.httpserver;
 
-import com.pelensky.httpserver.File.Cookies;
-import com.pelensky.httpserver.Request.Request;
-import com.pelensky.httpserver.Request.RequestParser;
+import com.pelensky.httpserver.Request.Cookies;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,8 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 public class CookiesTest {
 
-    Cookies cookies;
-    Map<String,String> headers;
+    private Cookies cookies;
+    private Map<String,String> headers;
 
     @Before
     public void setUp() {

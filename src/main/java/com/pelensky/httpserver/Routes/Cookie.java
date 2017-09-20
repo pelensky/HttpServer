@@ -17,9 +17,9 @@ public class Cookie extends Route {
     public Response get(Request request) {
         Map<String, String> headers = new HashMap<>();
         if (request.hasParameters()) {
-            StringBuilder body = new StringBuilder();
-            request.getParameters().forEach((key, value) -> body.append(key).append("=").append(value).append(System.lineSeparator()));
-            headers.put("Set-Cookie", String.valueOf(body));
+            StringBuilder cookies = new StringBuilder();
+            request.getParameters().forEach((key, value) -> cookies.append(key).append("=").append(value).append(System.lineSeparator()));
+            headers.put("Set-Cookie", String.valueOf(cookies));
         }
         return new Response(Status.OK.code(), headers, "Eat".getBytes());
     }

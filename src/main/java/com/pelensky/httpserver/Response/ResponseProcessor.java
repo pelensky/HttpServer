@@ -9,7 +9,7 @@ private OutputStream out;
 
     public void sendResponse(SocketWrapper clientSocket, byte[] response) throws IOException {
         setUp(clientSocket);
-        for (final byte responseByte : response) {
+        for (byte responseByte : response) {
             out.write(responseByte);
         }
         tearDown();

@@ -21,5 +21,9 @@ Status(Integer code, String message) {
     public Integer code() {
         return code;
     }
+
+    public String message() {
+    return message;
+    }
 }
 

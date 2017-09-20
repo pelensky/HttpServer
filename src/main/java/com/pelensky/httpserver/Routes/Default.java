@@ -15,8 +15,7 @@ public class Default extends Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        byte[] body = new FileProcessor().displayDirectoryContentsAsLinks();
-        return new Response(Status.OK.code(), null, body);
+        return new Response(Status.OK.code(), null, new FileProcessor().displayDirectoryContentsAsLinks());
     }
 
     @Override

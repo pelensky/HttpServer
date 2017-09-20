@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Logs extends Route {
-    private final String username = "admin";
-    private final String password = "hunter2";
 
     @Override
     public String route() {
@@ -20,6 +18,8 @@ public class Logs extends Route {
 
     @Override
     public Response get(Request request) {
+        final String username = "admin";
+        final String password = "hunter2";
         if (new Authentication(username, password).isAuthenticated(request)) {
             return new Response(Status.OK.code(), null, LogRequests.showLogs().getBytes());
         } else {
