@@ -29,13 +29,13 @@ public class RequestProcessor {
             if (line.isEmpty()) {
                 break;
             } else {
-                addLine(line, request);
+                addLineToString(line, request);
             }
         }
         return String.valueOf(request);
     }
 
-    private void addLine(String line, StringBuilder request) {
+    private void addLineToString(String line, StringBuilder request) {
         request.append(line);
         request.append(System.lineSeparator());
     }

@@ -10,7 +10,7 @@ public class ResponseFormatter {
     }
 
     private String formatStatusCodeAndHeaders(Response response) {
-        String httpVersion = "HTTP/1.1";
+        final String httpVersion = "HTTP/1.1";
         StringBuilder headerString = new StringBuilder();
         headerString.append(httpVersion).append(" ").append(String.valueOf(response.getStatusCode()));
         addHeaders(response, headerString);
@@ -22,7 +22,7 @@ public class ResponseFormatter {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
         outputStream.write(statusCodeAndHeaders.getBytes());
         outputStream.write(response.getBody());
-        return outputStream.toByteArray( );
+        return outputStream.toByteArray();
     }
 
     private void addHeaders(Response response, StringBuilder responseString) {
@@ -31,8 +31,7 @@ public class ResponseFormatter {
 
     private void addContentLength(Response response, StringBuilder responseString) {
         if (!response.isBodyEmpty()) {
-            byte[] body = response.getBody();
-            String contentLength = "Content-Length: " + String.valueOf(body.length);
+            String contentLength = "Content-Length: " + String.valueOf(response.getBody().length);
             responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator());
         }
     }
@@ -40,7 +39,7 @@ public class ResponseFormatter {
     private String formatHeaders(Response response) {
         StringBuilder headers = new StringBuilder();
         response.getResponseHeader().forEach((key, value) -> headers.append(key).append(": ").append(value).append(System.lineSeparator()));
-        return String.valueOf(headers).trim(); //TODO Don't add a new line then remove it. ForEach with Index?
+        return String.valueOf(headers).trim();
     }
 
 }

@@ -4,13 +4,12 @@ import com.pelensky.httpserver.Authentication;
 import com.pelensky.httpserver.LogRequests;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.Response.Status;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Logs extends Route {
-    private final String username = "admin";
-    private final String password = "hunter2";
 
     @Override
     public String route() {
@@ -19,12 +18,14 @@ public class Logs extends Route {
 
     @Override
     public Response get(Request request) {
+        final String username = "admin";
+        final String password = "hunter2";
         if (new Authentication(username, password).isAuthenticated(request)) {
-            return new Response(200, null, LogRequests.showLogs().getBytes());
+            return new Response(Status.OK.code(), null, LogRequests.showLogs().getBytes());
         } else {
             Map<String, String> header = new HashMap<>();
             header.put("WWW-Authenticate", "Basic realm=\"Authentication required\"");
-            return new Response(401, header);
+            return new Response(Status.UNAUTHORIZED.code(), header);
         }
     }
 }

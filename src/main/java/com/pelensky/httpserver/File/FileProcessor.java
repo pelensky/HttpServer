@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class FileProcessor {
     private final String path = "./public/";
@@ -34,7 +35,7 @@ public class FileProcessor {
     }
 
     public Boolean doesFileExistInDirectory(String filename) {
-       return Files.exists(getPath(filename));
+        return Files.exists(getPath(filename));
     }
 
     private Path getPath(String fileName) {
@@ -43,6 +44,8 @@ public class FileProcessor {
 
     public byte[] displayDirectoryContentsAsLinks() throws IOException {
         String[] files = new File(path).list();
+        assert files != null;
+        Arrays.sort(files);
         return new HtmlFormatter().format("HttpServer", files).getBytes();
     }
 

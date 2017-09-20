@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Router;
 
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
@@ -7,7 +7,6 @@ import com.pelensky.httpserver.Response.ResponseFormatter;
 import com.pelensky.httpserver.Router.Router;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;

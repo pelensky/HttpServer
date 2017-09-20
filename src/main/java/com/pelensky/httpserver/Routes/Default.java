@@ -3,6 +3,7 @@ package com.pelensky.httpserver.Routes;
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
+import com.pelensky.httpserver.Response.Status;
 
 import java.io.IOException;
 
@@ -14,12 +15,11 @@ public class Default extends Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        byte[] body = new FileProcessor().displayDirectoryContentsAsLinks();
-        return new Response(200, null, body);
+        return new Response(Status.OK.code(), null, new FileProcessor().displayDirectoryContentsAsLinks());
     }
 
     @Override
     public Response head(Request request) {
-        return new Response(200);
+        return new Response(Status.OK.code());
     }
 }
