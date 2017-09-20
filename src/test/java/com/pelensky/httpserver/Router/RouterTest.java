@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Router;
 
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;

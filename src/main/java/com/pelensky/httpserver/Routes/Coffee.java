@@ -14,6 +14,6 @@ public class Coffee extends Route {
 
     @Override
     public Response get(Request request) throws IOException {
-        return new Response(Status.TEAPOT.code(), null, "I'm a teapot".getBytes());
+        return new Response(Status.TEAPOT.code(), null, Status.TEAPOT.message().getBytes());
     }
 }

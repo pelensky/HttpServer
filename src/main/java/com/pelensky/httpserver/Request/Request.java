@@ -1,7 +1,5 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.File.Cookies;
-
 import java.util.Map;
 
 
@@ -79,6 +77,10 @@ public class Request {
 
     public boolean hasCookies() {
         return headers.containsKey("Cookie");
+    }
+
+    public boolean hasRange() {
+        return headers.containsKey("Range");
     }
 
     public Map<String,String> getCookie() {
