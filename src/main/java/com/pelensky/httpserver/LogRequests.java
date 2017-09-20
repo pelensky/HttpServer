@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogRequests {
-    private static final List<Request> logs = new ArrayList<>();
+    private static final List<Request> logs = new ArrayList<>(100);
 
     public static void add(Request request) {
         logs.add(request);
