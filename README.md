@@ -5,7 +5,7 @@
 
 This is a HTTP server built to pass these [Cob Spec Specifications](https://github.com/8thlight/cob_spec).
 
-The tests tests to pass are as follows:
+The tests I was required to pass are the following:
 ![tests](https://i.imgur.com/2T0QVTm.png)
 
 #### Prerequisites 
