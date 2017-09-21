@@ -2,6 +2,8 @@ package com.pelensky.httpserver.Response;
 
 public enum ResponseHeader {
     CONTENT_LENGTH("Content-Length: "),
+    CONTENT_TYPE("Content-Type"),
+    ETAG("ETag"),
     COOKIE("Set-Cookie"),
     LOCATION("Location"),
     WWW_AUTHENTICATE("WWW-Authenticate");
