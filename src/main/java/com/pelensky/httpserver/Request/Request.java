@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.Response.ResponseHeader;
 import com.pelensky.httpserver.Utilities.Cookies;
 
 import java.util.Map;
@@ -66,7 +67,7 @@ public class Request {
     }
 
     public String findETag() {
-        return headers.get("If-Match");
+        return headers.get(RequestHeader.IF_MATCH.header());
     }
 
     public String findFileName() {
@@ -78,7 +79,7 @@ public class Request {
     }
 
     public boolean hasCookies() {
-        return headers.containsKey("Cookie");
+        return headers.containsKey(RequestHeader.COOKIE.header());
     }
 
     public Map<String,String> findCookies() {
@@ -86,6 +87,6 @@ public class Request {
     }
 
     public boolean hasRange() {
-        return headers.containsKey("Range");
+        return headers.containsKey(RequestHeader.RANGE.header());
     }
 }

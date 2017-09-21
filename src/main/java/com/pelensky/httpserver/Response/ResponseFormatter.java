@@ -31,7 +31,7 @@ public class ResponseFormatter {
 
     private void addContentLength(Response response, StringBuilder responseString) {
         if (!response.isBodyEmpty()) {
-            String contentLength = "Content-Length: " + String.valueOf(response.getBody().length);
+            String contentLength = ResponseHeader.CONTENT_LENGTH.header() + String.valueOf(response.getBody().length);
             responseString.append(System.lineSeparator()).append(contentLength).append(System.lineSeparator()).append(System.lineSeparator());
         }
     }

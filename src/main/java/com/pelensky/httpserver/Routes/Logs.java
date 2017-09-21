@@ -1,5 +1,6 @@
 package com.pelensky.httpserver.Routes;
 
+import com.pelensky.httpserver.Response.ResponseHeader;
 import com.pelensky.httpserver.Utilities.LoggingTool;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
@@ -25,7 +26,7 @@ public class Logs extends Route {
             return new Response(Status.OK.code(), null, LoggingTool.showLogs());
         } else {
             Map<String, String> header = new HashMap<>();
-            header.put("WWW-Authenticate", "Basic realm=\"Authentication required\"");
+            header.put(ResponseHeader.WWW_AUTHENTICATE.header(), "Basic realm=\"Authentication required\"");
             return new Response(Status.UNAUTHORIZED.code(), header);
         }
     }
