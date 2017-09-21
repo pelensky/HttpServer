@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-public class Middleware {
+public class BasicAuthorization {
     private final List<String[]> list = new ArrayList<>();
 
     public void add(String route, String username, String password) {

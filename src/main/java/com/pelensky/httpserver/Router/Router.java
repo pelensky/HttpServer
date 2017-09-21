@@ -5,7 +5,7 @@ import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Response.ResponseHeader;
 import com.pelensky.httpserver.Response.Status;
 import com.pelensky.httpserver.Routes.Route;
-import com.pelensky.httpserver.Utilities.Middleware;
+import com.pelensky.httpserver.Utilities.BasicAuthorization;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -14,9 +14,9 @@ import java.util.Map;
 
 public class Router {
 
-    public static Response findResponse(Middleware middleware, Request request) throws IOException, NoSuchAlgorithmException {
-        if (middleware.isAuthenticationRequired(request)){
-            if (middleware.isAuthenticated(request)) {
+    public static Response findResponse(BasicAuthorization basicAuthorization, Request request) throws IOException, NoSuchAlgorithmException {
+        if (basicAuthorization.isAuthenticationRequired(request)){
+            if (basicAuthorization.isAuthenticated(request)) {
                 return getResponse(request);
             }
             return requestAuthorization();

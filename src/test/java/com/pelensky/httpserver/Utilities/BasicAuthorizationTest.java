@@ -11,43 +11,43 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class MiddlewareTest {
-    Middleware middleware;
+public class BasicAuthorizationTest {
+    BasicAuthorization basicAuthorization;
 
     @Before
     public void setUp() {
-        middleware = new Middleware();
-        middleware.add("secret", "dan", "asdf");
+        basicAuthorization = new BasicAuthorization();
+        basicAuthorization.add("secret", "dan", "asdf");
     }
     @Test
     public void acceptsARoute() {
-        assertEquals(middleware.getList().get(0)[0], "secret");
-        assertEquals(middleware.getList().get(0)[1], "dan");
-        assertEquals(middleware.getList().get(0)[2], "asdf");
+        assertEquals(basicAuthorization.getList().get(0)[0], "secret");
+        assertEquals(basicAuthorization.getList().get(0)[1], "dan");
+        assertEquals(basicAuthorization.getList().get(0)[2], "asdf");
     }
 
     @Test
     public void checksIfAuthenticationIsRequired() throws UnsupportedEncodingException {
         Request request = new RequestParser().parseRequest("GET /secret HTTP/1.1");
-       assertTrue(middleware.isAuthenticationRequired(request));
+       assertTrue(basicAuthorization.isAuthenticationRequired(request));
     }
 
     @Test
     public void checksAuthenticationNotRequired() throws UnsupportedEncodingException {
         Request request = new RequestParser().parseRequest("GET / HTTP/1.1");
-        assertFalse(middleware.isAuthenticationRequired(request));
+        assertFalse(basicAuthorization.isAuthenticationRequired(request));
     }
 
     @Test
     public void authenticationMatches() throws UnsupportedEncodingException {
         Request request = new RequestParser().parseRequest("GET /secret HTTP/1.1\nAuthorization: Basic ZGFuOmFzZGY=\n");
-        assertTrue(middleware.isAuthenticated(request));
+        assertTrue(basicAuthorization.isAuthenticated(request));
     }
 
     @Test
     public void authenticationDoesntMatch() throws UnsupportedEncodingException {
         Request request = new RequestParser().parseRequest("GET /secret HTTP/1.1\nAuthorization: Basic ZGFuOmFzZGZhZHNmYWRz\n");
-        assertFalse(middleware.isAuthenticated(request));
+        assertFalse(basicAuthorization.isAuthenticated(request));
     }
 
 }

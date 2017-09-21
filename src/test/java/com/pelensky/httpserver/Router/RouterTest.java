@@ -4,8 +4,7 @@ import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestParser;
 import com.pelensky.httpserver.Response.ResponseFormatter;
-import com.pelensky.httpserver.Router.Router;
-import com.pelensky.httpserver.Utilities.Middleware;
+import com.pelensky.httpserver.Utilities.BasicAuthorization;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -182,9 +181,9 @@ public class RouterTest {
     }
 
     private String getResponse(Request request) throws IOException, NoSuchAlgorithmException {
-        Middleware middleware = new Middleware();
-        middleware.add("logs", "admin", "hunter2");
-        return new String(new ResponseFormatter().formatResponse(Router.findResponse(middleware, request)));
+        BasicAuthorization basicAuthorization = new BasicAuthorization();
+        basicAuthorization.add("logs", "admin", "hunter2");
+        return new String(new ResponseFormatter().formatResponse(Router.findResponse(basicAuthorization, request)));
     }
 
 
