@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.Utilities;
 
 import com.pelensky.httpserver.Request.Request;
+import com.pelensky.httpserver.Request.RequestHeader;
 
 import java.util.Base64;
 
@@ -15,7 +16,7 @@ public class Authentication {
     }
 
     public boolean isAuthenticated(Request request) {
-        if (request.getHeaders().get("Authorization") != null) {
+        if (request.getHeaders().get(RequestHeader.AUTHORIZATION.header()) != null) {
             String[] decodedUsernameAndPassword = decodeUsernameAndPassword(request);
             return (decodedUsernameAndPassword[0].equals(username) && decodedUsernameAndPassword[1].equals(password));
         }
@@ -23,7 +24,7 @@ public class Authentication {
     }
 
     private String[] decodeUsernameAndPassword(Request request) {
-        String[] authorizationDetails = request.getHeaders().get("Authorization").split(" ");
+        String[] authorizationDetails = request.getHeaders().get(RequestHeader.AUTHORIZATION.header()).split(" ");
         return new String(Base64.getDecoder().decode(authorizationDetails[1])).split(":");
     }
 

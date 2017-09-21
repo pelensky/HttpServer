@@ -12,6 +12,7 @@ import java.util.Arrays;
 
 public class FileProcessor {
     private final String path = "./public/";
+    private final String webTitle = "HttpServer";
 
     public byte[] readEntireFile(String fileName) throws IOException {
         return Files.readAllBytes(getPath(fileName));
@@ -46,7 +47,7 @@ public class FileProcessor {
         String[] files = new File(path).list();
         assert files != null;
         Arrays.sort(files);
-        return new HtmlFormatter().format("HttpServer", files).getBytes();
+        return new HtmlFormatter().format(webTitle, files).getBytes();
     }
 
     public byte[] patchFile(String fileName, String updatedContent) throws IOException {

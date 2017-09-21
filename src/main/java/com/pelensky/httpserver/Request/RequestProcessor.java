@@ -16,7 +16,7 @@ public class RequestProcessor {
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String request = getHeader(in);
-        if (request.contains("Content-Length")) request += getBody(in, request);
+        if (request.contains(RequestHeader.CONTENT_LENGTH.header())) request += getBody(in, request);
         return request;
     }
 
@@ -48,7 +48,7 @@ public class RequestProcessor {
         Integer contentLength = 0;
         for (String line : header) {
             String[] lineWords = line.split(":");
-            if (lineWords[0].trim().equals("Content-Length")) {
+            if (lineWords[0].trim().equals(RequestHeader.CONTENT_LENGTH.header())) {
                 contentLength = Integer.parseInt(lineWords[1].trim());
             }
         }

@@ -6,7 +6,6 @@ import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Response.Status;
 import com.pelensky.httpserver.Routes.File;
 import com.pelensky.httpserver.Routes.Route;
-import com.pelensky.httpserver.Routes.Routes;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

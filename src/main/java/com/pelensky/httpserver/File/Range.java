@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.File;
 
 import com.pelensky.httpserver.Request.Request;
+import com.pelensky.httpserver.Request.RequestHeader;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class Range {
    }
 
     private String[] splitRangeRequest() throws IOException {
-        String[] requestTypeAndData = request.getHeaders().get("Range").split("=");
+        String[] requestTypeAndData = request.getHeaders().get(RequestHeader.RANGE.header()).split("=");
         String[] startAndEndOfRange = requestTypeAndData[1].split("-");
         if (startAndEndOfRange[0].isEmpty()) startAndEndOfRange = setStartAndEndOfRange(startAndEndOfRange);
         if (startAndEndOfRange.length == 1) startAndEndOfRange = keepStartChangeEndToEndOfFile(startAndEndOfRange);
