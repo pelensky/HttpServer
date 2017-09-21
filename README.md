@@ -5,7 +5,17 @@
 
 This is a HTTP server built to pass these [Cob Spec Specifications](https://github.com/8thlight/cob_spec).
 
-The tests tests to pass are as follows:
+#### Server flow
+- Server starts
+- Waits for request
+- Processes request
+- Parses request, creates Request object
+- Router finds correct route for request
+- Response object created
+- Response formatted
+- Response processed
+
+#### Server tests
 ![tests](https://i.imgur.com/2T0QVTm.png)
 
 #### Prerequisites 
