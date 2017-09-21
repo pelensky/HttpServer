@@ -10,8 +10,7 @@ import java.io.InputStreamReader;
 public class RequestProcessor {
 
     public Request createRequest(SocketWrapper clientSocket) throws IOException {
-        Request request = new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
-        return request;
+        return new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
     }
 
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {

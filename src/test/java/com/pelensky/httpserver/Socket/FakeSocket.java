@@ -4,7 +4,8 @@ import java.io.*;
 
 public class FakeSocket implements SocketWrapper {
 
-    private String input;
+    private final String input;
+    private boolean connected = false;
 
     public FakeSocket(String input) {
         this.input = input;
@@ -16,6 +17,7 @@ public class FakeSocket implements SocketWrapper {
 
     @Override
     public InputStream getInputStream() throws IOException {
+        connected = true;
         return new ByteArrayInputStream(input.getBytes());
     }
 
@@ -26,5 +28,9 @@ public class FakeSocket implements SocketWrapper {
 
     @Override
     public void close() throws IOException {
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 }
