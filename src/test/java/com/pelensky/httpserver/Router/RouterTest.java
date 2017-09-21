@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class RouterTest {
@@ -167,6 +167,13 @@ public class RouterTest {
         assertEquals("HTTP/1.1 200\nContent-Type: text/plain\nContent-Length: 15\n\npatched content", getResponse(nextRequest));
         new FileProcessor().patchFile("patch-content.txt", "default content");
     }
+
+    @Test
+    public void LetsAuthorisedUserIn() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\n");
+        assertTrue(getResponse(request).contains("200"));
+    }
+
 
     private Request setUpRequest(String request) throws UnsupportedEncodingException {
         return new RequestParser().parseRequest(request);
