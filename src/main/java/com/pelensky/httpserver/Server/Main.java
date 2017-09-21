@@ -1,7 +1,8 @@
 package com.pelensky.httpserver.Server;
 
-import com.pelensky.httpserver.Logs.LoggingTool;
+import com.pelensky.httpserver.Utilities.LoggingTool;
 import com.pelensky.httpserver.Socket.HttpServerSocket;
+import com.pelensky.httpserver.Utilities.CommandLineArgumentParser;
 
 import java.io.IOException;
 

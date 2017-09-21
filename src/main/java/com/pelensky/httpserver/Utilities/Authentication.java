@@ -1,4 +1,4 @@
-package com.pelensky.httpserver.Server;
+package com.pelensky.httpserver.Utilities;
 
 import com.pelensky.httpserver.Request.Request;
 
@@ -6,8 +6,8 @@ import java.util.Base64;
 
 public class Authentication {
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
 
     public Authentication(String username, String password) {
        this.username = username;

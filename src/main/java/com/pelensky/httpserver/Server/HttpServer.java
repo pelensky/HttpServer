@@ -19,7 +19,7 @@ class HttpServer {
 
   private final ServerSocketWrapper serverSocket;
   private SocketWrapper clientSocket;
-  private final ExecutorService executor = Executors.newFixedThreadPool(10);
+  private final ExecutorService executor = Executors.newFixedThreadPool(20);
 
   private boolean inProgress = true;
 
