@@ -1,7 +1,9 @@
 package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Utilities.Cookies;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 public class Request {
@@ -69,11 +71,11 @@ public class Request {
     }
 
     public String findFileName() {
-        return uri + "." + fileType;
+        return  (fileType != null) ? uri + "." + fileType : uri;
     }
 
     public boolean isAFile() {
-        return getFileType() != null;
+        return getFileType() != null || (!uri.isEmpty() && new FileProcessor().doesFileExistInDirectory(uri));
     }
 
     public boolean hasCookies() {

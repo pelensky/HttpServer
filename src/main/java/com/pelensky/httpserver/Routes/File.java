@@ -1,6 +1,7 @@
 package com.pelensky.httpserver.Routes;
 
 import com.pelensky.httpserver.File.ContentType;
+import com.pelensky.httpserver.Response.ResponseHeader;
 import com.pelensky.httpserver.Utilities.ETag;
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.File.Range;
@@ -14,9 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class File extends Route {
+
     @Override
-    public String route() {
-        return null;
+    public boolean respondsTo(Request request) {
+        return new FileProcessor().doesFileExistInDirectory(request.findFileName());
     }
 
     @Override
@@ -35,7 +37,7 @@ public class File extends Route {
             if (request.findETag().equals(createETag(request.findFileName()))) {
                 statusCode = Status.NO_CONTENT.code();
                 new FileProcessor().patchFile(request.findFileName(), request.getBody());
-                headers.put("ETag", createETag(request.findFileName()));
+                headers.put(ResponseHeader.ETAG.header(), createETag(request.findFileName()));
             }
         }
         return new Response(statusCode, headers);

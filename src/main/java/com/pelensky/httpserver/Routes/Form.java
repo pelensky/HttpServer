@@ -8,8 +8,8 @@ public class Form extends Route {
 private byte[] body;
 
     @Override
-    public String route() {
-        return "form";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("form");
     }
 
     @Override

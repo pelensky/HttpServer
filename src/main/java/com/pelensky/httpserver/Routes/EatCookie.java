@@ -5,9 +5,10 @@ import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Response.Status;
 
 public class EatCookie extends Route {
+
     @Override
-    public String route() {
-        return "eat_cookie";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("eat_cookie");
     }
 
     @Override

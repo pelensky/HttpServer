@@ -8,9 +8,10 @@ import com.pelensky.httpserver.Response.Status;
 import java.io.IOException;
 
 public class Default extends Route {
+
     @Override
-    public String route() {
-        return "";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("");
     }
 
     @Override

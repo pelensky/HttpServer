@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Cookie extends Route {
     @Override
-    public String route() {
-        return "cookie";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("cookie");
     }
 
     @Override

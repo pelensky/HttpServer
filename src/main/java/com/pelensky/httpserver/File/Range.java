@@ -2,6 +2,7 @@ package com.pelensky.httpserver.File;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestHeader;
+import com.pelensky.httpserver.Response.ResponseHeader;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class Range {
     public Map<String, String> getRangeHeaders() throws IOException {
         String[] rangeRequest = splitRangeRequest();
         Map<String, String> responseHeader = new HashMap<>();
-        responseHeader.put("Content-Range", rangeRequest[0] + " " + rangeRequest[1] + "-" + rangeRequest[2] + "/" + String.valueOf(lastByte()));
+        responseHeader.put(ResponseHeader.CONTENT_RANGE.header(), rangeRequest[0] + " " + rangeRequest[1] + "-" + rangeRequest[2] + "/" + String.valueOf(lastByte()));
         return responseHeader;
     }
 

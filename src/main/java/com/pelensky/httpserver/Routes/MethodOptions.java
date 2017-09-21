@@ -7,10 +7,9 @@ import com.pelensky.httpserver.Response.Status;
 public class MethodOptions extends Route {
 
     @Override
-    public String route() {
-        return "method_options";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("method_options");
     }
-
 
     @Override
     public Response get(Request request) {

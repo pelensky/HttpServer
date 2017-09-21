@@ -14,8 +14,8 @@ import java.util.Map;
 public class Logs extends Route {
 
     @Override
-    public String route() {
-        return "logs";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("logs");
     }
 
     @Override

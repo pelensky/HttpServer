@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public abstract class Route {
 
-    public abstract String route();
+    public abstract boolean respondsTo(Request request);
 
     public Response call(Request request) throws IOException, NoSuchAlgorithmException {
         String method = request.getMethod();
