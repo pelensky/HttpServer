@@ -5,9 +5,10 @@ import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Response.Status;
 
 public class Parameters extends Route {
+
     @Override
-    public String route() {
-        return "parameters";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("parameters");
     }
 
     @Override

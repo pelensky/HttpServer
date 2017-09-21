@@ -8,6 +8,7 @@ import java.util.List;
 public class Routes {
     private static final Route defaultRoute = new Default();
     private static final Route form = new Form();
+    private static final Route file = new File();
     private static final Route methodOptions = new MethodOptions();
     private static final Route methodOptions2 = new MethodOptions2();
     private static final Route redirect = new Redirect();
@@ -31,6 +32,7 @@ public class Routes {
         routesList.add(parameters);
         routesList.add(cookie);
         routesList.add(eatCookie);
+        routesList.add(file);
         return routesList;
     }
 }

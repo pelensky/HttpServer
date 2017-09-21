@@ -11,8 +11,8 @@ import java.util.Map;
 public class Redirect extends Route {
 
     @Override
-    public String route() {
-        return "redirect";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("redirect");
     }
 
     @Override

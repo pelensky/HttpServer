@@ -7,9 +7,10 @@ import com.pelensky.httpserver.Response.Status;
 import java.io.IOException;
 
 public class Coffee extends Route {
+
     @Override
-    public String route() {
-        return "coffee";
+    public boolean respondsTo(Request request) {
+        return request.getUri().equals("coffee");
     }
 
     @Override
