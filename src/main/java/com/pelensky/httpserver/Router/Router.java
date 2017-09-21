@@ -2,7 +2,6 @@ package com.pelensky.httpserver.Router;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
-import com.pelensky.httpserver.Response.Status;
 import com.pelensky.httpserver.Routes.Route;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class Router {
         return selection.call(request);
       }
     }
-    return new Response(Status.NOT_FOUND.code());
+    return null;
   }
 
-}
+  }
