@@ -9,6 +9,7 @@ import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 import com.pelensky.httpserver.Utilities.LoggingTool;
+import com.pelensky.httpserver.Utilities.Middleware;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -19,12 +20,14 @@ import java.util.concurrent.Executors;
 public class HttpServer {
 
   private final ServerSocketWrapper serverSocket;
+  private final Middleware middleware;
   private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
   private boolean inProgress = true;
 
-  public HttpServer(ServerSocketWrapper serverSocket) {
+  public HttpServer(ServerSocketWrapper serverSocket, Middleware middleware) {
     this.serverSocket = serverSocket;
+    this.middleware = middleware;
   }
 
   void serve() throws IOException {
@@ -49,7 +52,7 @@ public class HttpServer {
 
   public void processRequestAndResponse(SocketWrapper clientSocket) throws IOException, NoSuchAlgorithmException {
     Request request = new RequestProcessor().createRequest(clientSocket);
-    Response response = Router.findResponse(request);
+    Response response = Router.findResponse(middleware, request);
     new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
   }
 

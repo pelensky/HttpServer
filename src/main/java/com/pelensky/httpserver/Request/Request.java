@@ -3,7 +3,6 @@ package com.pelensky.httpserver.Request;
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.Utilities.Cookies;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 public class Request {
@@ -88,5 +87,9 @@ public class Request {
 
     public boolean hasRange() {
         return headers.containsKey(RequestHeader.RANGE.header());
+    }
+
+    public boolean hasAuthorization() {
+        return headers.containsKey(RequestHeader.AUTHORIZATION.header());
     }
 }
