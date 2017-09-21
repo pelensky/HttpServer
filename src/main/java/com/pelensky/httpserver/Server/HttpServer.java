@@ -18,8 +18,7 @@ import java.util.concurrent.Executors;
 class HttpServer {
 
   private final ServerSocketWrapper serverSocket;
-  private SocketWrapper clientSocket;
-  private final ExecutorService executor = Executors.newFixedThreadPool(20);
+  private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
   private boolean inProgress = true;
 
@@ -27,36 +26,28 @@ class HttpServer {
     this.serverSocket = serverSocket;
   }
 
-  void serve() {
-    executor.execute(
+  void serve() throws IOException {
+    while (inProgress) {
+      SocketWrapper clientSocket = serverSocket.accept();
+      executor.execute(
             () -> {
-              while (inProgress) {
                 try {
-                  clientSocket = serverSocket.accept();
-                  processRequestAndResponse();
-                  clientSocket.close();
+                  processRequestAndResponse(clientSocket);
                 } catch (IOException e) {
                   executor.shutdownNow();
                   throw new UncheckedIOException(e);
                 } catch (NoSuchAlgorithmException e) {
                   e.printStackTrace();
                 }
-              }
             }
     );
+    }
   }
 
-  private void processRequestAndResponse() throws IOException, NoSuchAlgorithmException {
+  private void processRequestAndResponse(SocketWrapper clientSocket) throws IOException, NoSuchAlgorithmException {
     Request request = new RequestProcessor().createRequest(clientSocket);
     Response response = Router.findResponse(request);
     new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
   }
 
-  void closeServerSocket() throws IOException {
-    serverSocket.close();
-  }
-
-  void killServer() {
-    inProgress = false;
-  }
 }
