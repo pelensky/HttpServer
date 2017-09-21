@@ -26,5 +26,3 @@ The tests tests to pass are as follows:
 12. Update the PUBLIC_DIR variable to `!define PUBLIC_DIR {/Users/YOUR_COMPUTER_NAME/cob_spec/public/}`
 13. Click Save
 14. Click [Suite](http://localhost:9090/HttpTestSuite?suite) to run all tests.
-
-

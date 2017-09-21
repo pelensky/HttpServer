@@ -8,6 +8,7 @@ import com.pelensky.httpserver.Response.ResponseProcessor;
 import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
+import com.pelensky.httpserver.Utilities.LoggingTool;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -34,9 +35,11 @@ public class HttpServer {
                 try {
                   processRequestAndResponse(clientSocket);
                 } catch (IOException e) {
+                    LoggingTool.logError(e.toString());
                   executor.shutdownNow();
                   throw new UncheckedIOException(e);
                 } catch (NoSuchAlgorithmException e) {
+                  LoggingTool.logError(e.toString());
                   e.printStackTrace();
                 }
             }
