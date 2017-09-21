@@ -1,4 +1,4 @@
-package com.pelensky.httpserver.Logs;
+package com.pelensky.httpserver.Utilities;
 
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;

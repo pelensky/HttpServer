@@ -1,4 +1,4 @@
-package com.pelensky.httpserver.Request;
+package com.pelensky.httpserver.Utilities;
 
 import java.util.HashMap;
 import java.util.Map;

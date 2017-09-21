@@ -1,5 +1,7 @@
 package com.pelensky.httpserver.Request;
 
+import com.pelensky.httpserver.Utilities.Cookies;
+
 import java.util.Map;
 
 

@@ -1,5 +1,6 @@
-package com.pelensky.httpserver.Logs;
+package com.pelensky.httpserver.Utilities;
 
+import com.pelensky.httpserver.Utilities.LoggingTool;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.File;
 
-import com.pelensky.httpserver.Response.HtmlFormatter;
+import com.pelensky.httpserver.Utilities.HtmlFormatter;
 
 import java.io.File;
 import java.io.IOException;

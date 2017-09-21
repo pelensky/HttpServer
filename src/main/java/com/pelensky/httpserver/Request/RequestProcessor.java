@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Logs.LoggingTool;
+import com.pelensky.httpserver.Utilities.LoggingTool;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.BufferedReader;
