@@ -1,10 +1,8 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Response.ResponseHeader;
 import com.pelensky.httpserver.Utilities.Cookies;
 
 import java.util.Map;
-
 
 public class Request {
 
@@ -38,7 +36,7 @@ public class Request {
         return fileType;
     }
 
-    public String getHttpVersion() {
+    String getHttpVersion() {
         return httpVersion;
     }
 
