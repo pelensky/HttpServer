@@ -1,6 +1,5 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Utilities;
 
-import com.pelensky.httpserver.Request.Cookies;
 import org.junit.Before;
 import org.junit.Test;
 

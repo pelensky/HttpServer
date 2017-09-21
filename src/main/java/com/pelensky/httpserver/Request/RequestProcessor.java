@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.LogRequests;
+import com.pelensky.httpserver.Utilities.LoggingTool;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.BufferedReader;
@@ -10,15 +10,13 @@ import java.io.InputStreamReader;
 public class RequestProcessor {
 
     public Request createRequest(SocketWrapper clientSocket) throws IOException {
-        Request request = new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
-        LogRequests.add(request);
-        return request;
+        return new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
     }
 
     String getRequestFromSocket(SocketWrapper clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String request = getHeader(in);
-        if (request.contains("Content-Length")) request += getBody(in, request);
+        if (request.contains(RequestHeader.CONTENT_LENGTH.header())) request += getBody(in, request);
         return request;
     }
 
@@ -32,7 +30,9 @@ public class RequestProcessor {
                 addLineToString(line, request);
             }
         }
-        return String.valueOf(request);
+        String header = String.valueOf(request);
+        LoggingTool.logRequest(header);
+        return header;
     }
 
     private void addLineToString(String line, StringBuilder request) {
@@ -48,7 +48,7 @@ public class RequestProcessor {
         Integer contentLength = 0;
         for (String line : header) {
             String[] lineWords = line.split(":");
-            if (lineWords[0].trim().equals("Content-Length")) {
+            if (lineWords[0].trim().equals(RequestHeader.CONTENT_LENGTH.header())) {
                 contentLength = Integer.parseInt(lineWords[1].trim());
             }
         }

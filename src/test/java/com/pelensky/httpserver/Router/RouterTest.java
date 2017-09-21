@@ -47,6 +47,12 @@ public class RouterTest {
     }
 
     @Test
+    public void serverRespondsToDeleteRequestWith200() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("DELETE /form HTTP/1.1\n");
+        assertEquals("HTTP/1.1 200", getResponse(request));
+    }
+
+    @Test
     public void serverRespondsToHeadRequestWith200() throws IOException, NoSuchAlgorithmException {
         Request request = setUpRequest("HEAD / HTTP/1.1\n");
         assertEquals("HTTP/1.1 200", getResponse(request));

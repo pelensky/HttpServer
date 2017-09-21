@@ -1,12 +1,12 @@
-package com.pelensky.httpserver.Server;
+package com.pelensky.httpserver.Utilities;
 
 import java.util.Objects;
 
-class CommandLineArgumentParser {
+public class CommandLineArgumentParser {
 
     private final String[] args;
 
-    CommandLineArgumentParser(String[] args) {
+    public CommandLineArgumentParser(String[] args) {
         this.args = args;
     }
 
@@ -20,13 +20,13 @@ class CommandLineArgumentParser {
         return null;
     }
 
-    Integer findPort() {
+    public Integer findPort() {
         Integer index = loopThroughArguments("-p");
         Integer defaultPort = 5000;
         return Objects.equals(index, null) ? defaultPort : Integer.parseInt(args[index]);
     }
 
-    String findDirectory() {
+    public String findDirectory() {
         Integer index = loopThroughArguments("-d");
         String defaultDirectory = "PUBLIC_DIR";
         return Objects.equals(index, null) ? defaultDirectory : args[index];

@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Utilities;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;

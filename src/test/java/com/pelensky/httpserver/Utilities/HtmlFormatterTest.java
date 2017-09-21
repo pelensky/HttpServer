@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Utilities;
 
 import org.junit.Before;
 import org.junit.Test;

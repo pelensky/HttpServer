@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -59,17 +57,17 @@ public class RequestParserTest {
     }
 
     @Test
-    public void handlesMultiplesParamsWhenEncoded() throws UnsupportedEncodingException {
+    public void handlesMultipleParamsWhenEncoded() throws UnsupportedEncodingException {
         assertEquals("stuff", (requestParser.parseRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1\n").getParameters().get("variable_2")));
     }
 
     @Test
-    public void correctlyIdentifiesURI() throws UnsupportedEncodingException {
+    public void identifiesURI() throws UnsupportedEncodingException {
         assertEquals("parameters", (requestParser.parseRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1\n").getUri()));
     }
 
     @Test
-    public void correctlyIdentifiesHttpVersion() throws UnsupportedEncodingException {
+    public void identifiesHttpVersion() throws UnsupportedEncodingException {
         assertEquals("HTTP/1.1", (requestParser.parseRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1\n").getHttpVersion()));
     }
 }

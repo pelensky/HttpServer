@@ -8,6 +8,7 @@ import com.pelensky.httpserver.Response.ResponseProcessor;
 import com.pelensky.httpserver.Router.Router;
 import com.pelensky.httpserver.Socket.ServerSocketWrapper;
 import com.pelensky.httpserver.Socket.SocketWrapper;
+import com.pelensky.httpserver.Utilities.LoggingTool;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -15,48 +16,45 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-class HttpServer {
+public class HttpServer {
 
   private final ServerSocketWrapper serverSocket;
-  private SocketWrapper clientSocket;
   private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
   private boolean inProgress = true;
 
-  HttpServer(ServerSocketWrapper serverSocket) {
+  public HttpServer(ServerSocketWrapper serverSocket) {
     this.serverSocket = serverSocket;
   }
 
-  void serve() {
-    executor.execute(
+  void serve() throws IOException {
+    while (inProgress) {
+      SocketWrapper clientSocket = serverSocket.accept();
+      executor.execute(
             () -> {
-              while (inProgress) {
                 try {
-                  clientSocket = serverSocket.accept();
-                  processRequestAndResponse();
-                  clientSocket.close();
+                  processRequestAndResponse(clientSocket);
                 } catch (IOException e) {
+                    LoggingTool.logError(e.toString());
                   executor.shutdownNow();
                   throw new UncheckedIOException(e);
                 } catch (NoSuchAlgorithmException e) {
+                  LoggingTool.logError(e.toString());
                   e.printStackTrace();
                 }
-              }
             }
     );
+    }
   }
 
-  private void processRequestAndResponse() throws IOException, NoSuchAlgorithmException {
+  public void processRequestAndResponse(SocketWrapper clientSocket) throws IOException, NoSuchAlgorithmException {
     Request request = new RequestProcessor().createRequest(clientSocket);
     Response response = Router.findResponse(request);
     new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
   }
 
-  void closeServerSocket() throws IOException {
-    serverSocket.close();
-  }
-
-  void killServer() {
+  public void killServer() {
     inProgress = false;
   }
+
 }

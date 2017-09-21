@@ -11,19 +11,19 @@ import static org.junit.Assert.assertEquals;
 public class ResponseFormatterTest {
 
     @Test
-    public void processesABasicGetRequestResponse() throws IOException {
+    public void formatsAGetRequestResponse() throws IOException {
         Response response = new Response(200);
         assertEquals("HTTP/1.1 200", stringifiedVersionOfResponse(response));
     }
 
     @Test
-    public void processA404Response() throws IOException {
+    public void formatsA404Response() throws IOException {
         Response response = new Response(404);
         assertEquals("HTTP/1.1 404", stringifiedVersionOfResponse(response));
     }
 
     @Test
-    public void processesAResponseWithHeaders() throws IOException {
+    public void formatsAResponseWithHeaders() throws IOException {
         Map<String, String> headers= new HashMap<>();
         headers.put("Location", "/");
         Response response = new Response(302, headers);
@@ -31,7 +31,7 @@ public class ResponseFormatterTest {
     }
 
     @Test
-    public void processesAResponseWithABody() throws IOException {
+    public void formatsAResponseWithABody() throws IOException {
         Response response = new Response(200, null, "data=fatcat".getBytes());
         assertEquals("HTTP/1.1 200\nContent-Length: 11\n\ndata=fatcat", stringifiedVersionOfResponse(response));
     }

@@ -1,4 +1,6 @@
-package com.pelensky.httpserver.Request;
+package com.pelensky.httpserver.Utilities;
+
+import com.pelensky.httpserver.Request.RequestHeader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +9,7 @@ public class Cookies {
 
     public Map<String, String> getCookie(Map<String,String> headers) {
         Map<String, String> cookies = new HashMap<>();
-        String requestCookies = headers.get("Cookie");
+        String requestCookies = headers.get(RequestHeader.COOKIE.header());
         if (requestCookies.contains(";")) {
             String[] splitCookies = requestCookies.split(";");
             for (String individualCookie : splitCookies) {
