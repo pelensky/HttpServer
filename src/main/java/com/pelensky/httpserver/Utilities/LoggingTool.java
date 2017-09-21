@@ -34,6 +34,10 @@ public class LoggingTool {
         LOGGER.info(request);
     }
 
+    public static void logError(String error) {
+        LOGGER.warning(error);
+    }
+
     public static byte[] showLogs() throws IOException {
         return Files.readAllBytes(Paths.get("./logs/serverLogs.log"));
     }

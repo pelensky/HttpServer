@@ -16,7 +16,7 @@ import java.util.Map;
 public class File extends Route {
     @Override
     public String route() {
-        return "file";
+        return null;
     }
 
     @Override
@@ -32,10 +32,10 @@ public class File extends Route {
         Integer statusCode = Status.METHOD_NOT_ALLOWED.code();
         Map<String, String> headers = new HashMap<>();
         if (request.isAFile()) {
-            if (request.findETag().equals(createETagFromFile(request.findFileName()))) {
+            if (request.findETag().equals(createETag(request.findFileName()))) {
                 statusCode = Status.NO_CONTENT.code();
                 new FileProcessor().patchFile(request.findFileName(), request.getBody());
-                headers.put("ETag", createETagFromFile(request.findFileName()));
+                headers.put("ETag", createETag(request.findFileName()));
             }
         }
         return new Response(statusCode, headers);
@@ -57,7 +57,7 @@ public class File extends Route {
         header.put("Content-Type", new ContentType().list().get(request.getFileType()));
     }
 
-    private String createETagFromFile(String fileName) throws NoSuchAlgorithmException, IOException {
+    private String createETag(String fileName) throws NoSuchAlgorithmException, IOException {
         return new ETag().createETagFromFileContents(new FileProcessor().readEntireFile(fileName));
     }
 
