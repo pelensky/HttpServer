@@ -13,15 +13,19 @@ import java.util.Arrays;
 public class FileProcessor {
     private final String path = "./public/";
     private final String webTitle = "HttpServer";
+    final Integer arrayOffset = 1;
 
     public byte[] readEntireFile(String fileName) throws IOException {
-        return Files.readAllBytes(getPath(fileName));
+        return readFile(fileName, 0, getFileSize(fileName));
     }
 
     byte[] readRange(String fileName, String[] data) throws IOException {
-        final Integer arrayOffset = 1;
         Integer start = Integer.parseInt(data[1]);
         Integer end = Integer.parseInt(data[2]) + arrayOffset;
+        return readFile(fileName, start, end);
+    }
+
+    private byte[] readFile(String fileName, Integer start, Integer end) throws IOException {
         RandomAccessFile randomAccessFile = new RandomAccessFile(path + fileName, "r");
         byte[] buffer = new byte[end - start];
         for (int i=0; i<buffer.length; i++ ) {
@@ -32,7 +36,7 @@ public class FileProcessor {
     }
 
     Integer getFileSize(String fileName) throws IOException {
-        return readEntireFile(fileName).length;
+        return Math.toIntExact(Files.size(getPath(fileName)));
     }
 
     public Boolean doesFileExistInDirectory(String filename) {
