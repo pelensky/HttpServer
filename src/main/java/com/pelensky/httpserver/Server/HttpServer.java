@@ -15,14 +15,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-class HttpServer {
+public class HttpServer {
 
   private final ServerSocketWrapper serverSocket;
   private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
   private boolean inProgress = true;
 
-  HttpServer(ServerSocketWrapper serverSocket) {
+  public HttpServer(ServerSocketWrapper serverSocket) {
     this.serverSocket = serverSocket;
   }
 
@@ -44,10 +44,14 @@ class HttpServer {
     }
   }
 
-  private void processRequestAndResponse(SocketWrapper clientSocket) throws IOException, NoSuchAlgorithmException {
+  public void processRequestAndResponse(SocketWrapper clientSocket) throws IOException, NoSuchAlgorithmException {
     Request request = new RequestProcessor().createRequest(clientSocket);
     Response response = Router.findResponse(request);
     new ResponseProcessor().sendResponse(clientSocket, new ResponseFormatter().formatResponse(response));
+  }
+
+  public void killServer() {
+    inProgress = false;
   }
 
 }

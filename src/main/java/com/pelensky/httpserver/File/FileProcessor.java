@@ -42,7 +42,7 @@ public class FileProcessor {
         return Paths.get("./public/" + fileName);
     }
 
-    public byte[] displayDirectoryContentsAsLinks() throws IOException {
+    public byte[] displayDirectoryContentsAsLinks() {
         String[] files = new File(path).list();
         assert files != null;
         Arrays.sort(files);
