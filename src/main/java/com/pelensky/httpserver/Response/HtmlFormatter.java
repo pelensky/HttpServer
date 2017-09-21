@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Response;
 
 public class HtmlFormatter {
     public String format(String title, String[] directoryContents) {

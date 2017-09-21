@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.File;
 
-import com.pelensky.httpserver.HtmlFormatter;
+import com.pelensky.httpserver.Response.HtmlFormatter;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class FileProcessor {
         return Files.readAllBytes(getPath(fileName));
     }
 
-    public byte[] readRange(String fileName, String[] data) throws IOException {
+    byte[] readRange(String fileName, String[] data) throws IOException {
         final Integer arrayOffset = 1;
         Integer start = Integer.parseInt(data[1]);
         Integer end = Integer.parseInt(data[2]) + arrayOffset;
@@ -54,7 +54,7 @@ public class FileProcessor {
         return readEntireFile(fileName);
     }
 
-    public void deleteFile(String fileName) throws IOException {
+    void deleteFile(String fileName) throws IOException {
         Files.delete(Paths.get(path + fileName));
     }
 }

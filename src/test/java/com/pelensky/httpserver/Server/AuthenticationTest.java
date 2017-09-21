@@ -1,4 +1,4 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.Server;
 
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestParser;
