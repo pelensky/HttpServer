@@ -23,7 +23,7 @@ public class FileProcessorTest {
     }
 
     @Test
-    public void readsARangeFromAFile() throws IOException {
+    public void readsARange() throws IOException {
         String[] data = new String[] { "bytes", "0", "4" };
         String partialFile = new String(fileProcessor.readRange("partial_content.txt", data));
         assertEquals("This ", partialFile);

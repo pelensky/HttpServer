@@ -1,13 +1,11 @@
 package com.pelensky.httpserver.Utilities;
 
-import com.pelensky.httpserver.Utilities.CommandLineArgumentParser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CommandLineArgumentsParserTest {
     private CommandLineArgumentParser parser;
-    private String[] args;
 
     public void setUp(String[] args) {
         parser = new CommandLineArgumentParser(args);

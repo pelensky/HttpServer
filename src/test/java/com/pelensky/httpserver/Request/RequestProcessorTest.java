@@ -1,9 +1,7 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Request.RequestProcessor;
 import com.pelensky.httpserver.Socket.FakeSocket;
 import org.junit.Test;
-
 
 import java.io.IOException;
 
