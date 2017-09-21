@@ -12,18 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 public class HttpServerTest {
 
-    private HttpServer server;
-
-    @Before
-    public void setUp() throws IOException {
-        server = new HttpServer(null);
-    }
-
     @Test
     public void serverConnectsToClient() throws IOException, InterruptedException, NoSuchAlgorithmException {
+        HttpServer server = new HttpServer(null);
         FakeSocket fakeSocket = new FakeSocket();
         server.processRequestAndResponse(fakeSocket);
-        server.killServer();
         assertTrue(fakeSocket.isConnected());
     }
 

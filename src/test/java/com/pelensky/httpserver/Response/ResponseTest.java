@@ -18,7 +18,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void responseCanHaveAStatusCodeAndHeader() {
+    public void responseHasAStatusCodeAndHeader() {
         Map<String, String> header = new HashMap<>();
         header.put("Location", "/");
         response = new Response(302, header);
@@ -26,7 +26,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void responseCanHaveStatusCodeHeaderAndBody() {
+    public void responseHasStatusCodeHeaderAndBody() {
         Map<String, String> header = new HashMap<>();
         header.put("Content-Length", "32");
         response = new Response(200, header, "data=fatcat".getBytes());
