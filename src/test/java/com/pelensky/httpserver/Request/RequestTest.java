@@ -126,6 +126,19 @@ public class RequestTest {
         assertFalse(request.hasCookies());
     }
 
+    @Test
+    public void checksForAuthorization() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET /eat_cookie HTTP/1.1\nAuthorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==\n");
+        assertTrue(request.hasAuthorization());
+    }
+
+    @Test
+    public void checksForNoAuthorization() throws UnsupportedEncodingException {
+        request = new RequestParser().parseRequest("GET / HTTP/1.1\n");
+        assertFalse(request.hasAuthorization());
+    }
+
+
     private Map<String, String> setUpHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Length", "32");

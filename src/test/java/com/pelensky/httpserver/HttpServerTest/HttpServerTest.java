@@ -2,7 +2,7 @@ package com.pelensky.httpserver.HttpServerTest;
 
 import com.pelensky.httpserver.Server.HttpServer;
 import com.pelensky.httpserver.Socket.FakeSocket;
-import org.junit.Before;
+import com.pelensky.httpserver.Utilities.FakeMiddleware;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class HttpServerTest {
 
     @Test
     public void serverConnectsToClient() throws IOException, InterruptedException, NoSuchAlgorithmException {
-        HttpServer server = new HttpServer(null);
+        HttpServer server = new HttpServer(null, new FakeMiddleware());
         FakeSocket fakeSocket = new FakeSocket();
         server.processRequestAndResponse(fakeSocket);
         assertTrue(fakeSocket.isConnected());
