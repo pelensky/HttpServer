@@ -26,11 +26,6 @@ public class NotFound extends Route {
     }
 
     @Override
-    public Response optionsCode (Request request) {
-        return new Response(Status.NOT_FOUND.code());
-    }
-
-    @Override
     public Response put (Request request) {
         return new Response(Status.NOT_FOUND.code());
     }

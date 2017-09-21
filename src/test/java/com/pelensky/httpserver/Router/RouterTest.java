@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class RouterTest {
@@ -26,6 +26,36 @@ public class RouterTest {
     @Test
     public void serverRespondsToUnknownGetRouteWith404() throws IOException, NoSuchAlgorithmException {
         Request request = setUpRequest("GET /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownHeadRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("HEAD /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPostRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("POST /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownDeleteRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("DELETE /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPatchRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("PATCH /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPutRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("PUT /foobar HTTP/1.1\n");
         assertEquals("HTTP/1.1 404", getResponse(request));
     }
 
@@ -140,14 +170,6 @@ public class RouterTest {
     }
 
     @Test
-    public void LetsAuthorisedUserIn() throws IOException, NoSuchAlgorithmException {
-        Request request = setUpRequest("GET /logs HTTP/1.1\n");
-        assertEquals("HTTP/1.1 401\nWWW-Authenticate: Basic realm=\"Authentication required\"", getResponse(request));
-        Request request1 = setUpRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\n");
-        assertTrue(getResponse(request1).contains("200"));
-    }
-
-    @Test
     public void decodesParameters() throws IOException, NoSuchAlgorithmException {
         Request request = setUpRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1\n");
         assertEquals("HTTP/1.1 200\nContent-Length: 96\n\nvariable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"?\nvariable_2 = stuff", getResponse(request));
@@ -185,7 +207,5 @@ public class RouterTest {
         basicAuthorization.add("logs", "admin", "hunter2");
         return new String(new ResponseFormatter().formatResponse(Router.findResponse(basicAuthorization, request)));
     }
-
-
 
 }

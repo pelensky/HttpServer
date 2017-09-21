@@ -24,7 +24,7 @@ public class FileProcessorTest {
 
     @Test
     public void readsARange() throws IOException {
-        String[] data = new String[] { "bytes", "0", "4" };
+        int[] data = new int[] {0, 4};
         String partialFile = new String(fileProcessor.readRange("partial_content.txt", data));
         assertEquals("This ", partialFile);
     }

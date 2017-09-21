@@ -1,7 +1,5 @@
 package com.pelensky.httpserver.File;
 
-import com.pelensky.httpserver.Utilities.HtmlFormatter;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -12,16 +10,15 @@ import java.util.Arrays;
 
 public class FileProcessor {
     private final String path = "./public/";
-    private final String webTitle = "HttpServer";
-    final Integer arrayOffset = 1;
+    private final Integer arrayOffset = 1;
 
     public byte[] readEntireFile(String fileName) throws IOException {
         return readFile(fileName, 0, getFileSize(fileName));
     }
 
-    byte[] readRange(String fileName, String[] data) throws IOException {
-        Integer start = Integer.parseInt(data[1]);
-        Integer end = Integer.parseInt(data[2]) + arrayOffset;
+    byte[] readRange(String fileName, int[] data) throws IOException {
+        Integer start = data[0];
+        Integer end = data[1] + arrayOffset;
         return readFile(fileName, start, end);
     }
 
@@ -47,11 +44,11 @@ public class FileProcessor {
         return Paths.get("./public/" + fileName);
     }
 
-    public byte[] displayDirectoryContentsAsLinks() {
+    public String[] getPublicFolderContents() {
         String[] files = new File(path).list();
         assert files != null;
         Arrays.sort(files);
-        return new HtmlFormatter().format(webTitle, files).getBytes();
+        return files;
     }
 
     public byte[] patchFile(String fileName, String updatedContent) throws IOException {
