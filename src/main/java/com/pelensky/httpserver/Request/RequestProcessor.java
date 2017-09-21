@@ -1,6 +1,6 @@
 package com.pelensky.httpserver.Request;
 
-import com.pelensky.httpserver.Logs.LogRequests;
+import com.pelensky.httpserver.Logs.LoggingTool;
 import com.pelensky.httpserver.Socket.SocketWrapper;
 
 import java.io.BufferedReader;
@@ -11,7 +11,6 @@ public class RequestProcessor {
 
     public Request createRequest(SocketWrapper clientSocket) throws IOException {
         Request request = new RequestParser().parseRequest(getRequestFromSocket(clientSocket));
-        LogRequests.add(request);
         return request;
     }
 
@@ -32,7 +31,9 @@ public class RequestProcessor {
                 addLineToString(line, request);
             }
         }
-        return String.valueOf(request);
+        String header = String.valueOf(request);
+        LoggingTool.logRequest(header);
+        return header;
     }
 
     private void addLineToString(String line, StringBuilder request) {
