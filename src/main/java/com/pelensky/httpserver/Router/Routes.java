@@ -18,6 +18,7 @@ public class Routes {
     private static final Route parameters = new Parameters();
     private static final Route cookie = new Cookie();
     private static final Route eatCookie = new EatCookie();
+    private static final Route notFound = new NotFound();
 
     public static List<Route> routes() {
         List<Route> routesList = new ArrayList<>();
@@ -33,6 +34,7 @@ public class Routes {
         routesList.add(cookie);
         routesList.add(eatCookie);
         routesList.add(file);
+        routesList.add(notFound);
         return routesList;
     }
 }
