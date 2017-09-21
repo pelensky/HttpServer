@@ -1,7 +1,7 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.ETag;
 import com.pelensky.httpserver.File.ContentType;
+import com.pelensky.httpserver.File.ETag;
 import com.pelensky.httpserver.File.FileProcessor;
 import com.pelensky.httpserver.File.Range;
 import com.pelensky.httpserver.Request.Request;

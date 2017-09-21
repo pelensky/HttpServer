@@ -1,10 +1,10 @@
 package com.pelensky.httpserver.Routes;
 
-import com.pelensky.httpserver.Authentication;
-import com.pelensky.httpserver.LogRequests;
+import com.pelensky.httpserver.Logs.LogRequests;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Response.Response;
 import com.pelensky.httpserver.Response.Status;
+import com.pelensky.httpserver.Server.Authentication;
 
 import java.util.HashMap;
 import java.util.Map;

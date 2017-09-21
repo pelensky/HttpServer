@@ -1,6 +1,5 @@
-package com.pelensky.httpserver;
+package com.pelensky.httpserver.File;
 
-import com.pelensky.httpserver.File.Range;
 import com.pelensky.httpserver.Request.Request;
 import com.pelensky.httpserver.Request.RequestParser;
 import org.junit.Test;
