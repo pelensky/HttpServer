@@ -186,6 +186,4 @@ public class RouterTest {
         return new String(new ResponseFormatter().formatResponse(Router.findResponse(basicAuthorization, request)));
     }
 
-
-
 }

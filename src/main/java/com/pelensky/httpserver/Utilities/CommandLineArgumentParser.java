@@ -26,7 +26,7 @@ public class CommandLineArgumentParser {
         return Objects.equals(index, null) ? defaultPort : Integer.parseInt(args[index]);
     }
 
-    public String findDirectory() {
+    String findDirectory() {
         Integer index = loopThroughArguments("-d");
         String defaultDirectory = "PUBLIC_DIR";
         return Objects.equals(index, null) ? defaultDirectory : args[index];

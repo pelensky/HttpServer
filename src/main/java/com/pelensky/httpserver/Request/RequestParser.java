@@ -104,5 +104,4 @@ public class RequestParser {
         parameters.put(splitParams[0], URLDecoder.decode(splitParams[1], "UTF-8"));
     }
 
-
 }
