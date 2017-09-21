@@ -30,6 +30,36 @@ public class RouterTest {
     }
 
     @Test
+    public void serverRespondsToUnknownHeadRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("HEAD /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPostRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("POST /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownDeleteRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("DELETE /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPatchRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("PATCH /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
+    public void serverRespondsToUnknownPutRouteWith404() throws IOException, NoSuchAlgorithmException {
+        Request request = setUpRequest("PUT /foobar HTTP/1.1\n");
+        assertEquals("HTTP/1.1 404", getResponse(request));
+    }
+
+    @Test
     public void serverRespondsToPostRequestWith200() throws IOException, NoSuchAlgorithmException {
         Request request = setUpRequest("POST /form HTTP/1.1\nContent-Length: 348\n\nMy=Data");
         assertEquals("HTTP/1.1 200\nContent-Length: 7\n\nMy=Data", getResponse(request));
@@ -167,13 +197,6 @@ public class RouterTest {
         assertEquals("HTTP/1.1 200\nContent-Type: text/plain\nContent-Length: 15\n\npatched content", getResponse(nextRequest));
         new FileProcessor().patchFile("patch-content.txt", "default content");
     }
-
-    @Test
-    public void LetsAuthorisedUserIn() throws IOException, NoSuchAlgorithmException {
-        Request request = setUpRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\n");
-        assertTrue(getResponse(request).contains("200"));
-    }
-
 
     private Request setUpRequest(String request) throws UnsupportedEncodingException {
         return new RequestParser().parseRequest(request);
