@@ -33,7 +33,8 @@ The tests I was required to pass are the following:
 8. In a browser, navigate to [http://localhost:9090/](http://localhost:9090/)
 9. Navigate to [HttpTestSuite](http://localhost:9090/HttpTestSuite)
 10. Click [Edit](http://localhost:9090/HttpTestSuite?edit)
-11. Update the SERVER_START_COMMAND variable to `!define SERVER_START_COMMAND {java -jar /Users/YOUR_COMPUTER_NAME/HttpServer/build/libs/HttpServer-1.0-SNAPSHOT.jar}`
-12. Update the PUBLIC_DIR variable to `!define PUBLIC_DIR {/Users/YOUR_COMPUTER_NAME/cob_spec/public/}`
-13. Click Save
-14. Click [Suite](http://localhost:9090/HttpTestSuite?suite) to run all tests.
+11. Delete the `-` in front of both `!3 User-Defined Variables` - the start should be `!define` not `-!define`
+12. Update the SERVER_START_COMMAND variable to `!define SERVER_START_COMMAND {java -jar /Users/YOUR_COMPUTER_NAME/HttpServer/build/libs/HttpServer-1.0-SNAPSHOT.jar}`
+13. Update the PUBLIC_DIR variable to `!define PUBLIC_DIR {/Users/YOUR_COMPUTER_NAME/cob_spec/public/}`
+14. Click Save
+15. Click [Suite](http://localhost:9090/HttpTestSuite?suite) to run all tests.
